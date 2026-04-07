@@ -138,14 +138,13 @@ body {
 .heroSection::before {
     content: "";
     position: absolute;
-    top: -10px; left: -10px; right: -10px; bottom: -10px;
-    background: linear-gradient(rgba(22, 34, 56, 0.2), rgba(0, 0, 0, 0.1)), url('images/s-class.webp');
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(rgba(22, 34, 56, 0.4), rgba(0, 0, 0, 0.4)), url('images/s-class.webp');
     background-size: cover;
     background-position: center;
-    filter: blur(2px);
-    transform: scale(1.03);
+    transform: scale(1.05); /* Slight scale to allow hover shrink/grow */
     z-index: 1;
-    transition: filter var(--transition-premium), transform var(--transition-premium);
+    transition: transform var(--transition-premium);
 }
 
 .heroSection:hover::before {
@@ -321,12 +320,76 @@ body {
 
 /* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 900px) {
+    .mainHeader {
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
+        padding: 20px 5%;
+        gap: 15px;
+    }
+    
+    .logo-link {
+        margin-bottom: 5px;
+    }
+
+    .navBar {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .navBar ul {
+        flex-wrap: wrap; 
+        justify-content: center;
+        gap: 15px;
+        padding-bottom: 5px;
+    }
+
+    .requestButton {
+        display: none;
+    }
+
     .features-container {
         flex-direction: column;
     }
 
     .heroContent h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        letter-spacing: 4px;
+        margin-bottom: 10px;
+    }
+
+    .heroContent p {
+        font-size: 11px;
+        letter-spacing: 3px;
+    }
+
+    .service-info-section {
+        grid-template-columns: 1fr;
+        padding: 50px 5%;
+        gap: 30px;
+    }
+    
+    .fleet-section {
+        padding: 60px 5%;
+    }
+
+    .why-choose-us {
+        margin: 50px auto;
+        padding: 0 15px;
+    }
+
+    .services-hero {
+        padding: 80px 5% 40px;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        margin: 40px auto 60px;
+    }
+    
+    .cta-banner {
+        padding: 60px 15px;
     }
 }
 
