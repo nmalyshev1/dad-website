@@ -1,4 +1,4 @@
-const translations = {
+var translations = {
     'en': {
         'nav': {
             'home': 'Home',
@@ -292,7 +292,7 @@ const translations = {
             'book_e_class': 'Réserver Classe E',
             'book_trafic': 'Réserver Trafic',
             'why_title1': 'Professionnalisme et flexibilité inégalés',
-            'why_subtitle1': 'Des chauffeurs qui s'adaptent à votre emploi du temps.',
+            'why_subtitle1': "Des chauffeurs qui s'adaptent à votre emploi du temps.",
             'why_desc1': "Nos chauffeurs sont fiables, pragmatiques et dévoués à votre confort. En retard ou vol retardé ? Nous vous attendons. Profitez d'un service premium sans stress.",
             'why_title2': 'Voyagez dans le luxe moderne',
             'why_subtitle2': 'Les derniers modèles Mercedes-Benz à votre service.',
