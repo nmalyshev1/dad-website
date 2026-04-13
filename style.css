@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
 :root {
-    --riviera-white: #FCFAFA;
-    --sea-navy: #162238;
-    --champagne-bronze: #BCA37F;
-    --yacht-cream: #EFE9E0;
+    --riviera-white: #FAFAF8;
+    --sea-navy: #0F1D32;
+    --champagne-bronze: #C4A265;
+    --yacht-cream: #F0EBE3;
+    --soft-gray: #6B7280;
     --transition-premium: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
     --transition-fast: 0.3s ease;
 }
@@ -14,9 +17,11 @@
 }
 
 body {
-    font-family: 'Segoe UI', Arial, sans-serif; /* Clean, minimalistic body font */
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background-color: var(--riviera-white);
     color: var(--sea-navy);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* --- HEADER & NAVBAR --- */
@@ -26,14 +31,16 @@ body {
     align-items: center;
     padding: 0 8%;
     height: 90px;
-    background-color: rgba(239, 233, 224, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(239, 233, 224, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 
-    position: relative;
-    z-index: 10;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid rgba(188, 163, 127, 0.4);
+    transition: box-shadow 0.3s ease;
 }
 
 .logo-link {
@@ -90,11 +97,13 @@ body {
     transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.navBar a:hover::after {
+.navBar a:hover::after,
+.navBar a.active::after {
     width: 100%;
 }
 
-.navBar a:hover {
+.navBar a:hover,
+.navBar a.active {
     color: var(--champagne-bronze);
 }
 
@@ -1386,15 +1395,16 @@ body {
 
 .route-label {
     display: inline-block;
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 3px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--champagne-bronze);
-    border: 1px solid rgba(188, 163, 127, 0.4);
-    padding: 4px 10px;
-    border-radius: 2px;
-    margin-bottom: 14px;
+    color: #fff;
+    background: var(--champagne-bronze);
+    padding: 6px 14px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    line-height: 1;
 }
 
 .route-card-inner h3 {
@@ -1766,9 +1776,10 @@ body {
 
 /* ===== FAQ SECTION ===== */
 .faq-section {
-    max-width: 800px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 90px 8%;
+    padding: 90px calc((100% - 800px) / 2);
+    background-color: var(--yacht-cream);
 }
 
 .faq-title {
@@ -1870,9 +1881,8 @@ body {
 
 /* ===== INLINE CONTACT SECTION ===== */
 .contact-inline-section {
-    background: var(--yacht-cream);
+    background: var(--riviera-white);
     padding: 90px 8%;
-    border-top: 1px solid rgba(188, 163, 127, 0.2);
 }
 
 .contact-inline-inner {
@@ -1896,65 +1906,59 @@ body {
     letter-spacing: 1.5px;
     color: var(--champagne-bronze);
     text-transform: uppercase;
-    margin-bottom: 45px;
+    margin-bottom: 50px;
 }
 
 .contact-inline-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .contact-inline-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    padding: 30px 20px;
+    justify-content: center;
+    gap: 15px;
+    padding: 45px 30px;
     background: #fff;
-    border-radius: 6px;
-    border: 1px solid rgba(188, 163, 127, 0.2);
+    border-radius: 8px;
+    border: 1px solid rgba(196, 162, 101, 0.15);
     text-decoration: none;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transition: all 0.4s ease;
 }
 
 .contact-inline-card:hover {
+    background: #fff;
     transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
-
-.contact-inline-icon {
-    font-size: 1.6rem;
-    margin-bottom: 4px;
+    border-color: var(--champagne-bronze);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.06);
 }
 
 .contact-inline-label {
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 2.5px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--champagne-bronze);
 }
 
 .contact-inline-value {
-    font-size: 0.9rem;
+    font-size: 1.25rem;
     color: var(--sea-navy);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 @media (max-width: 900px) {
-    .contact-inline-grid {
-        grid-template-columns: 1fr 1fr;
-    }
     .contact-inline-section {
         padding: 60px 5%;
     }
 }
 
 @media (max-width: 480px) {
-    .contact-inline-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* ===== EXTENDED ROUTES GRID (6 cards, 2 rows) ===== */

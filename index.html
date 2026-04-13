@@ -195,32 +195,6 @@
     </div>
 </section>
 
-<!-- ===== WHY CHOOSE US ===== -->
-<section class="why-choose-us">
-    <div class="features-container">
-        <div class="feature-card">
-            <div class="feature-content">
-                <h3 data-i18n="index.why_title1">Unmatched Professionalism &amp; Flexibility</h3>
-                <h4 data-i18n="index.why_subtitle1">Chauffeurs who adapt to your schedule.</h4>
-                <p data-i18n="index.why_desc1">Our drivers are reliable, pragmatic, and dedicated to your convenience. Running late or dealing with a flight delay? We wait for you. Enjoy a completely stress-free, premium service where your timeline is our only priority.</p>
-            </div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-content">
-                <h3 data-i18n="index.why_title2">Travel in Modern Luxury</h3>
-                <h4 data-i18n="index.why_subtitle2">The newest Mercedes-Benz models at your service.</h4>
-                <p data-i18n="index.why_desc2">Experience uncompromising comfort in our pristine, top-of-the-line fleet. Featuring the latest Mercedes-Benz V-Class models, we provide spacious, state-of-the-art vehicles perfect for both solo executives and group travel. Step inside and let the journey be a destination in itself.</p>
-            </div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-content">
-                <h3 data-i18n="index.why_title3">The Superior Taxi Alternative</h3>
-                <h4 data-i18n="index.why_subtitle3">Private, discreet, and elevated travel.</h4>
-                <p data-i18n="index.why_desc3">We bridge the gap between an ordinary premium taxi and a private concierge. V-TRANSFER is built on discretion and exclusivity, offering a quiet, secure, and highly reliable environment so you can work, relax, or simply enjoy the ride with absolute peace of mind.</p>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- ===== POPULAR ROUTES ===== -->
 <section id="routes" class="popular-routes-section">
@@ -383,22 +357,18 @@
         <p class="contact-inline-sub">Available 24/7 · Côte d'Azur &amp; beyond</p>
         <div class="contact-inline-grid">
             <a href="tel:+33686269909" class="contact-inline-card">
-                <span class="contact-inline-icon">📞</span>
                 <span class="contact-inline-label">Phone</span>
                 <span class="contact-inline-value">+33 6 86 26 99 09</span>
             </a>
             <a href="mailto:info@vtransfer.fr" class="contact-inline-card">
-                <span class="contact-inline-icon">✉️</span>
                 <span class="contact-inline-label">Email</span>
                 <span class="contact-inline-value">info@vtransfer.fr</span>
             </a>
-            <a href="https://wa.me/33686269909" target="_blank" rel="noopener noreferrer" class="contact-inline-card contact-whatsapp-card">
-                <span class="contact-inline-icon">💬</span>
+            <a href="https://wa.me/33686269909" target="_blank" rel="noopener noreferrer" class="contact-inline-card">
                 <span class="contact-inline-label">WhatsApp</span>
                 <span class="contact-inline-value">Message us instantly</span>
             </a>
-            <a href="request.html" class="contact-inline-card contact-quote-card">
-                <span class="contact-inline-icon">📋</span>
+            <a href="request.html" class="contact-inline-card">
                 <span class="contact-inline-label">Book Online</span>
                 <span class="contact-inline-value">Request a bespoke quote</span>
             </a>
@@ -500,6 +470,37 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
         }
     });
 });
+
+// Scroll spy — highlight active nav link
+(function() {
+    const sections = document.querySelectorAll('section[id], #home, #services, #fleet, #routes, #faq, #contact');
+    const navLinks = document.querySelectorAll('.navBar a[href^="#"]');
+    const mobileLinks = document.querySelectorAll('.mobile-menu a[href^="#"]');
+
+    function setActive(id) {
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+        mobileLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+    }
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setActive(entry.target.id);
+            }
+        });
+    }, {
+        rootMargin: '-30% 0px -60% 0px',
+        threshold: 0
+    });
+
+    sections.forEach(section => {
+        if (section.id) observer.observe(section);
+    });
+})();
 </script>
 </body>
 </html>
