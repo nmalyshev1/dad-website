@@ -16,28 +16,45 @@
 
     <nav class="navBar">
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="index.html#fleet">Fleet</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+            <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+            <li><a href="index.html#fleet" data-i18n="nav.fleet">Fleet</a></li>
+            <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
         </ul>
     </nav>
 
     <div class="requestButton">
-        <a href="request.html" class="btn-request">Request Quote</a>
+        <div class="lang-picker">
+            <div class="current-lang">
+                <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" id="current-flag" alt="Flag">
+                <span class="current-lang-text">EN</span>
+            </div>
+            <div class="lang-dropdown">
+                <a href="#" class="lang-option" data-lang="en">
+                    <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="English"> English
+                </a>
+                <a href="#" class="lang-option" data-lang="fr">
+                    <img src="https://flagcdn.com/w40/fr.png" class="flag-icon" alt="Français"> Français
+                </a>
+                <a href="#" class="lang-option" data-lang="ru">
+                    <img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="Русский"> Русский
+                </a>
+            </div>
+        </div>
+        <a href="request.html" class="btn-request" data-i18n="nav.request_quote">Request Quote</a>
     </div>
 </header>
 
 <section class="heroSection">
     <div class="heroContent">
-        <h1>VIP Service Cote D'Azur</h1>
-        <p>Arrive in Style. Every Time.</p>
-        <a href="request.html"><button class="cta-button">Enquire Now</button></a>
+        <h1 data-i18n="index.hero_title">VIP Service Cote D'Azur</h1>
+        <p data-i18n="index.hero_subtitle">Arrive in Style. Every Time.</p>
+        <a href="request.html"><button class="cta-button" data-i18n="index.enquire_now">Enquire Now</button></a>
     </div>
 </section>
 
 <section id="fleet" class="fleet-section">
-    <h2 style="font-size: 1.8rem; letter-spacing: 8px;">THE FLEET</h2>
+    <h2 style="font-size: 1.8rem; letter-spacing: 8px;" data-i18n="index.fleet_title">THE FLEET</h2>
 
     <div class="fleet-grid">
         <!-- V-Class -->
@@ -45,8 +62,8 @@
             <img src="images/fleet_v_class.png" alt="Mercedes V-Class VIP Van" class="fleet-image">
             <div class="fleet-card-content">
                 <h3>Mercedes V-Class</h3>
-                <p>The ultimate in spacious luxury. Perfect for families, executive teams, or those who travel with extra luggage. Featuring premium leather conference seating.</p>
-                <a href="request.html" class="banner-btn">Book V-Class</a>
+                <p data-i18n="index.fleet_v_class_desc">The ultimate in spacious luxury. Perfect for families, executive teams, or those who travel with extra luggage. Featuring premium leather conference seating.</p>
+                <a href="request.html" class="banner-btn" data-i18n="index.book_v_class">Book V-Class</a>
             </div>
         </div>
         <!-- E-Class -->
@@ -54,8 +71,8 @@
             <img src="images/fleet_e_class.png" alt="Mercedes E-Class Sedan" class="fleet-image">
             <div class="fleet-card-content">
                 <h3>Mercedes E-Class</h3>
-                <p>Sophisticated, quiet, and incredibly comfortable. The E-Class is the standard for premium executive travel across the Cote d'Azur.</p>
-                <a href="request.html" class="banner-btn">Book E-Class</a>
+                <p data-i18n="index.fleet_e_class_desc">Sophisticated, quiet, and incredibly comfortable. The E-Class is the standard for premium executive travel across the Cote d'Azur.</p>
+                <a href="request.html" class="banner-btn" data-i18n="index.book_e_class">Book E-Class</a>
             </div>
         </div>
         <!-- Renault Traffic -->
@@ -63,8 +80,8 @@
             <img src="images/fleet_renault.png" alt="Renault Trafic Passenger Van" class="fleet-image">
             <div class="fleet-card-content">
                 <h3>Renault Trafic SpaceClass</h3>
-                <p>An exceptional, high-capacity vehicle that blends group practicality with VIP black-car professionalism. Excellent for event transportation.</p>
-                <a href="request.html" class="banner-btn">Book Trafic</a>
+                <p data-i18n="index.fleet_renault_desc">An exceptional, high-capacity vehicle that blends group practicality with VIP black-car professionalism. Excellent for event transportation.</p>
+                <a href="request.html" class="banner-btn" data-i18n="index.book_trafic">Book Trafic</a>
             </div>
         </div>
     </div>
@@ -74,25 +91,25 @@
     <div class="features-container">
         <div class="feature-card">
             <div class="feature-content">
-                <h3>Unmatched Professionalism & Flexibility</h3>
-                <h4>Chauffeurs who adapt to your schedule.</h4>
-                <p>Our drivers are reliable, pragmatic, and dedicated to your convenience. Running late or dealing with a flight delay? We wait for you. Enjoy a completely stress-free, premium service where your timeline is our only priority.</p>
+                <h3 data-i18n="index.why_title1">Unmatched Professionalism & Flexibility</h3>
+                <h4 data-i18n="index.why_subtitle1">Chauffeurs who adapt to your schedule.</h4>
+                <p data-i18n="index.why_desc1">Our drivers are reliable, pragmatic, and dedicated to your convenience. Running late or dealing with a flight delay? We wait for you. Enjoy a completely stress-free, premium service where your timeline is our only priority.</p>
             </div>
         </div>
 
         <div class="feature-card">
             <div class="feature-content">
-                <h3>Travel in Modern Luxury</h3>
-                <h4>The newest Mercedes-Benz models at your service.</h4>
-                <p>Experience uncompromising comfort in our pristine, top-of-the-line fleet. Featuring the latest Mercedes-Benz V-Class models, we provide spacious, state-of-the-art vehicles perfect for both solo executives and group travel. Step inside and let the journey be a destination in itself.</p>
+                <h3 data-i18n="index.why_title2">Travel in Modern Luxury</h3>
+                <h4 data-i18n="index.why_subtitle2">The newest Mercedes-Benz models at your service.</h4>
+                <p data-i18n="index.why_desc2">Experience uncompromising comfort in our pristine, top-of-the-line fleet. Featuring the latest Mercedes-Benz V-Class models, we provide spacious, state-of-the-art vehicles perfect for both solo executives and group travel. Step inside and let the journey be a destination in itself.</p>
             </div>
         </div>
 
         <div class="feature-card">
             <div class="feature-content">
-                <h3>The Superior Taxi Alternative</h3>
-                <h4>Private, discreet, and elevated travel.</h4>
-                <p>We bridge the gap between an ordinary premium taxi and a private concierge. V-TRANSFER is built on discretion and exclusivity, offering a quiet, secure, and highly reliable environment so you can work, relax, or simply enjoy the ride with absolute peace of mind.</p>
+                <h3 data-i18n="index.why_title3">The Superior Taxi Alternative</h3>
+                <h4 data-i18n="index.why_subtitle3">Private, discreet, and elevated travel.</h4>
+                <p data-i18n="index.why_desc3">We bridge the gap between an ordinary premium taxi and a private concierge. V-TRANSFER is built on discretion and exclusivity, offering a quiet, secure, and highly reliable environment so you can work, relax, or simply enjoy the ride with absolute peace of mind.</p>
             </div>
         </div>
     </div>
@@ -100,9 +117,9 @@
 
 <section class="cta-banner">
     <div class="cta-content">
-        <h2>Touching down in the Cote d'Azur?</h2>
-        <p>Your vacation should begin the moment you land. Skip the taxi lines and step directly into uncompromising luxury. We don't just provide a ride; we curate a seamless arrival experience. Whether you are heading to a coastal villa or a luxury resort, let us handle the journey while you simply enjoy the view.</p>
-        <a href="request.html" class="banner-btn">Request a Bespoke Quote</a>
+        <h2 data-i18n="index.cta_banner_title">Touching down in the Cote d'Azur?</h2>
+        <p data-i18n="index.cta_banner_desc">Your vacation should begin the moment you land. Skip the taxi lines and step directly into uncompromising luxury. We don't just provide a ride; we curate a seamless arrival experience. Whether you are heading to a coastal villa or a luxury resort, let us handle the journey while you simply enjoy the view.</p>
+        <a href="request.html" class="banner-btn" data-i18n="index.request_bespoke">Request a Bespoke Quote</a>
     </div>
 </section>
 
@@ -116,31 +133,31 @@
     <div class="footer-container">
         <div class="footer-brand">
             <div class="logo">V-TRANSFER</div>
-            <p>Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
+            <p data-i18n="footer.brand_desc">Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
         </div>
 
         <div class="footer-links">
-            <h4 class="footer-heading">Services</h4>
+            <h4 class="footer-heading" data-i18n="footer.services">Services</h4>
             <ul>
-                <li><a href="airport-transfers.html">Airport Transfers</a></li>
-                <li><a href="intercity-transfers.html">Intercity Transfers</a></li>
-                <li><a href="private-excursions.html">Private Excursions</a></li>
-                <li><a href="services.html">All Services</a></li>
+                <li><a href="airport-transfers.html" data-i18n="footer.airport_transfers">Airport Transfers</a></li>
+                <li><a href="intercity-transfers.html" data-i18n="footer.intercity_transfers">Intercity Transfers</a></li>
+                <li><a href="private-excursions.html" data-i18n="footer.private_excursions">Private Excursions</a></li>
+                <li><a href="services.html" data-i18n="footer.all_services">All Services</a></li>
             </ul>
         </div>
 
         <div class="footer-links">
-            <h4 class="footer-heading">Company</h4>
+            <h4 class="footer-heading" data-i18n="footer.company">Company</h4>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#fleet">The Fleet</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="request.html">Book Now</a></li>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="index.html#fleet" data-i18n="footer.the_fleet">The Fleet</a></li>
+                <li><a href="contact.html" data-i18n="footer.contact_us">Contact Us</a></li>
+                <li><a href="request.html" data-i18n="footer.book_now">Book Now</a></li>
             </ul>
         </div>
 
         <div class="footer-contact-info">
-            <h4 class="footer-heading">Inquiries</h4>
+            <h4 class="footer-heading" data-i18n="footer.inquiries">Inquiries</h4>
             <p>06400 Cannes, France</p>
             <p><a href="tel:+33686269909">+33 6 86 26 99 09</a></p>
             <p><a href="mailto:info@vtransfer.fr">info@vtransfer.fr</a></p>
@@ -149,13 +166,16 @@
 
     <div class="footer-bottom">
         <div class="copyright">
-            &copy; 2026 V-TRANSFER. All rights reserved.
+            &copy; 2026 V-TRANSFER. <span data-i18n="footer.rights">All rights reserved.</span>
         </div>
         <div class="legal-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+            <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
         </div>
     </div>
 </footer>
+
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>

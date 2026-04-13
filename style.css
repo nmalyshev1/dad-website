@@ -98,16 +98,40 @@ body {
     color: var(--champagne-bronze);
 }
 
+.requestButton {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
 /* --- LANGUAGE PICKER --- */
 .lang-picker {
     position: relative;
     cursor: pointer;
     display: flex;
     align-items: center;
+    padding: 0 5px;
+    height: 100%;
 }
 
 .current-lang {
-    font-weight: 700 !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--sea-navy);
+    text-transform: uppercase;
+}
+
+.flag-icon {
+    width: 28px;
+    height: 20px;
+    border-radius: 2px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
 .lang-dropdown {
@@ -117,15 +141,14 @@ body {
     transform: translateX(-50%) translateY(10px);
     background-color: var(--riviera-white);
     border: 1px solid rgba(188, 163, 127, 0.2);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
     border-radius: 4px;
-    padding: 5px 0;
+    padding: 8px 0;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
-    min-width: 60px;
-    text-align: center;
-    z-index: 100;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    min-width: 120px;
+    z-index: 1000;
 }
 
 .lang-picker:hover .lang-dropdown {
@@ -134,24 +157,32 @@ body {
     transform: translateX(-50%) translateY(0);
 }
 
-.lang-dropdown a {
-    display: block !important;
+.lang-option {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
     padding: 10px 20px !important;
     color: var(--sea-navy) !important;
     font-size: 11px !important;
     font-weight: 600 !important;
     text-decoration: none;
-    letter-spacing: 2px;
-    transition: background 0.3s;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    text-align: left !important;
 }
 
-.lang-dropdown a::after {
+.lang-option::after {
     display: none !important;
 }
 
-.lang-dropdown a:hover {
+.lang-option:hover {
     background-color: rgba(188, 163, 127, 0.1);
     color: var(--champagne-bronze) !important;
+}
+
+.lang-option.active {
+    color: var(--champagne-bronze) !important;
+    background-color: rgba(188, 163, 127, 0.05);
 }
 
 /* --- BUTTONS --- */
@@ -1058,9 +1089,77 @@ body {
     margin-bottom: 10px;
 }
 
+/* --- LEGAL PAGES (Terms, Privacy) --- */
+.legal-hero {
+    padding: 140px 8% 60px;
+    text-align: center;
+    background-color: var(--yacht-cream);
+    border-bottom: 1px solid rgba(188, 163, 127, 0.2);
+}
 
+.legal-hero h1 {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 3rem;
+    color: var(--sea-navy);
+    margin-bottom: 15px;
+}
 
+.legal-subtitle {
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--champagne-bronze);
+    font-weight: 700;
+}
 
+.legal-container {
+    max-width: 800px;
+    margin: -40px auto 80px;
+    padding: 50px 60px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(188, 163, 127, 0.1);
+}
 
+.legal-container h2 {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--sea-navy);
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(188, 163, 127, 0.2);
+    padding-bottom: 10px;
+}
 
+.legal-container p, .legal-container ul {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+}
 
+.legal-container ul {
+    margin-left: 20px;
+}
+
+.legal-container li {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .legal-container {
+        padding: 30px;
+        margin: -20px 20px 60px;
+    }
+    .legal-hero {
+        padding: 120px 5% 50px;
+    }
+    .legal-hero h1 {
+        font-size: 2.2rem;
+    }
+}

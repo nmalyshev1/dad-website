@@ -15,69 +15,90 @@
   </a>
   <nav class="navBar">
     <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="index.html#fleet">Fleet</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+      <li><a href="index.html#fleet" data-i18n="nav.fleet">Fleet</a></li>
+      <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
     </ul>
   </nav>
   <div class="requestButton">
-    <a href="request.html" class="btn-request">Request Quote</a>
+      <div class="lang-picker">
+          <div class="current-lang">
+              <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" id="current-flag" alt="Flag">
+              <span class="current-lang-text">EN</span>
+          </div>
+          <div class="lang-dropdown">
+              <a href="#" class="lang-option" data-lang="en">
+                  <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="English"> English
+              </a>
+              <a href="#" class="lang-option" data-lang="fr">
+                  <img src="https://flagcdn.com/w40/fr.png" class="flag-icon" alt="Français"> Français
+              </a>
+              <a href="#" class="lang-option" data-lang="ru">
+                  <img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="Русский"> Русский
+              </a>
+          </div>
+      </div>
+    <a href="request.html" class="btn-request" data-i18n="nav.request_quote">Request Quote</a>
   </div>
 </header>
 
-<main style="max-width: 800px; margin: 120px auto 60px; padding: 0 20px;">
-  <h1 style="color: var(--sea-navy); margin-bottom: 20px;">Terms of Service</h1>
-  <p style="margin-bottom: 20px;"><strong>Effective Date:</strong> January 1, 2026</p>
+<main>
+  <section class="legal-hero">
+    <h1 data-i18n="legals.terms_title">Terms of Service</h1>
+    <p class="subtitle" data-i18n="legals.last_updated">Last updated: April 2026</p>
+  </section>
 
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">1. Services Provided</h2>
-  <p style="margin-bottom: 15px;">V-TRANSFER offers premium chauffeur and transfer services exclusively on the French Riviera. The details of the transportation service, including pick-up times, drop-off locations, and designated vehicles, will be confirmed at the time of booking.</p>
+  <div class="legal-container">
+    <h2>1. Services Provided</h2>
+    <p>V-TRANSFER offers premium chauffeur and transfer services exclusively on the French Riviera. The details of the transportation service, including pick-up times, drop-off locations, and designated vehicles, will be confirmed at the time of booking.</p>
 
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">2. Booking and Quotes</h2>
-  <p style="margin-bottom: 15px;">All services are subject to availability. By submitting a quote request, you are initiating an inquiry, which is not a confirmed booking until officially accepted and confirmed by V-TRANSFER.</p>
+    <h2>2. Booking and Quotes</h2>
+    <p>All services are subject to availability. By submitting a quote request, you are initiating an inquiry, which is not a confirmed booking until officially accepted and confirmed by V-TRANSFER.</p>
 
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">3. Cancellations and Modifications</h2>
-  <p style="margin-bottom: 15px;">We understand that travel plans change. Cancellations must be communicated to us at least 24 hours prior to the scheduled service for a full refund or to cancel without penalty. Modifications depend on availability and may affect the finalized quote.</p>
+    <h2>3. Cancellations and Modifications</h2>
+    <p>We understand that travel plans change. Cancellations must be communicated to us at least 24 hours prior to the scheduled service for a full refund or to cancel without penalty. Modifications depend on availability and may affect the finalized quote.</p>
 
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">4. Passenger Responsibilities</h2>
-  <p style="margin-bottom: 15px;">Passengers are expected to conduct themselves appropriately. Any vehicle damage caused by a passenger's negligence will be charged to the client. Wearing seatbelts is strictly mandatory in accordance with French law.</p>
-  
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">5. Liability</h2>
-  <p style="margin-bottom: 15px;">While our chauffeurs strive to ensure you reach your destination punctually, V-TRANSFER is not liable for delays caused by circumstances beyond our control, including severe weather, unpredicted traffic conditions, or road closures.</p>
+    <h2>4. Passenger Responsibilities</h2>
+    <p>Passengers are expected to conduct themselves appropriately. Any vehicle damage caused by a passenger's negligence will be charged to the client. Wearing seatbelts is strictly mandatory in accordance with French law.</p>
+    
+    <h2>5. Liability</h2>
+    <p>While our chauffeurs strive to ensure you reach your destination punctually, V-TRANSFER is not liable for delays caused by circumstances beyond our control, including severe weather, unpredicted traffic conditions, or road closures.</p>
 
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">6. Governing Law</h2>
-  <p style="margin-bottom: 15px;">These Terms of Service are governed by the laws of France. Any disputes arising from these terms will be resolved in the appropriate courts in France.</p>
+    <h2>6. Governing Law</h2>
+    <p>These Terms of Service are governed by the laws of France. Any disputes arising from these terms will be resolved in the appropriate courts in France.</p>
+  </div>
 </main>
 
 <footer class="global-footer">
     <div class="footer-container">
         <div class="footer-brand">
             <div class="logo">V-TRANSFER</div>
-            <p>Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
+            <p data-i18n="footer.brand_desc">Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
         </div>
 
         <div class="footer-links">
-            <h4 class="footer-heading">Services</h4>
+            <h4 class="footer-heading" data-i18n="footer.services">Services</h4>
             <ul>
-                <li><a href="airport-transfers.html">Airport Transfers</a></li>
-                <li><a href="intercity-transfers.html">Intercity Transfers</a></li>
-                <li><a href="private-excursions.html">Private Excursions</a></li>
-                <li><a href="services.html">All Services</a></li>
+                <li><a href="airport-transfers.html" data-i18n="footer.airport_transfers">Airport Transfers</a></li>
+                <li><a href="intercity-transfers.html" data-i18n="footer.intercity_transfers">Intercity Transfers</a></li>
+                <li><a href="private-excursions.html" data-i18n="footer.private_excursions">Private Excursions</a></li>
+                <li><a href="services.html" data-i18n="footer.all_services">All Services</a></li>
             </ul>
         </div>
 
         <div class="footer-links">
-            <h4 class="footer-heading">Company</h4>
+            <h4 class="footer-heading" data-i18n="footer.company">Company</h4>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#fleet">The Fleet</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="request.html">Book Now</a></li>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="index.html#fleet" data-i18n="footer.the_fleet">The Fleet</a></li>
+                <li><a href="contact.html" data-i18n="footer.contact_us">Contact Us</a></li>
+                <li><a href="request.html" data-i18n="footer.book_now">Book Now</a></li>
             </ul>
         </div>
 
         <div class="footer-contact-info">
-            <h4 class="footer-heading">Inquiries</h4>
+            <h4 class="footer-heading" data-i18n="footer.inquiries">Inquiries</h4>
             <p>06400 Cannes, France</p>
             <p><a href="tel:+33686269909">+33 6 86 26 99 09</a></p>
             <p><a href="mailto:info@vtransfer.fr">info@vtransfer.fr</a></p>
@@ -86,14 +107,17 @@
 
     <div class="footer-bottom">
         <div class="copyright">
-            &copy; 2026 V-TRANSFER. All rights reserved.
+            &copy; 2026 V-TRANSFER. <span data-i18n="footer.rights">All rights reserved.</span>
         </div>
         <div class="legal-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+            <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
         </div>
     </div>
 </footer>
+
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 
 <a href="https://wa.me/33686269909?text=Hello,%20I'm%20interested%20in%20a%20transfer." class="whatsapp-float" target="_blank" rel="noopener noreferrer">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="whatsapp-icon" style="fill: #ffffff; stroke: none !important; border: none !important;">

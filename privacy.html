@@ -15,81 +15,102 @@
   </a>
   <nav class="navBar">
     <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="index.html#fleet">Fleet</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+      <li><a href="index.html#fleet" data-i18n="nav.fleet">Fleet</a></li>
+      <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
     </ul>
   </nav>
   <div class="requestButton">
-    <a href="request.html" class="btn-request">Request Quote</a>
+      <div class="lang-picker">
+          <div class="current-lang">
+              <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" id="current-flag" alt="Flag">
+              <span class="current-lang-text">EN</span>
+          </div>
+          <div class="lang-dropdown">
+              <a href="#" class="lang-option" data-lang="en">
+                  <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="English"> English
+              </a>
+              <a href="#" class="lang-option" data-lang="fr">
+                  <img src="https://flagcdn.com/w40/fr.png" class="flag-icon" alt="Français"> Français
+              </a>
+              <a href="#" class="lang-option" data-lang="ru">
+                  <img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="Русский"> Русский
+              </a>
+          </div>
+      </div>
+    <a href="request.html" class="btn-request" data-i18n="nav.request_quote">Request Quote</a>
   </div>
 </header>
 
-<main style="max-width: 800px; margin: 120px auto 60px; padding: 0 20px;">
-  <h1 style="color: var(--sea-navy); margin-bottom: 20px;">Privacy Policy</h1>
-  <p style="margin-bottom: 20px;"><strong>Effective Date:</strong> January 1, 2026</p>
+<main>
+  <section class="legal-hero">
+    <h1 data-i18n="legals.privacy_title">Privacy Policy</h1>
+    <p class="subtitle" data-i18n="legals.last_updated">Last updated: April 2026</p>
+  </section>
 
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">1. Information We Collect</h2>
-  <p style="margin-bottom: 15px;">When you request a quote or contact us, we collect the following personal information:</p>
-  <ul style="margin-left: 20px; margin-bottom: 20px;">
-    <li>Name and contact details (email address, phone number).</li>
-    <li>Trip details (pickup/drop-off locations, dates, passenger count, luggage).</li>
-    <li>Special requirements you choose to share with us.</li>
-  </ul>
+  <div class="legal-container">
+    <h2>1. Information We Collect</h2>
+    <p>When you request a quote or contact us, we collect the following personal information:</p>
+    <ul>
+      <li>Name and contact details (email address, phone number).</li>
+      <li>Trip details (pickup/drop-off locations, dates, passenger count, luggage).</li>
+      <li>Special requirements you choose to share with us.</li>
+    </ul>
 
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">2. How We Use Your Information</h2>
-  <p style="margin-bottom: 15px;">We use your data solely to provide our premium chauffeur services, which includes:</p>
-  <ul style="margin-left: 20px; margin-bottom: 20px;">
-    <li>Processing quotes and coordinating transfers.</li>
-    <li>Communicating with you regarding your booking.</li>
-    <li>Improving our website and services.</li>
-  </ul>
+    <h2>2. How We Use Your Information</h2>
+    <p>We use your data solely to provide our premium chauffeur services, which includes:</p>
+    <ul>
+      <li>Processing quotes and coordinating transfers.</li>
+      <li>Communicating with you regarding your booking.</li>
+      <li>Improving our website and services.</li>
+    </ul>
 
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">3. Data Protection (GDPR)</h2>
-  <p style="margin-bottom: 15px;">As a French company, V-TRANSFER complies with the General Data Protection Regulation (GDPR). We are committed to protecting your privacy and ensuring your personal information is handled securely and responsibly. You have the right to access, rectify, or delete your personal data at any time by contacting us.</p>
+    <h2>3. Data Protection (GDPR)</h2>
+    <p>As a French company, V-TRANSFER complies with the General Data Protection Regulation (GDPR). We are committed to protecting your privacy and ensuring your personal information is handled securely and responsibly. You have the right to access, rectify, or delete your personal data at any time by contacting us.</p>
 
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">4. Data Sharing</h2>
-  <p style="margin-bottom: 15px;">We do not sell, trade, or rent your personal information to third parties. Data is only shared with our employed chauffeurs and logistics personnel strictly and to the extent necessary to fulfill your booked services.</p>
+    <h2>4. Data Sharing</h2>
+    <p>We do not sell, trade, or rent your personal information to third parties. Data is only shared with our employed chauffeurs and logistics personnel strictly and to the extent necessary to fulfill your booked services.</p>
 
-  <h2 style="color: var(--sea-navy); margin-top: 30px; margin-bottom: 15px;">5. Contact Us</h2>
-  <p style="margin-bottom: 15px;">If you have any questions about this Privacy Policy, please contact us:</p>
-  <ul style="margin-left: 20px; margin-bottom: 20px;">
-    <li>Email: <a href="mailto:info@vtransfer.fr" style="color: var(--gold); text-decoration: none;">info@vtransfer.fr</a></li>
-    <li>Phone: +33 6 86 26 99 09</li>
-    <li>Address: 06400 Cannes, France</li>
-  </ul>
+    <h2>5. Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy, please contact us:</p>
+    <ul>
+      <li>Email: <a href="mailto:info@vtransfer.fr" style="color: var(--champagne-bronze); text-decoration: none;">info@vtransfer.fr</a></li>
+      <li>Phone: +33 6 86 26 99 09</li>
+      <li>Address: 06400 Cannes, France</li>
+    </ul>
+  </div>
 </main>
 
 <footer class="global-footer">
     <div class="footer-container">
         <div class="footer-brand">
             <div class="logo">V-TRANSFER</div>
-            <p>Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
+            <p data-i18n="footer.brand_desc">Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
         </div>
 
         <div class="footer-links">
-            <h4 class="footer-heading">Services</h4>
+            <h4 class="footer-heading" data-i18n="footer.services">Services</h4>
             <ul>
-                <li><a href="airport-transfers.html">Airport Transfers</a></li>
-                <li><a href="intercity-transfers.html">Intercity Transfers</a></li>
-                <li><a href="private-excursions.html">Private Excursions</a></li>
-                <li><a href="services.html">All Services</a></li>
+                <li><a href="airport-transfers.html" data-i18n="footer.airport_transfers">Airport Transfers</a></li>
+                <li><a href="intercity-transfers.html" data-i18n="footer.intercity_transfers">Intercity Transfers</a></li>
+                <li><a href="private-excursions.html" data-i18n="footer.private_excursions">Private Excursions</a></li>
+                <li><a href="services.html" data-i18n="footer.all_services">All Services</a></li>
             </ul>
         </div>
 
         <div class="footer-links">
-            <h4 class="footer-heading">Company</h4>
+            <h4 class="footer-heading" data-i18n="footer.company">Company</h4>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#fleet">The Fleet</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="request.html">Book Now</a></li>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="index.html#fleet" data-i18n="footer.the_fleet">The Fleet</a></li>
+                <li><a href="contact.html" data-i18n="footer.contact_us">Contact Us</a></li>
+                <li><a href="request.html" data-i18n="footer.book_now">Book Now</a></li>
             </ul>
         </div>
 
         <div class="footer-contact-info">
-            <h4 class="footer-heading">Inquiries</h4>
+            <h4 class="footer-heading" data-i18n="footer.inquiries">Inquiries</h4>
             <p>06400 Cannes, France</p>
             <p><a href="tel:+33686269909">+33 6 86 26 99 09</a></p>
             <p><a href="mailto:info@vtransfer.fr">info@vtransfer.fr</a></p>
@@ -98,14 +119,17 @@
 
     <div class="footer-bottom">
         <div class="copyright">
-            &copy; 2026 V-TRANSFER. All rights reserved.
+            &copy; 2026 V-TRANSFER. <span data-i18n="footer.rights">All rights reserved.</span>
         </div>
         <div class="legal-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+            <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
         </div>
     </div>
 </footer>
+
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 
 <a href="https://wa.me/33686269909?text=Hello,%20I'm%20interested%20in%20a%20transfer." class="whatsapp-float" target="_blank" rel="noopener noreferrer">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="whatsapp-icon" style="fill: #ffffff; stroke: none !important; border: none !important;">

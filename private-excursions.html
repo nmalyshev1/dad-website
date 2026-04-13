@@ -15,38 +15,55 @@
   </a>
   <nav class="navBar">
     <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="index.html#fleet">Fleet</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+      <li><a href="index.html#fleet" data-i18n="nav.fleet">Fleet</a></li>
+      <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
     </ul>
   </nav>
   <div class="requestButton">
-    <a href="request.html" class="btn-request">Request Call</a>
+      <div class="lang-picker">
+          <div class="current-lang">
+              <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" id="current-flag" alt="Flag">
+              <span class="current-lang-text">EN</span>
+          </div>
+          <div class="lang-dropdown">
+              <a href="#" class="lang-option" data-lang="en">
+                  <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="English"> English
+              </a>
+              <a href="#" class="lang-option" data-lang="fr">
+                  <img src="https://flagcdn.com/w40/fr.png" class="flag-icon" alt="Français"> Français
+              </a>
+              <a href="#" class="lang-option" data-lang="ru">
+                  <img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="Русский"> Русский
+              </a>
+          </div>
+      </div>
+    <a href="request.html" class="btn-request" data-i18n="nav.request_quote">Request Call</a>
   </div>
 </header>
 
 <main>
   <section class="service-detail-hero hero-excursion">
     <div class="heroContent">
-      <h1>Private Excursions</h1>
+      <h1 data-i18n="excursions.title">Private Excursions</h1>
     </div>
   </section>
 
   <section class="service-info-section">
     <div class="service-info-text">
-      <h2>Bespoke Journeys Along the French Riviera</h2>
-      <p>Whether you desire a serene drive through the Provencal vineyards, an afternoon of high-end shopping in Cannes, or a glamorous evening out in Monaco, our private excursions are curated strictly around your itinerary.</p>
-      <p>Book our premium vehicles and dedicated chauffeurs by the hour. We grant you absolute flexibility. Change your schedule on a whim—our driver is at your full disposal, ensuring every stop is perfectly timed and effortlessly luxurious.</p>
+      <h2 data-i18n="excursions.h2">Bespoke Journeys Along the French Riviera</h2>
+      <p data-i18n="excursions.p1">Whether you desire a serene drive through the Provencal vineyards, an afternoon of high-end shopping in Cannes, or a glamorous evening out in Monaco, our private excursions are curated strictly around your itinerary.</p>
+      <p data-i18n="excursions.p2">Book our premium vehicles and dedicated chauffeurs by the hour. We grant you absolute flexibility. Change your schedule on a whim—our driver is at your full disposal, ensuring every stop is perfectly timed and effortlessly luxurious.</p>
       
       <ul class="service-info-features">
-        <li>Hourly and daily hire available</li>
-        <li>Customizable, flexible itineraries</li>
-        <li>Chauffeurs with deep local knowledge</li>
-        <li>VIP concierge-level adaptability</li>
+        <li data-i18n="excursions.f1">Hourly and daily hire available</li>
+        <li data-i18n="excursions.f2">Customizable, flexible itineraries</li>
+        <li data-i18n="excursions.f3">Chauffeurs with deep local knowledge</li>
+        <li data-i18n="excursions.f4">VIP concierge-level adaptability</li>
       </ul>
       <br>
-      <a href="request.html" class="btn-request">Book Your Excursion</a>
+      <a href="request.html" class="btn-request" data-i18n="excursions.btn">Book Your Excursion</a>
     </div>
     <div class="service-info-image">
       <img src="images/private_excursion.png" alt="Luxury Excursion Van Cannes">
@@ -58,31 +75,31 @@
     <div class="footer-container">
         <div class="footer-brand">
             <div class="logo">V-TRANSFER</div>
-            <p>Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
+            <p data-i18n="footer.brand_desc">Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
         </div>
 
         <div class="footer-links">
-            <h4 class="footer-heading">Services</h4>
+            <h4 class="footer-heading" data-i18n="footer.services">Services</h4>
             <ul>
-                <li><a href="airport-transfers.html">Airport Transfers</a></li>
-                <li><a href="intercity-transfers.html">Intercity Transfers</a></li>
-                <li><a href="private-excursions.html">Private Excursions</a></li>
-                <li><a href="services.html">All Services</a></li>
+                <li><a href="airport-transfers.html" data-i18n="footer.airport_transfers">Airport Transfers</a></li>
+                <li><a href="intercity-transfers.html" data-i18n="footer.intercity_transfers">Intercity Transfers</a></li>
+                <li><a href="private-excursions.html" data-i18n="footer.private_excursions">Private Excursions</a></li>
+                <li><a href="services.html" data-i18n="footer.all_services">All Services</a></li>
             </ul>
         </div>
 
         <div class="footer-links">
-            <h4 class="footer-heading">Company</h4>
+            <h4 class="footer-heading" data-i18n="footer.company">Company</h4>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#fleet">The Fleet</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="request.html">Book Now</a></li>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="index.html#fleet" data-i18n="footer.the_fleet">The Fleet</a></li>
+                <li><a href="contact.html" data-i18n="footer.contact_us">Contact Us</a></li>
+                <li><a href="request.html" data-i18n="footer.book_now">Book Now</a></li>
             </ul>
         </div>
 
         <div class="footer-contact-info">
-            <h4 class="footer-heading">Inquiries</h4>
+            <h4 class="footer-heading" data-i18n="footer.inquiries">Inquiries</h4>
             <p>06400 Cannes, France</p>
             <p><a href="tel:+33686269909">+33 6 86 26 99 09</a></p>
             <p><a href="mailto:info@vtransfer.fr">info@vtransfer.fr</a></p>
@@ -91,14 +108,17 @@
 
     <div class="footer-bottom">
         <div class="copyright">
-            &copy; 2026 V-TRANSFER. All rights reserved.
+            &copy; 2026 V-TRANSFER. <span data-i18n="footer.rights">All rights reserved.</span>
         </div>
         <div class="legal-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+            <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
         </div>
     </div>
 </footer>
+
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 
 <a href="https://wa.me/33686269909?text=Hello,%20I'm%20interested%20in%20a%20transfer." class="whatsapp-float" target="_blank" rel="noopener noreferrer">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="whatsapp-icon" style="fill: #ffffff; stroke: none !important; border: none !important;">
