@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Intercity Transfers | V-TRANSFER VIP</title>
+  <title>Chauffeur Privé Cannes, Monaco, Saint-Tropez | Intercity Transfer – V-Transfer</title>
+  <meta name="description" content="Luxury intercity transfers between Cannes, Monaco, Saint-Tropez and the French Riviera. Private chauffeur in a Mercedes E-Class or V-Class. Fixed price, door-to-door service.">
+  <meta name="keywords" content="chauffeur privé Cannes, transfer Monaco Saint-Tropez, VTC French Riviera, luxury intercity transfer Côte d'Azur, private chauffeur Cannes Monaco">
+  <link rel="canonical" href="https://www.vtransfer.fr/intercity-transfers.html">
+  <meta property="og:title" content="Chauffeur Privé Cannes, Monaco, Saint-Tropez | V-Transfer">
+  <meta property="og:description" content="Premium intercity transfers along the French Riviera. Mercedes-Benz fleet, discreet professional chauffeurs.">
+  <meta property="og:url" content="https://www.vtransfer.fr/intercity-transfers.html">
+  <meta property="og:type" content="website">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -16,9 +23,9 @@
   <nav class="navBar">
     <ul>
       <li><a href="index.html" data-i18n="nav.home">Home</a></li>
-      <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+      <li><a href="index.html#services" data-i18n="nav.services">Services</a></li>
       <li><a href="index.html#fleet" data-i18n="nav.fleet">Fleet</a></li>
-      <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
+      <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
   </nav>
   <div class="requestButton">
@@ -41,7 +48,41 @@
       </div>
     <a href="request.html" class="btn-request" data-i18n="nav.request_quote">Request Call</a>
   </div>
+
+    <!-- Hamburger Button -->
+    <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 </header>
+<!-- Mobile Navigation Overlay -->
+<div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+
+<!-- Mobile Menu Panel -->
+<div class="mobile-menu" id="mobile-menu">
+    <ul>
+        <li><a href="index.html" class="mobile-menu-close-on-click" data-i18n="nav.home">Home</a></li>
+        <li><a href="index.html#services" class="mobile-menu-close-on-click" data-i18n="nav.services">Services</a></li>
+        <li><a href="index.html#fleet" class="mobile-menu-close-on-click" data-i18n="nav.fleet">Fleet</a></li>
+        <li><a href="index.html#contact" class="mobile-menu-close-on-click" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+    <div class="mobile-menu-footer">
+        <a href="request.html" class="btn-request mobile-menu-close-on-click" data-i18n="nav.request_quote">Request Quote</a>
+        <div class="mobile-lang-switcher">
+            <a href="#" class="mobile-lang-btn" data-lang="en">
+                <img src="https://flagcdn.com/w40/gb.png" alt="EN"> EN
+            </a>
+            <a href="#" class="mobile-lang-btn" data-lang="fr">
+                <img src="https://flagcdn.com/w40/fr.png" alt="FR"> FR
+            </a>
+            <a href="#" class="mobile-lang-btn" data-lang="ru">
+                <img src="https://flagcdn.com/w40/ru.png" alt="RU"> RU
+            </a>
+        </div>
+    </div>
+</div>
+
 
 <main>
   <section class="service-detail-hero hero-intercity">
@@ -126,5 +167,6 @@
     </svg>
 </a>
 
+<script src="burger.js"></script>
 </body>
 </html>
