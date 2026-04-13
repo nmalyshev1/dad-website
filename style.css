@@ -98,6 +98,62 @@ body {
     color: var(--champagne-bronze);
 }
 
+/* --- LANGUAGE PICKER --- */
+.lang-picker {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.current-lang {
+    font-weight: 700 !important;
+}
+
+.lang-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background-color: var(--riviera-white);
+    border: 1px solid rgba(188, 163, 127, 0.2);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    border-radius: 4px;
+    padding: 5px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    min-width: 60px;
+    text-align: center;
+    z-index: 100;
+}
+
+.lang-picker:hover .lang-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.lang-dropdown a {
+    display: block !important;
+    padding: 10px 20px !important;
+    color: var(--sea-navy) !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: background 0.3s;
+}
+
+.lang-dropdown a::after {
+    display: none !important;
+}
+
+.lang-dropdown a:hover {
+    background-color: rgba(188, 163, 127, 0.1);
+    color: var(--champagne-bronze) !important;
+}
+
 /* --- BUTTONS --- */
 .btn-request {
     display: inline-block;
@@ -390,6 +446,34 @@ body {
     
     .cta-banner {
         padding: 60px 15px;
+    }
+
+    .lang-picker {
+        width: 100%;
+        justify-content: center;
+        margin-top: 5px;
+    }
+    
+    .current-lang {
+        display: none !important;
+    }
+    
+    .lang-dropdown {
+        position: relative;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        border: none;
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding: 0;
+    }
+    
+    .lang-dropdown a {
+        padding: 5px !important;
     }
 }
 
