@@ -25,7 +25,7 @@ var translations = {
             'terms': 'Terms of Service'
         },
         'index': {
-            'hero_title': "VIP Service Cote D'Azur",
+            'hero_title': "VIP Transport Cote D'Azur",
             'hero_subtitle': 'Arrive in Style. Every Time.',
             'enquire_now': 'Enquire Now',
             'fleet_title': 'THE FLEET',
@@ -153,7 +153,7 @@ var translations = {
             'terms': 'Условия использования'
         },
         'index': {
-            'hero_title': "VIP сервис на Лазурном Берегу",
+            'hero_title': "VIP транспорт на Лазурном Берегу",
             'hero_subtitle': 'Прибывайте со вкусом. Каждый раз.',
             'enquire_now': 'Запросить расчет',
             'fleet_title': 'НАШ АВТОПАРК',
@@ -281,7 +281,7 @@ var translations = {
             'terms': "Conditions d'utilisation"
         },
         'index': {
-            'hero_title': "Service VIP Côte d'Azur",
+            'hero_title': "VIP Transport Côte d'Azur",
             'hero_subtitle': 'Arrivez avec style. À chaque fois.',
             'enquire_now': 'Demander un devis',
             'fleet_title': 'LA FLOTTE',

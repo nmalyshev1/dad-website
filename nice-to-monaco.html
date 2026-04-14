@@ -34,6 +34,32 @@
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+    <!-- Route SEO Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Luxury Airport Transfer: Nice to Monaco",
+      "description": "Private chauffeur transfer from Nice Airport (NCE) to Monaco. Premium V-Class and E-Class VIP transport available 24/7.",
+      "provider": {
+        "@type": "TaxiService",
+        "name": "V-Transfer"
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Nice" },
+        { "@type": "City", "name": "Monaco" }
+      ],
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": "120.00",
+        "availability": "https://schema.org/InStock",
+        "url": "https://www.vtransfer.fr/nice-to-monaco.html"
+      }
+    }
+    </script>
+
 </head>
 <body>
 
@@ -44,7 +70,7 @@
                 <path d="M2 4 L12 21 L22 4"></path>
                 <path d="M7 4 L12 12.5 L17 4"></path>
             </svg>
-            V-TRANSFER
+            TRANSFER
         </div>
   </a>
   <nav class="navBar">
@@ -96,7 +122,7 @@
 <main>
   <!-- Hero -->
   <section class="route-hero">
-    <div class="route-hero-content">
+    <div class="route-hero-content reveal">
       <div class="route-breadcrumb"><a href="index.html">Home</a> › <a href="intercity-transfers.html">Routes</a> › Nice Airport → Monaco</div>
       <h1>Nice Airport → Monaco Transfer</h1>
       <p class="route-hero-sub">Private chauffeur from NCE to Monte-Carlo · ~28 km · ~30 minutes · Fixed price</p>
@@ -109,7 +135,7 @@
     <div class="route-info-grid">
 
       <!-- Stats bar -->
-      <div class="route-stats">
+      <div class="route-stats stagger-parent">
         <div class="route-stat">
           <span class="stat-icon">📍</span>
           <strong>Distance</strong>
@@ -160,8 +186,8 @@
   <section class="popular-routes-section">
     <h2 class="routes-title">Other Popular Routes</h2>
     <p class="routes-subtitle">Explore our full range of private transfers along the French Riviera</p>
-    <div class="routes-grid">
-      <a href="cannes-to-st-tropez.html" class="route-card">
+    <div class="routes-grid stagger-parent">
+      <a href="cannes-to-st-tropez.html" class="route-card reveal">
         <div class="route-card-inner">
           <span class="route-label">ROUTE</span>
           <h3>Cannes → Saint-Tropez</h3>
@@ -169,7 +195,7 @@
           <span class="route-link">View Route →</span>
         </div>
       </a>
-      <a href="airport-transfers.html" class="route-card">
+      <a href="airport-transfers.html" class="route-card reveal">
         <div class="route-card-inner">
           <span class="route-label">AIRPORT</span>
           <h3>All Airport Transfers</h3>
@@ -177,7 +203,7 @@
           <span class="route-link">View Service →</span>
         </div>
       </a>
-      <a href="intercity-transfers.html" class="route-card">
+      <a href="intercity-transfers.html" class="route-card reveal">
         <div class="route-card-inner">
           <span class="route-label">INTERCITY</span>
           <h3>Intercity Transfers</h3>
@@ -197,7 +223,7 @@
                 <path d="M2 4 L12 21 L22 4"></path>
                 <path d="M7 4 L12 12.5 L17 4"></path>
             </svg>
-            V-TRANSFER
+            TRANSFER
         </div>
       <p>Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
     </div>
@@ -256,5 +282,19 @@
 <script src="translations.js"></script>
 <script src="i18n.js"></script>
 <script src="burger.js"></script>
+<script>
+// Scroll Reveal Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach(el => revealObserver.observe(el));
+});
+</script>
 </body>
 </html>

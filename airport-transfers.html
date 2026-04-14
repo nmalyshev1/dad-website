@@ -23,7 +23,7 @@
                 <path d="M2 4 L12 21 L22 4"></path>
                 <path d="M7 4 L12 12.5 L17 4"></path>
             </svg>
-            V-TRANSFER
+            TRANSFER
         </div>
   </a>
   <nav class="navBar">
@@ -74,7 +74,7 @@
         <li><a href="index.html#contact" class="mobile-menu-close-on-click" data-i18n="nav.contact">Contact</a></li>
     </ul>
     <div class="mobile-menu-footer">
-        <a href="request.html" class="btn-request mobile-menu-close-on-click" data-i18n="nav.request_quote">Request Quote</a>
+        <a href="request.html" class="btn-request mobile-menu-close-on-click"><span data-i18n="nav.request_quote">Request Quote</span></a>
         <div class="mobile-lang-switcher">
             <a href="#" class="mobile-lang-btn" data-lang="en">
                 <img src="https://flagcdn.com/w40/gb.png" alt="EN"> EN
@@ -126,7 +126,7 @@
                 <path d="M2 4 L12 21 L22 4"></path>
                 <path d="M7 4 L12 12.5 L17 4"></path>
             </svg>
-            V-TRANSFER
+            TRANSFER
         </div>
             <p data-i18n="footer.brand_desc">Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
         </div>
@@ -192,5 +192,19 @@
 </div>
 
 <script src="burger.js"></script>
+<script>
+// Scroll Reveal Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach(el => revealObserver.observe(el));
+});
+</script>
 </body>
 </html>

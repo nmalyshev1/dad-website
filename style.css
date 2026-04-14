@@ -51,7 +51,7 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 2px;
     font-size: 1.1rem;
     font-weight: 800;
     color: var(--sea-navy);
@@ -206,7 +206,9 @@ body {
 
 /* --- BUTTONS --- */
 .btn-request {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     background-color: var(--sea-navy);
     color: var(--riviera-white);
     padding: 12px 28px;
@@ -248,9 +250,13 @@ body {
     background: linear-gradient(rgba(22, 34, 56, 0.4), rgba(0, 0, 0, 0.4)), url('images/s-class.webp');
     background-size: cover;
     background-position: center;
-    transform: scale(1.05); /* Slight scale to allow hover shrink/grow */
+    transform: scale(1.1);
     z-index: 1;
-    transition: transform var(--transition-premium);
+    transition: transform 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.heroSection.visible::before {
+    transform: scale(1);
 }
 
 .heroSection:hover::before {
@@ -904,7 +910,7 @@ body {
 .services-hero {
     padding: 100px 8% 60px;
     text-align: center;
-    background-color: var(--yacht-cream);
+    background-color: transparent;
 }
 
 .services-hero h1 {
@@ -2109,4 +2115,86 @@ body {
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 100px;
+}
+
+/* --- PREMIUM SCROLL REVEAL ANIMATIONS --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    will-change: transform, opacity;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger delays for children */
+.stagger-parent .reveal:nth-child(1) { transition-delay: 0.1s; }
+.stagger-parent .reveal:nth-child(2) { transition-delay: 0.2s; }
+.stagger-parent .reveal:nth-child(3) { transition-delay: 0.3s; }
+.stagger-parent .reveal:nth-child(4) { transition-delay: 0.4s; }
+.stagger-parent .reveal:nth-child(5) { transition-delay: 0.5s; }
+.stagger-parent .reveal:nth-child(6) { transition-delay: 0.6s; }
+
+/* Horizontal reveal variant */
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* --- SCROLL PROGRESS BAR --- */
+.scroll-progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 9999;
+    background: transparent;
+}
+
+.scroll-progress-bar {
+    height: 100%;
+    background: var(--champagne-bronze);
+    width: 0%;
+    box-shadow: 0 0 10px rgba(188, 163, 127, 0.5);
+    transition: width 0.1s ease-out;
+}
+
+/* Horizontal reveals usage */
+.routes-grid .route-card:nth-child(even) {
+    transform: translateX(40px);
+}
+.routes-grid .route-card:nth-child(odd) {
+    transform: translateX(-40px);
+}
+.routes-grid .route-card.visible {
+    transform: translateX(0);
+}
+
+/* Parallax zoom for fleet images on scroll */
+.fleet-card img {
+    transition: transform 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.fleet-card.visible img {
+    transform: scale(1.05);
 }
