@@ -54,12 +54,11 @@
     </a>
     <nav class="navBar">
         <ul>
-            <li><a href="index.html#home" data-i18n="nav.home">Home</a></li>
-            <li><a href="index.html#fleet" data-i18n="nav.fleet">Fleet</a></li>
-            <li><a href="index.html#routes">Routes</a></li>
-            <li><a href="index.html#services" data-i18n="nav.services">Services</a></li>
-            <li><a href="index.html#faq">FAQ</a></li>
-            <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+            <li><a href="#home" data-i18n="nav.home">Home</a></li>
+            <li><a href="#fleet" data-i18n="nav.fleet">Fleet</a></li>
+            <li><a href="#routes">Routes</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
     </nav>
     <div class="requestButton">
@@ -95,12 +94,11 @@
 <!-- Mobile Menu Panel -->
 <div class="mobile-menu" id="mobile-menu">
     <ul>
-        <li><a href="index.html#home" class="mobile-menu-close-on-click" data-i18n="nav.home">Home</a></li>
-        <li><a href="index.html#fleet" class="mobile-menu-close-on-click" data-i18n="nav.fleet">Fleet</a></li>
-        <li><a href="index.html#routes" class="mobile-menu-close-on-click">Routes</a></li>
-        <li><a href="index.html#services" class="mobile-menu-close-on-click" data-i18n="nav.services">Services</a></li>
-        <li><a href="index.html#faq" class="mobile-menu-close-on-click">FAQ</a></li>
-        <li><a href="index.html#contact" class="mobile-menu-close-on-click" data-i18n="nav.contact">Contact</a></li>
+        <li><a href="#home" class="mobile-menu-close-on-click" data-i18n="nav.home">Home</a></li>
+        <li><a href="#fleet" class="mobile-menu-close-on-click" data-i18n="nav.fleet">Fleet</a></li>
+        <li><a href="#routes" class="mobile-menu-close-on-click">Routes</a></li>
+        <li><a href="#faq" class="mobile-menu-close-on-click">FAQ</a></li>
+        <li><a href="#contact" class="mobile-menu-close-on-click" data-i18n="nav.contact">Contact</a></li>
     </ul>
     <div class="mobile-menu-footer">
         <a href="tel:+33686269909" class="btn-call-nav mobile-menu-close-on-click" style="width:100%; justify-content:center; padding:14px;">Call Now</a>
@@ -127,8 +125,11 @@
     </div>
 </section>
 <!-- ===== FLEET ===== -->
-<section id="fleet" class="fleet-section reveal">
-    <h2 style="font-size: 1.8rem; letter-spacing: 8px;" data-i18n="index.fleet_title">THE FLEET</h2>
+<section id="fleet" class="fleet-section">
+    <div class="section-header reveal">
+        <h2 data-i18n="index.fleet_title">THE FLEET</h2>
+        <p class="section-intro" data-i18n="index.why_subtitle2">The newest Mercedes-Benz models at your service.</p>
+    </div>
     <div class="fleet-grid stagger-parent">
         <!-- V-Class -->
         <div class="fleet-card reveal">
@@ -160,9 +161,11 @@
     </div>
 </section>
 <!-- ===== POPULAR ROUTES ===== -->
-<section id="routes" class="popular-routes-section reveal">
-    <h2 class="routes-title">Popular Routes</h2>
-    <p class="routes-subtitle">Transfert aéroport Nice (NCE) · Chauffeur privé Cannes · Luxury VTC French Riviera · Théoule-sur-Mer transfer service</p>
+<section id="routes" class="popular-routes-section">
+    <div class="section-header reveal">
+        <h2 class="routes-title">Popular Routes</h2>
+        <p class="routes-subtitle">Transfert aéroport Nice (NCE) · Chauffeur privé Cannes · Luxury VTC French Riviera · Théoule-sur-Mer transfer service</p>
+    </div>
     <div class="routes-grid routes-grid-extended stagger-parent">
         <a href="request.html?pickup=Nice+Airport+%28NCE%29&dropoff=Monaco" class="route-card reveal">
             <div class="route-card-inner">
@@ -214,129 +217,15 @@
         </a>
     </div>
 </section>
-<!-- ===== SERVICES ===== -->
-<section id="services">
-    <main>
-        <section class="services-hero reveal" style="padding-top:80px;">
-            <h2 data-i18n="services.title" style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:400; letter-spacing:4px; text-transform:uppercase; color:var(--sea-navy); margin-bottom:10px;">Chauffeur Services</h2>
-            <p class="service-subtitle" data-i18n="services.subtitle">Cannes • Monaco • Nice • St Tropez</p>
-        </section>
-        <section class="services-grid stagger-parent">
-            <div class="service-type-card reveal">
-                <img src="images/airport_transfer.png" alt="Airport Transfers" class="fleet-image" style="border-radius:6px; margin-bottom:20px;">
-                <h3 data-i18n="footer.airport_transfers">Airport Transfers</h3>
-                <p data-i18n="services.airport_desc">Swift, punctual transfers to and from NICE Airport. Your driver will meet you at arrivals with a personalized sign, handling your luggage for a seamless transition.</p>
-                <a href="airport-transfers.html" class="banner-btn" data-i18n="services.learn_more">Learn More</a>
-            </div>
-            <div class="service-type-card reveal">
-                <img src="images/intercity_transfer.png" alt="Inter-City Transfers" class="fleet-image" style="border-radius:6px; margin-bottom:20px;">
-                <h3 data-i18n="footer.intercity_transfers">Inter-City Transfers</h3>
-                <p data-i18n="services.intercity_desc">Premium one-way travel between major Riviera hubs. Whether moving from Monaco to Cannes or Marseille to St Tropez, enjoy the landscape in total comfort.</p>
-                <a href="intercity-transfers.html" class="banner-btn" data-i18n="services.learn_more">Learn More</a>
-            </div>
-            <div class="service-type-card reveal">
-                <img src="images/private_excursion.png" alt="Private Excursions" class="fleet-image" style="border-radius:6px; margin-bottom:20px;">
-                <h3 data-i18n="footer.private_excursions">Private Excursions</h3>
-                <p data-i18n="services.private_desc">Hourly bookings for sightseeing, shopping trips, or business meetings. Minimum 4 hours, tailored entirely to your itinerary.</p>
-                <a href="private-excursions.html" class="banner-btn" data-i18n="services.learn_more">Learn More</a>
-            </div>
-        </section>
-    </main>
-</section>
-<!-- ===== CTA BANNER ===== -->
-<section class="cta-banner">
-    <div class="cta-content reveal">
-        <h2 data-i18n="index.cta_banner_title">Touching down in the Cote d'Azur?</h2>
-        <p data-i18n="index.cta_banner_desc">Your vacation should begin the moment you land. Skip the taxi lines and step directly into uncompromising luxury. We don't just provide a ride; we curate a seamless arrival experience. Whether you are heading to a coastal villa or a luxury resort, let us handle the journey while you simply enjoy the view.</p>
-        <a href="request.html" class="banner-btn" data-i18n="index.request_bespoke">Request a Quote</a>
-    </div>
-</section>
-<!-- ===== FAQ ===== -->
-<section id="faq" class="faq-section">
-    <h2 class="faq-title">Frequently Asked Questions</h2>
-    <p class="faq-subtitle">Everything you need to know before booking your transfer</p>
-    <div class="faq-list">
-        <div class="faq-item reveal">
-            <button class="faq-question" aria-expanded="false">
-                How do I book a transfer?
-                <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-                <p>Simply click <strong>Request Quote</strong> or click on any route card on this page. Fill out your pickup location, destination, date, and preferred vehicle — we'll confirm your booking and send a fixed-price quote directly to your email within the hour.</p>
-            </div>
-        </div>
-        <div class="faq-item reveal">
-            <button class="faq-question" aria-expanded="false">
-                Are prices fixed or metered?
-                <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-                <p>All V-Transfer prices are <strong>fixed and agreed before departure</strong>. There are no meters, no surge pricing, and no hidden fees. The price you see in your quote is exactly what you pay.</p>
-            </div>
-        </div>
-        <div class="faq-item reveal">
-            <button class="faq-question" aria-expanded="false">
-                Do you track my flight?
-                <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-                <p>Yes. For all airport pickups, your chauffeur monitors your flight in real-time. If your flight is delayed, your driver adjusts automatically — you will never be left waiting, and you will never be charged extra for flight delays.</p>
-            </div>
-        </div>
-        <div class="faq-item reveal">
-            <button class="faq-question" aria-expanded="false">
-                What vehicles are available?
-                <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-                <p>Our fleet includes the <strong>Mercedes E-Class</strong> (ideal for 1–3 passengers), the <strong>Mercedes V-Class</strong> (up to 7 passengers, perfect for families or executive groups), and the <strong>Renault Trafic SpaceClass</strong> (large groups and events). All vehicles are immaculate, late-model, and fully air-conditioned.</p>
-            </div>
-        </div>
-        <div class="faq-item reveal">
-            <button class="faq-question" aria-expanded="false">
-                Is there a meet &amp; greet at the airport?
-                <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-                <p>Absolutely. Your driver will be waiting in the arrivals hall with a <strong>personalised name board</strong>. They will assist with your luggage and escort you directly to the vehicle — no searching, no stress.</p>
-            </div>
-        </div>
-        <div class="faq-item reveal">
-            <button class="faq-question" aria-expanded="false">
-                Can I book a return journey or all-day chauffeur?
-                <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-                <p>Yes. We offer <strong>one-way transfers, return journeys, and full-day private chauffeur hire</strong>. Use the quote form to describe your needs and we will tailor an itinerary around you.</p>
-            </div>
-        </div>
-        <div class="faq-item reveal">
-            <button class="faq-question" aria-expanded="false">
-                Do you serve destinations outside the Côte d'Azur?
-                <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-                <p>Yes. We cover long-distance routes including <strong>Marseille, Sanremo (Italy), and Paris</strong> upon request. Contact us directly for custom quotes on routes beyond the French Riviera.</p>
-            </div>
-        </div>
-        <div class="faq-item reveal">
-            <button class="faq-question" aria-expanded="false">
-                How far in advance should I book?
-                <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-                <p>We recommend booking at least <strong>24 hours in advance</strong>, though last-minute bookings can often be accommodated. During peak summer season (July–August), booking 48–72 hours ahead is strongly advised.</p>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- ===== CONTACT ===== -->
-<section id="contact" class="contact-inline-section">
-    <div class="contact-inline-inner">
-        <h2 class="contact-inline-title">Get in Touch</h2>
-        <p class="contact-inline-sub">Available 24/7 · Côte d'Azur &amp; beyond</p>
-        <div class="contact-inline-grid">
-            <a href="tel:+33686269909" class="contact-inline-card">
+<!-- ===== COMBINED CTA & CONTACT ===== -->
+<section id="contact" class="cta-banner">
+    <div class="cta-content contact-inline-inner reveal">
+        <h2 data-i18n="index.cta_banner_title" class="contact-inline-title" style="color: #fff; margin-bottom:15px; border:none;">Touching down in the Cote d'Azur?</h2>
+        <p class="section-intro" style="color: var(--champagne-bronze); max-width: 800px; margin: 0 auto 50px; font-style:normal; font-family: 'Playfair Display', serif; font-size:1.25rem;" data-i18n="index.cta_banner_desc">Your vacation should begin the moment you land. Skip the taxi lines and step directly into uncompromising luxury. We don't just provide a ride; we curate a seamless arrival experience. Let us handle the journey while you simply enjoy the view.</p>
+        
+        <div class="contact-inline-grid stagger-parent" style="margin-top:20px;">
+            
+            <a href="tel:+33686269909" class="contact-inline-card reveal">
                 <div class="contact-icon-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                 </div>
@@ -345,7 +234,7 @@
                     <span class="contact-inline-value">+33 6 86 26 99 09</span>
                 </div>
             </a>
-            <a href="mailto:info@vtransfer.fr" class="contact-inline-card">
+            <a href="mailto:info@vtransfer.fr" class="contact-inline-card reveal">
                 <div class="contact-icon-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </div>
@@ -354,7 +243,7 @@
                     <span class="contact-inline-value">info@vtransfer.fr</span>
                 </div>
             </a>
-            <a href="https://wa.me/33686269909" target="_blank" rel="noopener noreferrer" class="contact-inline-card">
+            <a href="https://wa.me/33686269909" target="_blank" rel="noopener noreferrer" class="contact-inline-card reveal">
                 <div class="contact-icon-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                 </div>
@@ -363,7 +252,7 @@
                     <span class="contact-inline-value">Message us instantly</span>
                 </div>
             </a>
-            <a href="request.html" class="contact-inline-card">
+            <a href="request.html" class="contact-inline-card reveal">
                 <div class="contact-icon-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 </div>
@@ -372,7 +261,7 @@
                     <span class="contact-inline-value">Request a quote</span>
                 </div>
             </a>
-        </div>
+        
     </div>
 </section>
 <!-- Floating buttons group -->
@@ -410,7 +299,6 @@
                 <li><a href="airport-transfers.html" data-i18n="footer.airport_transfers">Airport Transfers</a></li>
                 <li><a href="intercity-transfers.html" data-i18n="footer.intercity_transfers">Intercity Transfers</a></li>
                 <li><a href="private-excursions.html" data-i18n="footer.private_excursions">Private Excursions</a></li>
-                <li><a href="#services" data-i18n="footer.all_services">All Services</a></li>
             </ul>
         </div>
         <div class="footer-links">
@@ -470,7 +358,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 // Scroll spy — highlight active nav link
 (function() {
-    const sections = document.querySelectorAll('section[id], #home, #services, #fleet, #routes, #faq, #contact');
+    const sections = document.querySelectorAll('section[id], #home, #fleet, #routes, #faq, #contact');
     const navLinks = document.querySelectorAll('.navBar a[href^="#"]');
     const mobileLinks = document.querySelectorAll('.mobile-menu a[href^="#"]');
     function setActive(id) {
