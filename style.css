@@ -650,10 +650,6 @@ body {
     .service-info-image {
         order: -1;
     }
-    
-    .fleet-section {
-        padding: 60px 5%;
-    }
 
     .fleet-grid {
         grid-template-columns: 1fr;
@@ -665,13 +661,19 @@ body {
     }
 
     .services-hero {
-        padding: 80px 5% 40px;
-    }
+    text-align: center;
+    background-color: transparent;
+    /* Removed padding so it does not double up with .services-section */
+}
     
     .services-grid {
-        grid-template-columns: 1fr;
-        margin: 40px auto 60px;
-    }
+    max-width: 1200px;
+    margin: 30px auto 30px; /* Reduced margin from 60px/100px */
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
     
     .cta-banner {
         padding: 60px 5%;
@@ -938,12 +940,14 @@ body {
 }
 
 .service-type-card {
-    background: #fff;
+    background: #FFFFFF;
     padding: 40px;
     border-radius: 4px;
-    border-bottom: 3px solid var(--champagne-bronze);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
+    border: 1px solid rgba(188, 163, 127, 0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: transform 0.4s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .service-type-card:hover {
@@ -976,27 +980,18 @@ body {
 }
 
 /* --- FLEET SECTION --- */
-.fleet-section {
-    padding: 100px 8%;
-    background-color: var(--yacht-cream);
-    text-align: center;
-}
+.fleet-section { background-color: #FFFFFF; }
 
 .fleet-section h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 2.6rem;
+    font-size: 2.4rem;
     color: var(--sea-navy);
-    margin-bottom: 15px;
-    letter-spacing: 4px;
+    margin-bottom: 12px;
+    letter-spacing: 3px;
     text-transform: uppercase;
 }
 
-.fleet-section > p {
-    color: #666;
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto 60px;
-}
+
 
 .fleet-grid {
     display: grid;
@@ -1313,11 +1308,7 @@ body {
 }
 
 /* ===== POPULAR ROUTES SECTION (index.html) ===== */
-.popular-routes-section {
-    background-color: var(--riviera-white);
-    padding: 90px 8%;
-    text-align: center;
-}
+.popular-routes-section { background-color: #FFFFFF; }
 
 .routes-title {
     font-family: 'Playfair Display', serif;
@@ -1329,13 +1320,7 @@ body {
     margin-bottom: 12px;
 }
 
-.routes-subtitle {
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    color: var(--champagne-bronze);
-    text-transform: uppercase;
-    margin-bottom: 50px;
-}
+
 
 .routes-grid {
     display: grid;
@@ -1348,10 +1333,10 @@ body {
 .route-card {
     display: block;
     text-decoration: none;
-    background: #fff;
+    background: #FFFFFF;
     border-radius: 6px;
     border: 1px solid rgba(188, 163, 127, 0.2);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.07);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     text-align: left;
     overflow: hidden;
@@ -1768,8 +1753,9 @@ body {
 .faq-section {
     max-width: 100%;
     margin: 0 auto;
-    padding: 90px calc((100% - 800px) / 2);
-    background-color: var(--yacht-cream);
+    padding: 100px calc((100% - 800px) / 2);
+    background-color: #F8F5F0; /* Soft, warm luxury cream */
+    border-top: 1px solid rgba(196,162,101,0.1);
 }
 
 .faq-title {
@@ -1783,14 +1769,7 @@ body {
     margin-bottom: 10px;
 }
 
-.faq-subtitle {
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    color: var(--champagne-bronze);
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 50px;
-}
+
 
 .faq-list {
     display: flex;
@@ -2120,45 +2099,53 @@ html {
 /* --- PREMIUM SCROLL REVEAL ANIMATIONS --- */
 .reveal {
     opacity: 0;
-    transform: translateY(40px);
-    transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     will-change: transform, opacity;
+    pointer-events: none;
 }
 
 .reveal.visible {
     opacity: 1;
     transform: translateY(0);
+    pointer-events: auto;
 }
 
 /* Stagger delays for children */
-.stagger-parent .reveal:nth-child(1) { transition-delay: 0.1s; }
-.stagger-parent .reveal:nth-child(2) { transition-delay: 0.2s; }
-.stagger-parent .reveal:nth-child(3) { transition-delay: 0.3s; }
-.stagger-parent .reveal:nth-child(4) { transition-delay: 0.4s; }
-.stagger-parent .reveal:nth-child(5) { transition-delay: 0.5s; }
-.stagger-parent .reveal:nth-child(6) { transition-delay: 0.6s; }
+.stagger-parent > *:nth-child(1) { transition-delay: 0s; }
+.stagger-parent > *:nth-child(2) { transition-delay: 0.15s; }
+.stagger-parent > *:nth-child(3) { transition-delay: 0.3s; }
+.stagger-parent > *:nth-child(4) { transition-delay: 0.45s; }
+.stagger-parent > *:nth-child(5) { transition-delay: 0.6s; }
+.stagger-parent > *:nth-child(6) { transition-delay: 0.75s; }
 
 /* Horizontal reveal variant */
 .reveal-left {
     opacity: 0;
-    transform: translateX(-40px);
-    transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateX(-30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: transform, opacity;
+    pointer-events: none;
 }
 
 .reveal-left.visible {
     opacity: 1;
     transform: translateX(0);
+    pointer-events: auto;
 }
 
 .reveal-right {
     opacity: 0;
-    transform: translateX(40px);
-    transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: translateX(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: transform, opacity;
+    pointer-events: none;
 }
 
 .reveal-right.visible {
     opacity: 1;
     transform: translateX(0);
+    pointer-events: auto;
 }
 
 /* --- SCROLL PROGRESS BAR --- */
@@ -2197,4 +2184,197 @@ html {
 }
 .fleet-card.visible img {
     transform: scale(1.05);
+}
+
+#services {
+    background-color: var(--riviera-white);
+    display: block;
+}
+
+/* Services Section */
+.services-section { background-color: #FFFFFF; }
+.services-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--sea-navy);
+    margin-bottom: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+.services-section .section-intro {
+    margin-bottom: 55px;
+}
+
+/* === MOBILE BUTTON FIXES === */
+@media (max-width: 768px) {
+    /* Sections */
+    .fleet-section,
+    .popular-routes-section,
+    .services-section,
+    .faq-section {
+        padding-left: 5% !important;
+        padding-right: 5% !important;
+        padding-top: 70px !important;
+        padding-bottom: 70px !important;
+    }
+
+    /* Ensure ALL buttons are tappable */
+    .banner-btn,
+    .cta-button,
+    .btn-request,
+    .btn-call-nav,
+    .route-link {
+        min-height: 48px;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 24px;
+        touch-action: manipulation;
+        cursor: pointer;
+    }
+
+    /* Fleet cards stack */
+    .fleet-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+
+    /* Route cards stack */
+    .routes-grid,
+    .routes-grid-extended {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+    }
+
+    /* Service cards stack */
+    .services-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+
+    /* Hero button */
+    .cta-button {
+        padding: 16px 36px;
+        font-size: 11px;
+    }
+
+    /* Section titles */
+    .fleet-section h2,
+    .services-section h2,
+    .routes-title,
+    .faq-title {
+        font-size: 1.8rem !important;
+        letter-spacing: 2px !important;
+    }
+
+    /* FAQ */
+    .faq-section {
+        padding: 70px 6% !important;
+    }
+
+    /* Request form */
+    .booking-form {
+        grid-template-columns: 1fr !important;
+    }
+    .form-group.full-width {
+        grid-column: span 1 !important;
+    }
+}
+
+/* === MOBILE UX FIXES === */
+@media (max-width: 768px) {
+    
+
+    /* Fix Buttons for touch */
+    .banner-btn, .cta-button, .btn-request, .route-link {
+        min-height: 48px;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 24px;
+        touch-action: manipulation;
+        position: relative;
+        z-index: 100 !important;
+        pointer-events: auto !important;
+    }
+
+    .fleet-grid, .routes-grid, .services-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+}
+
+/* === UNIFIED HEADER & SEPARATION === */
+.fleet-section > p, 
+.section-intro, 
+.routes-subtitle, 
+.faq-subtitle,
+.service-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400; /* MATCH THE HEADER THICKNESS EXACTLY */
+    font-style: normal;
+    font-size: 1.25rem;
+    color: var(--sea-navy);
+    opacity: 0.85; /* slight transparency so color separates subtly from header */
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 0px;
+    padding-bottom: 40px; 
+    position: relative;
+    text-transform: none;
+    letter-spacing: 0px; /* Don't stretch lowercase words */
+}
+
+/* The Subtle Separation Line */
+.fleet-section > p::after, 
+.section-intro::after, 
+.routes-subtitle::after, 
+.faq-subtitle::after,
+.service-subtitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px; /* Elegant short line */
+    height: 1px;
+    background-color: var(--champagne-bronze);
+    opacity: 0.6;
+}
+
+/* === UNIFIED HEADING THICKNESS === */
+.fleet-section h2, 
+.services-section h2, 
+.routes-title, 
+.faq-title {
+    font-weight: 400 !important; /* Force EXACT match with subtitles */
+}
+
+/* === HORIZONTAL COLOR SEPARATION === */
+.section-header {
+    background-color: #F8F5F0; /* Cream background for the header area */
+    padding: 100px 8% 40px;
+    border-bottom: 1px solid rgba(196,162,101,0.2);
+    width: 100%;
+}
+
+.fleet-grid, 
+.routes-grid, 
+.services-grid, 
+.faq-list {
+    padding: 60px 8% 100px;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+    .section-header {
+        padding: 70px 5% 30px;
+    }
+    .fleet-grid, 
+    .routes-grid, 
+    .services-grid, 
+    .faq-list {
+        padding: 50px 5% 70px;
+    }
 }
