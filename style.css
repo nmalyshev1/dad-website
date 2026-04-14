@@ -49,7 +49,9 @@ body {
 }
 
 .logo {
-    /* Reverted to clean sans-serif */
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 1.1rem;
     font-weight: 800;
     color: var(--sea-navy);
@@ -58,10 +60,18 @@ body {
     transition: all 0.3s ease;
 }
 
+.logo-icon {
+    color: var(--champagne-bronze);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
 .logo-link:hover .logo {
     color: var(--champagne-bronze);
-    transform: translateY(-1px);
     cursor: pointer;
+}
+
+.logo-link:hover .logo-icon {
+    transform: scale(1.1) rotate(5deg);
 }
 
 .logo-link:active .logo {
@@ -793,7 +803,7 @@ body {
 .footer-brand .logo {
     color: var(--riviera-white);
     margin-bottom: 20px;
-    display: block;
+    display: flex;
 }
 
 .footer-brand p {
