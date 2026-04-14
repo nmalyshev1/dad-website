@@ -682,49 +682,7 @@ body {
     }
 }
 
-/* --- FLOATING WHATSAPP BUTTON --- */
-.whatsapp-float {
-    position: fixed;
-    width: 65px;
-    height: 65px;
-    bottom: 40px;
-    right: 40px;
-    background-color: #25d366; /* Official WhatsApp Green */
-    color: #FFF;
-    border-radius: 50px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); /* Glowing green shadow */
-    z-index: 999; /* Ensures it stays on top of everything */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
 
-.whatsapp-float:hover {
-    transform: translateY(-6px) scale(1.05); /* Lifts and slightly grows */
-    box-shadow: 0 15px 35px rgba(37, 211, 102, 0.6); /* Shadow expands */
-}
-
-.whatsapp-icon {
-    width: 35px;
-    height: 35px;
-    fill: #ffffff; /* Makes the SVG icon white */
-}
-
-/* Make it slightly smaller on mobile phones so it isn't in the way */
-@media (max-width: 900px) {
-    .whatsapp-float {
-        width: 55px;
-        height: 55px;
-        bottom: 25px;
-        right: 25px;
-    }
-    .whatsapp-icon {
-        width: 30px;
-        height: 30px;
-    }
-}
 
 /* --- REQUEST PAGE STYLES --- */
 .request-container {
@@ -1340,10 +1298,9 @@ body {
 
 /* ===== POPULAR ROUTES SECTION (index.html) ===== */
 .popular-routes-section {
-    background-color: var(--yacht-cream);
+    background-color: var(--riviera-white);
     padding: 90px 8%;
     text-align: center;
-    border-top: 1px solid rgba(188, 163, 127, 0.2);
 }
 
 .routes-title {
@@ -1423,16 +1380,28 @@ body {
 }
 
 .route-link {
-    font-size: 11px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--champagne-bronze);
-    transition: letter-spacing 0.3s ease;
+    color: var(--riviera-white);
+    background-color: var(--sea-navy);
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-top: 10px;
+    transition: all 0.4s ease;
+    border: 1px solid var(--sea-navy);
 }
 
 .route-card:hover .route-link {
-    letter-spacing: 2.5px;
+    background-color: var(--champagne-bronze);
+    border-color: var(--champagne-bronze);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(188, 163, 127, 0.25);
 }
 
 @media (max-width: 900px) {
@@ -1708,6 +1677,11 @@ body {
     background-color: var(--sea-navy);
 }
 
+.call-float svg {
+    width: 24px !important;
+    height: 24px !important;
+}
+
 /* WhatsApp button */
 .float-btn-group .whatsapp-float {
     position: static;
@@ -1733,8 +1707,8 @@ body {
 }
 
 .float-btn-group .whatsapp-float .whatsapp-icon {
-    width: 30px;
-    height: 30px;
+    width: 24px !important;
+    height: 24px !important;
 }
 
 @media (max-width: 900px) {
@@ -1753,8 +1727,8 @@ body {
         border-radius: 25px;
     }
     .call-float svg {
-        width: 22px;
-        height: 22px;
+        width: 20px !important;
+        height: 20px !important;
     }
     .float-btn-group .whatsapp-float {
         height: 50px;
@@ -1766,8 +1740,8 @@ body {
         min-width: 50px;
     }
     .float-btn-group .whatsapp-float .whatsapp-icon {
-        width: 24px;
-        height: 24px;
+        width: 22px !important;
+        height: 22px !important;
     }
     .float-btn-label {
         font-size: 10px;
@@ -1911,50 +1885,84 @@ body {
 
 .contact-inline-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-    max-width: 600px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
 .contact-inline-card {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 15px;
-    padding: 45px 30px;
+    gap: 20px;
+    padding: 30px;
     background: #fff;
     border-radius: 8px;
-    border: 1px solid rgba(196, 162, 101, 0.15);
+    border: 1px solid rgba(196, 162, 101, 0.1);
     text-decoration: none;
-    transition: all 0.4s ease;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
 }
 
 .contact-inline-card:hover {
     background: #fff;
-    transform: translateY(-5px);
+    transform: translateY(-4px);
     border-color: var(--champagne-bronze);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+    box-shadow: 0 12px 30px rgba(188, 163, 127, 0.1);
+}
+
+.contact-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(188, 163, 127, 0.06);
+    color: var(--champagne-bronze);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.contact-inline-card:hover .contact-icon-wrapper {
+    background: var(--champagne-bronze);
+    color: #fff;
+}
+
+.contact-icon-wrapper svg {
+    width: 20px;
+    height: 20px;
+}
+
+.contact-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .contact-inline-label {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
     color: var(--champagne-bronze);
+    opacity: 0.8;
 }
 
 .contact-inline-value {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
     color: var(--sea-navy);
     font-weight: 500;
 }
 
 @media (max-width: 900px) {
+    .contact-inline-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+    }
     .contact-inline-section {
-        padding: 60px 5%;
+        padding: 60px 8%;
     }
 }
 

@@ -46,7 +46,7 @@ var translations = {
             'why_desc3': 'We bridge the gap between an ordinary premium taxi and a private concierge. V-TRANSFER is built on discretion and exclusivity, offering a quiet, secure, and highly reliable environment so you can work, relax, or simply enjoy the ride with absolute peace of mind.',
             'cta_banner_title': "Touching down in the Cote d'Azur?",
             'cta_banner_desc': "Your vacation should begin the moment you land. Skip the taxi lines and step directly into uncompromising luxury. We don't just provide a ride; we curate a seamless arrival experience. Whether you are heading to a coastal villa or a luxury resort, let us handle the journey while you simply enjoy the view.",
-            'request_bespoke': 'Request a Bespoke Quote'
+            'request_bespoke': 'Request a Quote'
         },
         'services': {
             'title': 'Chauffeur Services',
@@ -55,7 +55,7 @@ var translations = {
             'intercity_desc': 'Premium one-way travel between major Riviera hubs. Whether moving from Monaco to Cannes or Marseille to St Tropez, enjoy the landscape in total comfort.',
             'private_desc': 'Hourly bookings for sightseeing, shopping trips, or business meetings. Minimum 4 hours, tailored entirely to your itinerary.',
             'learn_more': 'Learn More',
-            'bespoke_pricing': 'Bespoke Pricing',
+            'bespoke_pricing': 'Custom Pricing',
             'bespoke_desc': 'Every journey is unique. Rather than fixed rates, we provide customized quotes tailored precisely to your itinerary, vehicle preference, and schedule.',
             'request_custom': 'Request a Custom Quote'
         },
@@ -74,7 +74,7 @@ var translations = {
             'title': 'Intercity Transfers',
             'h2': 'Travel the Riviera in Unmatched Luxury',
             'p1': 'Whether you need to attend business in Monaco, dinner in Cannes, or a glamorous party in St Tropez, our intercity transfer service ensures your journey is just as premium as your destination.',
-            'p2': 'Avoid the unpredictability of trains or local taxis. Travel securely, quietly, and continuously between major hubs. Our bespoke V-Class guarantees superior comfort, allowing you to run your meetings, or simply stretch out and enjoy the coastal scenery in complete privacy.',
+            'p2': 'Avoid the unpredictability of trains or local taxis. Travel securely, quietly, and continuously between major hubs. Our V-Class guarantees superior comfort, allowing you to run your meetings, or simply stretch out and enjoy the coastal scenery in complete privacy.',
             'f1': 'Door-to-door premium executive travel',
             'f2': 'Absolute privacy with tinted windows',
             'f3': 'Spacious seating & on-board WiFi available',
@@ -100,7 +100,7 @@ var translations = {
         },
         'request': {
             'title': 'Service Request',
-            'desc': 'Enter your trip details to receive a bespoke concierge quotation.',
+            'desc': 'Enter your trip details to receive a concierge quotation.',
             'full_name': 'Full Name',
             'email_addr': 'Email Address',
             'phone_num': 'Phone Number',

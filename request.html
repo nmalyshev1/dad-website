@@ -71,7 +71,7 @@
   <section class="request-container">
     <div class="form-header">
       <h1 data-i18n="request.title">Service Request</h1>
-      <p data-i18n="request.desc">Enter your trip details to receive a bespoke concierge quotation.</p>
+      <p data-i18n="request.desc">Enter your trip details to receive a concierge quotation.</p>
     </div>
 
     <!-- Car Selector -->
@@ -158,7 +158,7 @@
         <input type="text" name="requirements" placeholder="Child seats, heavy luggage, extra stops..." data-i18n="request.placeholder_req">
       </div>
 
-      <button type="submit" class="btn-submit" data-i18n="request.btn_submit">Request Bespoke Quote</button>
+      <button type="submit" class="btn-submit" data-i18n="request.btn_submit">Request Quote</button>
     </form>
 
     <datalist id="riviera-cities">
@@ -246,18 +246,6 @@
 <script src="i18n.js"></script>
 <script src="burger.js"></script>
 <script>
-// ── Pre-fill from URL params ──────────────────────────────────────────────
-(function() {
-  const params = new URLSearchParams(window.location.search);
-  const pickup   = params.get('pickup');
-  const dropoff  = params.get('dropoff');
-  const carParam = params.get('car');
-
-  if (pickup)  document.getElementById('pickup-input').value  = pickup;
-  if (dropoff) document.getElementById('dropoff-input').value = dropoff;
-  if (carParam) selectCar(carParam);
-})();
-
 // ── Car Selector ──────────────────────────────────────────────────────────
 let selectedCar = '';
 
@@ -269,7 +257,7 @@ function selectCar(carName) {
   if (match) {
     match.classList.add('selected');
     selectedCar = carName;
-    document.getElementById('form-vehicle-input').value = carName;
+    document.getElementById('selected-car-input').value = carName;
   }
 }
 
@@ -282,7 +270,7 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
   e.preventDefault();
 
   // Inject selected car into form just before submission
-  document.getElementById('form-vehicle-input').value = selectedCar || 'Not specified';
+  document.getElementById('selected-car-input').value = selectedCar || 'Not specified';
 
   const form = e.target;
   const formData = new FormData(form);
@@ -311,6 +299,18 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
     submitBtn.disabled = false;
   });
 });
+
+// ── Pre-fill from URL params ──────────────────────────────────────────────
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const pickup   = params.get('pickup');
+  const dropoff  = params.get('dropoff');
+  const carParam = params.get('car');
+
+  if (pickup)  document.getElementById('pickup-input').value  = pickup;
+  if (dropoff) document.getElementById('dropoff-input').value = dropoff;
+  if (carParam) selectCar(carParam);
+})();
 </script>
 </body>
 </html>
