@@ -31,7 +31,7 @@ body {
     align-items: center;
     padding: 0 8%;
     height: 90px;
-    background-color: rgba(239, 233, 224, 0.97);
+    background-color: var(--sea-navy);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 
@@ -54,7 +54,7 @@ body {
     gap: 2px;
     font-size: 1.1rem;
     font-weight: 800;
-    color: var(--sea-navy);
+    color: var(--riviera-white);
     letter-spacing: 5px;
     text-transform: uppercase;
     transition: all 0.3s ease;
@@ -86,7 +86,7 @@ body {
 
 .navBar a {
     text-decoration: none;
-    color: var(--sea-navy);
+    color: var(--riviera-white);
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
@@ -140,7 +140,7 @@ body {
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 1.5px;
-    color: var(--sea-navy);
+    color: var(--riviera-white);
     text-transform: uppercase;
 }
 
@@ -209,7 +209,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: var(--sea-navy);
+    background-color: var(--champagne-bronze);
     color: var(--riviera-white);
     padding: 12px 28px;
     text-decoration: none;
@@ -217,19 +217,21 @@ body {
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
-    border: 1px solid var(--sea-navy);
+    border: 1px solid var(--champagne-bronze);
     position: relative;
+    overflow: hidden;
     z-index: 1;
-    transition: all 0.4s ease;
-    border-radius: 3px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-radius: 4px;
 }
 
 .btn-request:hover {
     background-color: var(--champagne-bronze);
     border-color: var(--champagne-bronze);
     color: #FFFFFF;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(188, 163, 127, 0.25);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(188, 163, 127, 0.4);
+    filter: brightness(1.05);
 }
 
 /* --- HERO SECTION --- */
@@ -301,19 +303,21 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 3px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.4s ease;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 .cta-button:hover {
     background-color: var(--champagne-bronze);
     border-color: var(--champagne-bronze);
     color: #FFFFFF;
-    transform: translateY(-3px);
-    backdrop-filter: blur(0px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(188, 163, 127, 0.4);
+    backdrop-filter: blur(0);
 }
 
 /* --- WHY CHOOSE US (CARDS) --- */
@@ -411,25 +415,28 @@ body {
 
 .banner-btn {
     display: inline-block;
-    background-color: transparent;
-    color: var(--yacht-cream);
+    background-color: var(--champagne-bronze);
+    color: #FFFFFF;
     padding: 16px 45px;
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 3px;
     border: 1px solid var(--champagne-bronze);
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
     text-decoration: none;
-    transition: all var(--transition-premium);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 .banner-btn:hover {
-    background-color: var(--champagne-bronze);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(188, 163, 127, 0.35);
+    filter: brightness(1.05);
     color: #FFFFFF;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 /* --- HAMBURGER BUTTON --- */
@@ -770,21 +777,26 @@ body {
 
 .btn-submit {
     grid-column: span 2;
-    background-color: var(--sea-navy);
+    background-color: var(--champagne-bronze);
     color: white;
     padding: 18px;
-    border: none;
+    border: 1px solid var(--champagne-bronze);
+    border-radius: 4px;
     text-transform: uppercase;
     letter-spacing: 3px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.4s ease;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-submit:hover {
-    background-color: var(--champagne-bronze);
-    transform: translateY(-2px);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 30px rgba(188, 163, 127, 0.4);
+    filter: brightness(1.05);
 }
 
 @media (max-width: 768px) {
@@ -1349,8 +1361,10 @@ body {
 }
 
 .route-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 45px rgba(0,0,0,0.09);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.1);
+    border-color: var(--champagne-bronze);
+    background: #FFFAF5; /* Very subtle luxury cream tint on hover */
 }
 
 .route-card-inner {
@@ -1361,17 +1375,32 @@ body {
 }
 
 .route-label {
-    display: inline-block;
-    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: #fff;
-    background: var(--champagne-bronze);
-    padding: 6px 14px;
-    border-radius: 3px;
-    margin-bottom: 16px;
+    color: var(--champagne-bronze);
+    padding: 0;
+    margin-bottom: 25px;
     line-height: 1;
+    position: relative;
+    width: fit-content;
+}
+
+.route-label::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 1px;
+    background-color: var(--champagne-bronze);
+    opacity: 0.5;
 }
 
 .route-card-inner h3 {
@@ -1398,20 +1427,24 @@ body {
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--riviera-white);
-    background-color: var(--sea-navy);
+    background-color: var(--champagne-bronze);
     padding: 15px 20px;
     border-radius: 6px;
     margin-top: auto;
-    transition: all 0.4s ease;
-    border: 1px solid var(--sea-navy);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: 1px solid var(--champagne-bronze);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 .route-card:hover .route-link {
     background-color: var(--champagne-bronze);
     border-color: var(--champagne-bronze);
     color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(188, 163, 127, 0.25);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(188, 163, 127, 0.4);
+    filter: brightness(1.05);
 }
 
 @media (max-width: 900px) {
@@ -1587,7 +1620,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: var(--sea-navy);
+    background-color: var(--champagne-bronze);
     color: var(--riviera-white);
     padding: 12px 28px;
     text-decoration: none;
@@ -1595,20 +1628,20 @@ body {
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
-    border: 1px solid var(--sea-navy);
-    border-radius: 3px;
-    transition: all 0.4s ease;
+    border: 1px solid var(--champagne-bronze);
+    border-radius: 4px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     white-space: nowrap;
     position: relative;
     z-index: 1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .btn-call-nav:hover {
-    background-color: var(--sea-navy);
-    color: var(--riviera-white);
-    border-color: var(--champagne-bronze);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(188, 163, 127, 0.25);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(188, 163, 127, 0.4);
+    filter: brightness(1.05);
 }
 
 /* ===== FLOATING BUTTON GROUP (Call + WhatsApp) ===== */
@@ -1762,9 +1795,7 @@ body {
 .faq-section {
     max-width: 100%;
     margin: 0 auto;
-    padding: 100px calc((100% - 800px) / 2);
-    background-color: #F8F5F0; /* Soft, warm luxury cream */
-    border-top: 1px solid rgba(196,162,101,0.1);
+    background-color: transparent;
 }
 
 .faq-title {
@@ -1774,8 +1805,7 @@ body {
     color: var(--sea-navy);
     letter-spacing: 4px;
     text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 
@@ -2290,6 +2320,38 @@ html {
     }
 }
 
+/* --- UNIVERSAL BUTTON SHINE EFFECT --- */
+.btn-request::before,
+.cta-button::before,
+.banner-btn::before,
+.route-link::before,
+.btn-submit::before,
+.btn-call-nav::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent
+    );
+    transition: all 0.6s ease;
+    z-index: 2;
+}
+
+.btn-request:hover::before,
+.cta-button:hover::before,
+.banner-btn:hover::before,
+.route-link:hover::before,
+.btn-submit:hover::before,
+.btn-call-nav:hover::before {
+    left: 140%;
+}
+
 /* === MOBILE UX FIXES === */
 @media (max-width: 768px) {
     
@@ -2303,6 +2365,7 @@ html {
         padding: 12px 24px;
         touch-action: manipulation;
         position: relative;
+        overflow: hidden; /* Ensure shine stays inside on mobile */
         z-index: 100 !important;
         pointer-events: auto !important;
     }
