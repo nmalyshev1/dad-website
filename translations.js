@@ -125,7 +125,7 @@ var translations = {
         },
         'routes': {
             'title': 'Popular Routes',
-            'subtitle': 'Nice · Cannes · Monaco · Saint-Tropez · Antibes · Théoule-sur-Mer',
+            'subtitle': 'Nice · Cannes · Monaco · Saint-Tropez · Antibes · Marseille',
             'route1_title': 'Nice Airport → Monaco',
             'route1_desc': 'From NCE to Monte-Carlo in your private premium vehicle. Fixed price, no surprises.',
             'route2_title': 'Cannes → Saint-Tropez',
@@ -136,8 +136,8 @@ var translations = {
             'route4_desc': "Private door-to-door transfer from NCE to Antibes or Cap d'Antibes villas.",
             'route5_title': 'Monaco → Cannes',
             'route5_desc': 'Discreet executive transfer along the Riviera. Tinted windows, Wi-Fi available.',
-            'route6_title': 'Nice Airport → Théoule-sur-Mer',
-            'route6_desc': 'Local expertise. Fast, reliable private transfer to Théoule-sur-Mer and the Esterel coast.',
+            'route6_title': 'Nice Airport → Marseille',
+            'route6_desc': 'Direct executive transfer to Marseille Airport (MRS) or Port. Premium comfort for long-distance travel.',
             'book_route': 'Book This Route →'
         },
         'faq': {
@@ -156,7 +156,7 @@ var translations = {
             'q6': 'Can I book a return journey or all-day chauffeur?',
             'a6': 'Yes. We offer one-way transfers, return journeys, and full-day private chauffeur hire. Use the quote form to describe your needs and we will tailor an itinerary around you.',
             'q7': "Do you serve destinations outside the Côte d'Azur?",
-            'a7': "Yes. We cover long-distance routes including Marseille, Sanremo (Italy), and Paris upon request. Contact us directly for custom quotes on routes beyond the French Riviera.",
+            'a7': "Yes. We cover long-distance routes including Marseille, Sanremo (Italy), Courchevel, and Paris upon request. Contact us directly for custom quotes on routes beyond the French Riviera.",
             'q8': 'How far in advance should I book?',
             'a8': 'We recommend booking at least 24 hours in advance, though last-minute bookings can often be accommodated. During peak summer season (July–August), booking 48–72 hours ahead is strongly advised.'
         },
@@ -292,7 +292,7 @@ var translations = {
         },
         'routes': {
             'title': 'Популярные маршруты',
-            'subtitle': 'Ницца · Канны · Монако · Сен-Тропе · Антиб · Теуль-сюр-Мер',
+            'subtitle': 'Ницца · Канны · Монако · Сен-Тропе · Антиб · Марсель',
             'route1_title': 'Аэропорт Ниццы → Монако',
             'route1_desc': 'Из NCE в Монте-Карло на частном автомобиле премиум-класса. Фиксированная цена без сюрпризов.',
             'route2_title': 'Канны → Сен-Тропе',
@@ -303,8 +303,8 @@ var translations = {
             'route4_desc': 'Премиум-трансфер из аэропорта на виллы в Антиб или на Кап-д\'Антиб.',
             'route5_title': 'Монако → Канны',
             'route5_desc': 'Дискретные поездки вдоль Ривьеры. Тонированные стекла и Wi-Fi в салоне.',
-            'route6_title': 'Аэропорт Ниццы → Теуль-сюр-Мер',
-            'route6_desc': 'Быстрый и надежный трансфер в Теуль-сюр-Мер и вдоль массива Эстерель.',
+            'route6_title': 'Аэропорт Ниццы → Марсель',
+            'route6_desc': 'Прямой трансфер бизнес-класса в аэропорт (MRS) или порт Марселя. Премиальный комфорт для поездок на дальние расстояния.',
             'book_route': 'Заказать маршрут →'
         },
         'faq': {
@@ -323,7 +323,7 @@ var translations = {
             'q6': 'Можно ли заказать обратный трансфер или водителя на весь день?',
             'a6': 'Да. Мы предлагаем трансферы в одну сторону, поездки туда-обратно и почасовую аренду авто с водителем. Опишите ваши пожелания в форме запроса, и мы составим маршрут специально для вас.',
             'q7': 'Вы работаете за пределами Лазурного Берега?',
-            'a7': 'Да. Мы выполняем поездки на дальние расстояния, включая Марсель, Сан-Ремо (Италия) и Париж по запросу. Свяжитесь со мной для расчета стоимости маршрутов за пределами Ривьеры.',
+            'a7': 'Да. Мы выполняем поездки на дальние расстояния, включая Марсель, Сан-Ремо (Италия), Куршевель и Париж по запросу. Свяжитесь со мной для расчета стоимости маршрутов за пределами Ривьеры.',
             'q8': 'За какое время нужно бронировать?',
             'a8': 'Мы рекомендуем бронировать минимум за 24 часа, хотя часто можем принять и срочные заказы. В пик летнего сезона (июль–август) советуем бронировать за 48–72 часа.'
         },
@@ -459,7 +459,7 @@ var translations = {
         },
         'routes': {
             'title': 'Itinéraires Populaires',
-            'subtitle': 'Nice · Cannes · Monaco · Saint-Tropez · Antibes · Théoule-sur-Mer',
+            'subtitle': 'Nice · Cannes · Monaco · Saint-Tropez · Antibes · Marseille',
             'route1_title': 'Aéroport de Nice → Monaco',
             'route1_desc': 'De NCE à Monte-Carlo dans votre véhicule premium privé. Prix fixe, sans surprises.',
             'route2_title': 'Cannes → Saint-Tropez',
@@ -470,8 +470,8 @@ var translations = {
             'route4_desc': "Transfert privé de NCE vers vos villas à Antibes ou au Cap d'Antibes.",
             'route5_title': 'Monaco → Cannes',
             'route5_desc': 'Transfert exécutif en toute discrétion. Vitres teintées et Wi-Fi à bord.',
-            'route6_title': 'Aéroport de Nice → Théoule-sur-Mer',
-            'route6_desc': 'Expertise locale. Transfert privé rapide et fiable vers Théoule-sur-Mer et la côte de l\'Esterel.',
+            'route6_title': 'Aéroport de Nice → Marseille',
+            'route6_desc': 'Transfert exécutif direct vers l\'aéroport (MRS) ou le Port de Marseille. Confort premium pour les longues distances.',
             'book_route': 'Réserver cet itinéraire →'
         },
         'faq': {

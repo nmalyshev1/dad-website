@@ -164,7 +164,7 @@
 <section id="routes" class="popular-routes-section">
     <div class="section-header reveal">
         <h2 class="routes-title" data-i18n="routes.title">Popular Routes</h2>
-        <p class="routes-subtitle" data-i18n="routes.subtitle">Nice · Cannes · Monaco · Saint-Tropez · Antibes · Théoule-sur-Mer</p>
+        <p class="routes-subtitle" data-i18n="routes.subtitle">Nice · Cannes · Monaco · Saint-Tropez · Antibes · Marseille</p>
     </div>
     <div class="routes-grid routes-grid-extended stagger-parent">
         <a href="request.html?pickup=Nice+Airport+%28NCE%29&dropoff=Monaco" class="route-card reveal">
@@ -207,11 +207,11 @@
                 <span class="route-link" data-i18n="routes.book_route">Book This Route →</span>
             </div>
         </a>
-        <a href="request.html?pickup=Nice+Airport+%28NCE%29&dropoff=Th%C3%A9oule-sur-Mer" class="route-card reveal">
+        <a href="request.html?pickup=Nice+Airport+%28NCE%29&dropoff=Marseille" class="route-card reveal">
             <div class="route-card-inner">
-                <span class="route-label">~50 MIN</span>
-                <h3 data-i18n="routes.route6_title">Nice Airport → Théoule-sur-Mer</h3>
-                <p data-i18n="routes.route6_desc">Local expertise. Fast, reliable private transfer to Théoule-sur-Mer and the Esterel coast.</p>
+                <span class="route-label">~2H 15 MIN</span>
+                <h3 data-i18n="routes.route6_title">Nice Airport → Marseille</h3>
+                <p data-i18n="routes.route6_desc">Direct executive transfer to Marseille Airport (MRS) or Port. Premium comfort for long-distance travel.</p>
                 <span class="route-link" data-i18n="routes.book_route">Book This Route →</span>
             </div>
         </a>
@@ -302,7 +302,7 @@
 <!-- ===== COMBINED CTA & CONTACT ===== -->
 <section id="contact" class="cta-banner">
     <div class="cta-content contact-inline-inner reveal">
-        <h2 data-i18n="index.cta_banner_title" class="contact-inline-title" style="color: #fff; margin-bottom:15px; border:none;">Touching down in the Cote d'Azur?</h2>
+        <h2 data-i18n="index.cta_banner_title" class="contact-inline-title" style="color: #C4A265; margin-bottom:15px; border:none;">Touching down in the Cote d'Azur?</h2>
         <p class="section-intro" style="color: #FFFFFF; max-width: 800px; margin: 0 auto 50px; font-style:normal; font-family: 'Playfair Display', serif; font-size:1.25rem; opacity:0.9;" data-i18n="index.cta_banner_desc">Your vacation should begin the moment you land. Skip the taxi lines and step directly into uncompromising luxury. We don't just provide a ride; we curate a seamless arrival experience. Let us handle the journey while you simply enjoy the view.</p>
         
         <div class="contact-inline-grid stagger-parent" style="margin-top:20px;">
@@ -343,7 +343,7 @@
                     <span class="contact-inline-value">Request a quote</span>
                 </div>
             </a>
-        
+        </div>
     </div>
 </section>
 <!-- Floating buttons group -->
@@ -484,6 +484,8 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+            } else {
+                entry.target.classList.remove('visible');
             }
         });
     }, {

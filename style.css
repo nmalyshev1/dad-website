@@ -220,7 +220,7 @@ body {
     letter-spacing: 2.5px;
     text-transform: uppercase;
     font-weight: 700;
-    border: 2px solid rgba(235, 211, 168, 0.8); /* Lighter, thicker champagne border */
+    border: 2px solid #C4A265;
     border-radius: 4px;
     position: relative;
     overflow: hidden;
@@ -304,10 +304,10 @@ body {
     color: white;
     padding: 18px 50px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 3px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid #C4A265; /* Unified premium gold border */
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -428,7 +428,7 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2.5px;
-    border: 1px solid rgba(188, 163, 127, 0.4);
+    border: 2px solid #C4A265; /* Unified premium gold border */
     border-radius: 6px;
     cursor: pointer;
     text-decoration: none;
@@ -730,6 +730,15 @@ body {
     border: 1px solid rgba(188, 163, 127, 0.2);
 }
 
+.popular-routes-section {
+    position: relative;
+    background: #FFFFFF; /* Match the content background */
+}
+
+.popular-routes-section .section-header {
+    padding-top: 60px; /* Reduced since Fleet provides gap */
+}
+
 .request-container h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2.8rem;
@@ -788,7 +797,7 @@ body {
     background-color: rgba(188, 163, 127, 0.05);
     color: var(--sea-navy);
     padding: 18px;
-    border: 1px solid rgba(188, 163, 127, 0.4);
+    border: 2px solid #C4A265;
     border-radius: 4px;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -976,6 +985,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative; /* For stretched link */
 }
 
 .service-type-card:hover {
@@ -999,7 +1009,7 @@ body {
 
 .service-type-card .banner-btn {
     color: var(--sea-navy);
-    border-color: var(--sea-navy);
+    border: 2px solid #C4A265;
     padding: 12px 25px;
     font-size: 10px;
     margin-top: auto;
@@ -1011,7 +1021,10 @@ body {
 }
 
 /* --- FLEET SECTION --- */
-.fleet-section { background-color: transparent; }
+.fleet-section { 
+    background: linear-gradient(180deg, #FFFFFF 0%, #f0f4f8 100%); 
+    padding: 100px 0;
+}
 
 .fleet-section h2 {
     font-family: 'Playfair Display', serif;
@@ -1036,20 +1049,38 @@ body {
     overflow: hidden;
     box-shadow: 0 15px 40px rgba(0,0,0,0.06);
     text-align: left;
-    transition: transform var(--transition-premium);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
     display: flex;
     flex-direction: column;
     height: 100%;
+    border: 1px solid rgba(188, 163, 127, 0.1);
+    position: relative; /* For stretched link */
 }
 
 .fleet-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-10px);
+    border-color: rgba(188, 163, 127, 0.5);
+    background: #FFFAF5; /* Luxury cream tint */
+    box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+}
+
+.fleet-card:hover .banner-btn {
+    background: var(--bronze-gradient);
+    border-color: transparent;
+    color: #FFFFFF;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(188, 163, 101, 0.3);
 }
 
 .fleet-image {
     width: 100%;
     height: 250px;
     object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.fleet-card:hover .fleet-image {
+    transform: scale(1.08); /* Subtle zoom in */
 }
 
 .fleet-card-content {
@@ -1076,7 +1107,7 @@ body {
 
 .fleet-card .banner-btn {
     color: var(--sea-navy);
-    border-color: var(--sea-navy);
+    border: 2px solid #C4A265;
     margin-top: auto;
     width: 100%;
     justify-content: center;
@@ -1346,7 +1377,7 @@ body {
 }
 
 /* ===== POPULAR ROUTES SECTION (index.html) ===== */
-.popular-routes-section { background-color: transparent; }
+
 
 .routes-title {
     font-family: 'Playfair Display', serif;
@@ -1457,7 +1488,7 @@ body {
     border-radius: 6px;
     margin-top: auto;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    border: 1px solid rgba(188, 163, 127, 0.4);
+    border: 2px solid #C4A265;
     position: relative;
     overflow: hidden;
     z-index: 5;
@@ -1654,7 +1685,7 @@ body {
     letter-spacing: 2.5px;
     text-transform: uppercase;
     font-weight: 700;
-    border: 2px solid rgba(235, 211, 168, 0.8); /* Lighter, thicker champagne border */
+    border: 2px solid #C4A265;
     border-radius: 4px;
     transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
     white-space: nowrap;
@@ -1969,10 +2000,10 @@ body {
 }
 
 .contact-inline-card:hover {
-    background: #fff;
-    transform: translateY(-4px);
+    background: #FFFAF5; /* Luxury cream tint on hover */
+    transform: translateY(-8px) scale(1.02);
     border-color: var(--champagne-bronze);
-    box-shadow: 0 12px 30px rgba(188, 163, 127, 0.1);
+    box-shadow: 0 20px 45px rgba(188, 163, 127, 0.25);
 }
 
 .contact-icon-wrapper {
@@ -2372,6 +2403,18 @@ html {
     z-index: 2;
 }
 
+/* Stretched Link for Fleet & Service Cards */
+.fleet-card .banner-btn::after,
+.service-type-card .banner-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+}
+
 .btn-request:hover::before,
 .cta-button:hover::before,
 .banner-btn:hover::before,
@@ -2452,10 +2495,21 @@ html {
 }
 
 /* === HORIZONTAL COLOR SEPARATION === */
+.cta-banner {
+    position: relative;
+    padding: 140px 8%;
+    background: radial-gradient(circle at 10% 20%, rgba(196, 162, 101, 0.05) 0%, transparent 40%),
+                linear-gradient(135deg, var(--sea-navy) 0%, #162a4a 50%, var(--sea-navy) 100%);
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Enhanced Section Fades */
 .section-header {
-    background: linear-gradient(180deg, #EBF1F7 0%, #FFFFFF 100%); /* Smooth Coastal Blue-to-White Transition */
-    padding: 100px 8% 40px;
-    border-bottom: 1px solid rgba(196,162,101,0.2);
+    background: linear-gradient(180deg, #f4f8fb 0%, #FFFFFF 100%);
+    padding: 120px 8% 50px;
+    border-bottom: 1px solid rgba(196,162,101,0.1);
     width: 100%;
 }
 
@@ -2482,7 +2536,7 @@ html {
 
 /* === MIDNIGHT AESTHETIC TEXT FIXES === */
 .section-header h2 {
-    color: var(--sea-navy) !important;
+    color: var(--champagne-bronze) !important; /* Premium gold for larger titles */
 }
 
 .section-intro,
