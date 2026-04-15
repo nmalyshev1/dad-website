@@ -3,7 +3,8 @@
 :root {
     --riviera-white: #FAFAF8;
     --sea-navy: #0F1D32;
-    --champagne-bronze: #C4A265;
+    --champagne-bronze: #C4A265; /* Sophisticated, muted premium bronze */
+    --bronze-gradient: linear-gradient(135deg, #C4A265 0%, #8E6D3B 100%);
     --yacht-cream: #F0EBE3;
     --soft-gray: #6B7280;
     --transition-premium: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -209,29 +210,32 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: var(--champagne-bronze);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     color: var(--riviera-white);
     padding: 12px 28px;
     text-decoration: none;
     font-size: 11px;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
     font-weight: 600;
-    border: 1px solid var(--champagne-bronze);
+    border: 1px solid rgba(196, 162, 101, 0.4);
+    border-radius: 4px;
     position: relative;
     overflow: hidden;
-    z-index: 1;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    border-radius: 4px;
+    z-index: 10;
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 .btn-request:hover {
-    background-color: var(--champagne-bronze);
-    border-color: var(--champagne-bronze);
+    background: var(--bronze-gradient);
+    border-color: transparent;
     color: #FFFFFF;
     transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 10px 25px rgba(188, 163, 127, 0.4);
-    filter: brightness(1.05);
+    box-shadow: 0 15px 35px rgba(142, 109, 59, 0.3);
 }
 
 /* --- HERO SECTION --- */
@@ -312,11 +316,11 @@ body {
 }
 
 .cta-button:hover {
-    background-color: var(--champagne-bronze);
-    border-color: var(--champagne-bronze);
+    background: var(--bronze-gradient);
+    border-color: transparent;
     color: #FFFFFF;
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 30px rgba(188, 163, 127, 0.4);
+    box-shadow: 0 15px 35px rgba(142, 109, 59, 0.3);
     backdrop-filter: blur(0);
 }
 
@@ -414,29 +418,33 @@ body {
 }
 
 .banner-btn {
-    display: inline-block;
-    background-color: var(--champagne-bronze);
-    color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(188, 163, 127, 0.05); /* Very subtle bronze tint */
+    color: var(--sea-navy);
     padding: 16px 45px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    border: 1px solid var(--champagne-bronze);
-    border-radius: 4px;
+    letter-spacing: 2.5px;
+    border: 1px solid rgba(188, 163, 127, 0.4);
+    border-radius: 6px;
     cursor: pointer;
     text-decoration: none;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
+    z-index: 5;
+    pointer-events: auto;
 }
 
 .banner-btn:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(188, 163, 127, 0.35);
-    filter: brightness(1.05);
+    background: var(--bronze-gradient);
+    border-color: transparent;
     color: #FFFFFF;
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(142, 109, 59, 0.3);
 }
 
 /* --- HAMBURGER BUTTON --- */
@@ -777,26 +785,29 @@ body {
 
 .btn-submit {
     grid-column: span 2;
-    background-color: var(--champagne-bronze);
-    color: white;
+    background-color: rgba(188, 163, 127, 0.05);
+    color: var(--sea-navy);
     padding: 18px;
-    border: 1px solid var(--champagne-bronze);
+    border: 1px solid rgba(188, 163, 127, 0.4);
     border-radius: 4px;
     text-transform: uppercase;
     letter-spacing: 3px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     margin-top: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
+    z-index: 5;
+    pointer-events: auto;
 }
 
 .btn-submit:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 12px 30px rgba(188, 163, 127, 0.4);
-    filter: brightness(1.05);
+    background: var(--bronze-gradient);
+    border-color: transparent;
+    color: #FFFFFF;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(142, 109, 59, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -954,7 +965,6 @@ body {
 }
 
 .service-type-card {
-    background: #ffffff;
     background: #FFFFFF;
     padding: 40px;
     border-radius: 4px;
@@ -963,6 +973,9 @@ body {
     transition: transform 0.4s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .service-type-card:hover {
@@ -989,6 +1002,9 @@ body {
     border-color: var(--sea-navy);
     padding: 12px 25px;
     font-size: 10px;
+    margin-top: auto;
+    width: 100%;
+    justify-content: center;
 }
 .service-type-card .banner-btn:hover {
     color: #fff;
@@ -1021,6 +1037,9 @@ body {
     box-shadow: 0 15px 40px rgba(0,0,0,0.06);
     text-align: left;
     transition: transform var(--transition-premium);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .fleet-card:hover {
@@ -1035,6 +1054,9 @@ body {
 
 .fleet-card-content {
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .fleet-card h3 {
@@ -1055,8 +1077,9 @@ body {
 .fleet-card .banner-btn {
     color: var(--sea-navy);
     border-color: var(--sea-navy);
-    padding: 10px 20px;
-    font-size: 10px;
+    margin-top: auto;
+    width: 100%;
+    justify-content: center;
 }
 
 .fleet-card .banner-btn:hover {
@@ -1420,31 +1443,33 @@ body {
 }
 
 .route-link {
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    text-align: center;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--riviera-white);
-    background-color: var(--champagne-bronze);
+    color: var(--sea-navy);
+    background-color: rgba(188, 163, 127, 0.05);
     padding: 15px 20px;
     border-radius: 6px;
     margin-top: auto;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    border: 1px solid var(--champagne-bronze);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(188, 163, 127, 0.4);
     position: relative;
     overflow: hidden;
+    z-index: 5;
+    pointer-events: auto;
 }
 
 .route-card:hover .route-link {
-    background-color: var(--champagne-bronze);
-    border-color: var(--champagne-bronze);
+    background: var(--bronze-gradient);
+    border-color: transparent;
     color: #fff;
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 25px rgba(188, 163, 127, 0.4);
+    box-shadow: 0 15px 30px rgba(142, 109, 59, 0.3);
     filter: brightness(1.05);
 }
 
@@ -1621,28 +1646,31 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: var(--champagne-bronze);
+    background: rgba(255, 255, 255, 0.03);
     color: var(--riviera-white);
     padding: 12px 28px;
     text-decoration: none;
     font-size: 11px;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
     font-weight: 600;
-    border: 1px solid var(--champagne-bronze);
+    border: 1px solid rgba(196, 162, 101, 0.4);
     border-radius: 4px;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
     white-space: nowrap;
     position: relative;
-    z-index: 1;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
     overflow: hidden;
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 .btn-call-nav:hover {
+    background: var(--bronze-gradient);
+    border-color: transparent;
+    color: #FFFFFF;
     transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 10px 25px rgba(188, 163, 127, 0.4);
-    filter: brightness(1.05);
+    box-shadow: 0 15px 35px rgba(142, 109, 59, 0.3);
 }
 
 /* ===== FLOATING BUTTON GROUP (Call + WhatsApp) ===== */
@@ -2189,22 +2217,22 @@ html {
 }
 
 /* --- SCROLL PROGRESS BAR --- */
+.scroll-progress-bar {
+    height: 100%;
+    background: var(--bronze-gradient);
+    width: 0%;
+    box-shadow: 0 0 20px rgba(188, 163, 101, 0.9);
+    transition: width 0.1s ease-out;
+}
+
 .scroll-progress-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 3px;
+    height: 4px;
     z-index: 9999;
     background: transparent;
-}
-
-.scroll-progress-bar {
-    height: 100%;
-    background: var(--champagne-bronze);
-    width: 0%;
-    box-shadow: 0 0 10px rgba(188, 163, 127, 0.5);
-    transition: width 0.1s ease-out;
 }
 
 /* Horizontal reveals usage */

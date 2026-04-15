@@ -9,6 +9,7 @@
 </head>
 <body class="request-page">
 
+<div class="scroll-progress-container"><div class="scroll-progress-bar" id="scrollProgress"></div></div>
 <header class="mainHeader">
   <a href="index.html" class="logo-link">
     <div class="logo">
@@ -320,6 +321,14 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
   if (dropoff) document.getElementById('dropoff-input').value = dropoff;
   if (carParam) selectCar(carParam);
 })();
+// Scroll Progress Bar
+window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const pb = document.getElementById('scrollProgress');
+    if (pb) pb.style.width = scrolled + '%';
+});
 </script>
 <script>
 // Scroll Reveal Logic
