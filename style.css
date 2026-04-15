@@ -1335,7 +1335,9 @@ body {
 
 .route-card {
     background: #ffffff;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     text-decoration: none;
     background: #FFFFFF;
     border-radius: 6px;
@@ -1353,6 +1355,9 @@ body {
 
 .route-card-inner {
     padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .route-label {
@@ -1396,7 +1401,7 @@ body {
     background-color: var(--sea-navy);
     padding: 15px 20px;
     border-radius: 6px;
-    margin-top: 10px;
+    margin-top: auto;
     transition: all 0.4s ease;
     border: 1px solid var(--sea-navy);
 }
