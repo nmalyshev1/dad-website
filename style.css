@@ -732,11 +732,11 @@ body {
 
 .popular-routes-section {
     position: relative;
-    background: #FFFFFF; /* Match the content background */
+    background: linear-gradient(180deg, #f0f4f8 0%, #FFFFFF 100%);
 }
 
 .popular-routes-section .section-header {
-    padding-top: 60px; /* Reduced since Fleet provides gap */
+    padding-top: 40px; /* Minimal gap since Fleet ends with a gradient */
 }
 
 .request-container h1 {
@@ -2507,9 +2507,9 @@ html {
 
 /* Enhanced Section Fades */
 .section-header {
-    background: linear-gradient(180deg, #f4f8fb 0%, #FFFFFF 100%);
-    padding: 120px 8% 50px;
-    border-bottom: 1px solid rgba(196,162,101,0.1);
+    background: transparent;
+    padding: 100px 8% 30px;
+    border-bottom: none;
     width: 100%;
 }
 
