@@ -586,6 +586,12 @@ html {
     width: 100%;
     justify-content: center;
     text-align: center;
+    color: var(--sea-navy) !important;
+    border-color: rgba(44, 67, 101, 0.2);
+}
+
+.mobile-menu-footer .btn-request span {
+    color: var(--sea-navy) !important;
 }
 
 .mobile-lang-switcher {
