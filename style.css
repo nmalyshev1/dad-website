@@ -52,6 +52,8 @@ html {
 .logo-link {
     text-decoration: none;
     transition: var(--transition-premium);
+    flex-shrink: 0;
+    margin-right: 20px;
 }
 
 .logo {
@@ -100,6 +102,7 @@ html {
     position: relative;
     padding-bottom: 5px;
     transition: color 0.3s ease;
+    white-space: nowrap;
 }
 
 .navBar a::after {
@@ -127,6 +130,8 @@ html {
     display: flex;
     align-items: center;
     gap: 20px;
+    flex-shrink: 0;
+    margin-left: 20px;
 }
 
 /* --- LANGUAGE PICKER --- */
@@ -571,15 +576,16 @@ html {
 .mobile-menu-footer {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
 }
 
-.mobile-menu-footer .btn-request {
+.mobile-menu-footer .btn-request,
+.mobile-menu-footer .btn-call-nav {
     width: 100%;
+    justify-content: center;
     text-align: center;
-    padding: 16px 28px;
-    font-size: 12px;
 }
 
 .mobile-lang-switcher {
@@ -620,16 +626,16 @@ html {
     object-fit: cover;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
     .mainHeader {
-        padding: 0 4%;
+        padding: 0 3%;
     }
     .navBar ul {
-        gap: 25px;
+        gap: 20px;
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1300px) {
     .mainHeader {
         flex-direction: row;
         justify-content: space-between;
