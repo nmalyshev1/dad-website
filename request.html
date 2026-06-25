@@ -173,7 +173,6 @@
             <div class="estimator-price" id="estimator-price-display">
               <span class="currency">€</span><span id="estimator-price-value">—</span>
             </div>
-            <div class="estimator-route-info" id="estimator-route-info"></div>
           </div>
           <div class="estimator-extras" id="estimator-extras">
             <span class="estimator-tag" id="tag-vehicle">
@@ -182,6 +181,26 @@
             </span>
           </div>
         </div>
+
+        <!-- Route Timeline Display -->
+        <div class="estimator-route-display">
+          <div class="route-visual-line">
+            <div class="visual-dot start"></div>
+            <div class="visual-dashed-line"></div>
+            <div class="visual-dot end"></div>
+          </div>
+          <div class="route-text-details">
+            <div class="route-text-row">
+              <span class="route-row-label" data-i18n="request.pickup_loc">Pickup Location</span>
+              <span class="route-row-value" id="estimator-pickup-value">—</span>
+            </div>
+            <div class="route-text-row">
+              <span class="route-row-label" data-i18n="request.dropoff_dest">Drop-off Destination</span>
+              <span class="route-row-value" id="estimator-dropoff-value">—</span>
+            </div>
+          </div>
+        </div>
+        <div class="estimator-distance-info" id="estimator-distance-info" style="display: none;"></div>
         <!-- Night surcharge notice (shown automatically when pickup time is 22:00–06:00) -->
         <div class="night-notice" id="night-notice" style="display:none;">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
@@ -436,7 +455,7 @@ function matchKnownLocation(address) {
   if (!address) return null;
   const norm = address.toLowerCase();
   
-  if (norm.includes('nice airport') || norm.includes('nce')) return 'nice airport';
+  if (norm.includes('nice airport') || /\bnce\b/i.test(norm)) return 'nice airport';
   if (norm.includes('monaco') || norm.includes('monte carlo') || norm.includes('monte-carlo')) return 'monaco';
   if (norm.includes('cannes')) return 'cannes';
   if (norm.includes("cap d'antibes")) return "cap d'antibes";
@@ -802,9 +821,16 @@ function updateEstimator() {
   document.getElementById('estimator-price-value').textContent = basePrice.toLocaleString('fr-FR');
 
   // Route info
-  const routeText = pickup + ' → ' + dropoff +
-    (result.method === 'estimated' ? ` (~${result.km} km)` : '');
-  document.getElementById('estimator-route-info').textContent = routeText;
+  document.getElementById('estimator-pickup-value').textContent = pickup;
+  document.getElementById('estimator-dropoff-value').textContent = dropoff;
+
+  const distEl = document.getElementById('estimator-distance-info');
+  if (result.method === 'estimated') {
+    distEl.textContent = `📏 Distance: ~${result.km} km`;
+    distEl.style.display = 'block';
+  } else {
+    distEl.style.display = 'none';
+  }
 
   // Vehicle tag
   const tagVehicle = document.getElementById('tag-vehicle');
