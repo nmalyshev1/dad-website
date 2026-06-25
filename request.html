@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Request Quote | V-TRANSFER VIP</title>
+  <title>Book Your Transfer | V-TRANSFER VIP</title>
+  <meta name="description" content="Book your premium chauffeur transfer on the French Riviera. Instant price estimate for Nice Airport, Cannes, Monaco, Saint-Tropez and more.">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -74,8 +75,8 @@
 <main class="request-wrapper">
   <section class="request-container">
     <div class="form-header">
-      <h1 data-i18n="request.title">Service Request</h1>
-      <p data-i18n="request.desc">Enter your trip details to receive a concierge quotation.</p>
+      <h1 data-i18n="request.title">Book Your Transfer</h1>
+      <p data-i18n="request.desc">Select your vehicle and enter trip details for an instant price estimate.</p>
     </div>
 
     <!-- Car Selector -->
@@ -83,7 +84,7 @@
       <label class="car-selector-label">Select Your Vehicle</label>
       <div class="car-selector-grid">
 
-        <div class="car-option" data-car="Mercedes E-Class" id="car-eclass">
+        <div class="car-option" data-car="standard" data-car-label="Mercedes E-Class / Similar" id="car-eclass">
           <img src="images/fleet_e_class.png" alt="Mercedes E-Class">
           <div class="car-option-info">
             <strong>Mercedes E-Class</strong>
@@ -92,7 +93,7 @@
           <div class="car-option-check">✓</div>
         </div>
 
-        <div class="car-option" data-car="Mercedes V-Class" id="car-vclass">
+        <div class="car-option" data-car="vclass" data-car-label="Mercedes V-Class" id="car-vclass">
           <img src="images/fleet_v_class.png" alt="Mercedes V-Class">
           <div class="car-option-info">
             <strong>Mercedes V-Class</strong>
@@ -101,7 +102,7 @@
           <div class="car-option-check">✓</div>
         </div>
 
-        <div class="car-option" data-car="Renault Trafic SpaceClass" id="car-trafic">
+        <div class="car-option" data-car="standard" data-car-label="Renault Trafic SpaceClass" id="car-trafic">
           <img src="images/fleet_renault.png" alt="Renault Trafic SpaceClass">
           <div class="car-option-info">
             <strong>Renault Trafic SpaceClass</strong>
@@ -116,10 +117,10 @@
     </div>
 
     <form class="booking-form" action="https://formsubmit.co/info@vtransfer.fr" method="POST">
-      <input type="hidden" name="_subject" value="New V-TRANSFER Concierge Request!">
+      <input type="hidden" name="_subject" value="New V-TRANSFER Booking Request!">
       <input type="hidden" name="_captcha" value="false">
-      <!-- Vehicle will be injected here by JS before submit -->
       <input type="hidden" name="vehicle" id="form-vehicle-input" value="">
+      <input type="hidden" name="estimated_price" id="form-price-input" value="">
 
       <div class="form-group">
         <label data-i18n="request.full_name">Full Name</label>
@@ -136,16 +137,59 @@
       </div>
       <div class="form-group">
         <label data-i18n="request.pickup_time">Pick-up Date &amp; Time</label>
-        <input type="datetime-local" name="pickup_datetime" required>
+        <input type="datetime-local" name="pickup_datetime" id="pickup-datetime" required>
       </div>
 
-      <div class="form-group">
+      <div class="form-group autocomplete-wrapper" id="pickup-wrapper">
         <label data-i18n="request.pickup_loc">Pickup Location</label>
-        <input type="text" id="pickup-input" name="pickup" list="riviera-cities" placeholder="e.g. Nice Airport (NCE)" data-i18n="request.placeholder_pickup" required>
+        <input type="text" id="pickup-input" name="pickup" placeholder="e.g. Nice Airport (NCE)" autocomplete="off" required>
+        <ul class="autocomplete-list" id="pickup-list"></ul>
       </div>
-      <div class="form-group">
+      <div class="form-group autocomplete-wrapper" id="dropoff-wrapper">
         <label data-i18n="request.dropoff_dest">Drop-off Destination</label>
-        <input type="text" id="dropoff-input" name="dropoff" list="riviera-cities" placeholder="e.g. Cannes" data-i18n="request.placeholder_dropoff" required>
+        <input type="text" id="dropoff-input" name="dropoff" placeholder="e.g. Cannes" autocomplete="off" required>
+        <ul class="autocomplete-list" id="dropoff-list"></ul>
+      </div>
+
+      <!-- Show Price Button Row -->
+      <div class="show-price-container">
+        <button type="button" id="btn-show-price" class="btn-show-price">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span data-i18n="request.show_price">Show Price</span>
+        </button>
+      </div>
+
+      <!-- Live Price Estimator Panel -->
+      <div class="price-estimator-panel" id="price-estimator-panel">
+        <div class="estimator-header">
+          <div class="estimator-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          </div>
+          <span class="estimator-label">Estimated Price</span>
+        </div>
+        <div class="estimator-body">
+          <div class="estimator-price-block">
+            <span class="estimator-from">From</span>
+            <div class="estimator-price" id="estimator-price-display">
+              <span class="currency">€</span><span id="estimator-price-value">—</span>
+            </div>
+            <div class="estimator-route-info" id="estimator-route-info"></div>
+          </div>
+          <div class="estimator-extras" id="estimator-extras">
+            <span class="estimator-tag" id="tag-vehicle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3m-4 12l2 2 4-4m-6 0H9a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/></svg>
+              Standard
+            </span>
+          </div>
+        </div>
+        <!-- Night surcharge notice (shown automatically when pickup time is 22:00–06:00) -->
+        <div class="night-notice" id="night-notice" style="display:none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <span>Night tariff applies (22:00–06:00) — a <strong>+10% surcharge</strong> will be added to the price above.</span>
+        </div>
+        <div class="estimator-disclaimer">
+          ✦ Approximate estimate based on fixed rates — final confirmed price will be sent to your email. Additional charges may apply for trips over 5 hours or on major event dates (Cannes Film Festival, Monaco Grand Prix, etc.).
+        </div>
       </div>
 
       <div class="form-group">
@@ -162,31 +206,65 @@
         <input type="text" name="requirements" placeholder="Child seats, heavy luggage, extra stops..." data-i18n="request.placeholder_req">
       </div>
 
-      <button type="submit" class="btn-submit" data-i18n="request.btn_submit">Request Quote</button>
+      <!-- Action Buttons Row -->
+      <div class="btn-actions-row">
+        <button type="submit" class="btn-submit" data-i18n="request.btn_submit">Request Quote</button>
+        <button type="button" class="btn-pay" id="btn-book-pay" onclick="openStripeModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          Book &amp; Pay Online
+          <span class="btn-pay-badge">Stripe · Secure</span>
+        </button>
+      </div>
     </form>
 
-    <datalist id="riviera-cities">
-      <option value="Nice Airport (NCE)"></option>
-      <option value="Nice City"></option>
-      <option value="Cannes"></option>
-      <option value="Monaco"></option>
-      <option value="Cap d'Antibes"></option>
-      <option value="Saint Jean Cap Ferrat"></option>
-      <option value="Antibes"></option>
-      <option value="Beaulieu sur Mer"></option>
-      <option value="Villefranche sur Mer"></option>
-      <option value="Menton"></option>
-      <option value="Grasse"></option>
-      <option value="Saint-Tropez"></option>
-      <option value="Théoule-sur-Mer"></option>
-      <option value="Saint Rafael / Frejus"></option>
-      <option value="Sanremo"></option>
-      <option value="Milan"></option>
-      <option value="Paris"></option>
-      <option value="Marseille"></option>
-    </datalist>
+    <!-- autocomplete city list is in JS -->
   </section>
 </main>
+
+<!-- ═══ STRIPE BOOKING MODAL ════════════════════════════════════════════════ -->
+<div class="stripe-overlay" id="stripe-overlay" role="dialog" aria-modal="true" aria-labelledby="stripe-modal-title">
+  <div class="stripe-modal">
+    <button class="stripe-modal-close" onclick="closeStripeModal()" aria-label="Close">✕</button>
+
+    <div class="stripe-modal-header">
+      <h3 id="stripe-modal-title">Confirm Your Booking</h3>
+      <p>Review your trip details and pay securely online</p>
+    </div>
+
+    <!-- Booking Summary -->
+    <div class="stripe-modal-summary" id="stripe-summary">
+      <div class="stripe-summary-row">
+        <span>Route</span>
+        <span id="modal-route">—</span>
+      </div>
+      <div class="stripe-summary-row">
+        <span>Vehicle</span>
+        <span id="modal-vehicle">—</span>
+      </div>
+      <div class="stripe-summary-row total">
+        <span>Estimated Price</span>
+        <span class="amount" id="modal-total">—</span>
+      </div>
+    </div>
+
+    <!-- Info Note -->
+    <div class="stripe-payment-note">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      <span>The estimated price is shown above. Final price will be confirmed by email. Payment is processed securely via Stripe.</span>
+    </div>
+
+    <!-- Stripe Pay Button -->
+    <a href="#" id="stripe-pay-link" class="btn-stripe-confirm" target="_blank" rel="noopener noreferrer" onclick="handleStripeClick(event)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+      Pay via Stripe
+    </a>
+
+    <div class="stripe-secure-row">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      Secured by Stripe · 3D Secure · SSL Encrypted
+    </div>
+  </div>
+</div>
 
 <footer class="global-footer">
   <div class="footer-container">
@@ -245,8 +323,7 @@
   <a href="https://wa.me/33686269909?text=Hello,%20I'm%20interested%20in%20a%20transfer." class="whatsapp-float float-btn" target="_blank" rel="noopener noreferrer">
     <span class="float-btn-icon">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="whatsapp-icon" style="fill: #ffffff; stroke: none !important; border: none !important;">
-        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
-      </svg>
+        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg>
     </span>
     <span class="float-btn-label">WhatsApp</span>
   </a>
@@ -256,38 +333,454 @@
 <script src="i18n.js"></script>
 <script src="burger.js"></script>
 <script>
-// ── Car Selector ──────────────────────────────────────────────────────────
-let selectedCar = '';
+// ══════════════════════════════════════════════════════════════════════════════
+// PRICE DATABASE  (Official Summer 2024 rates)
+// ══════════════════════════════════════════════════════════════════════════════
+// Each route key is a sorted pair: "CITY_A|CITY_B"
+// Values: [standardPrice, vclassPrice]
+// Airport = "nice airport"
+const PRICE_TABLE = {
+  // ── From / To Nice Airport ──────────────────────────────────────────
+  "nice airport|nice city":                          [60,   80],
+  "nice airport|nice":                               [60,   80],
+  "nice airport|cannes":                             [110,  130],
+  "nice airport|monaco":                             [110,  130],
+  "nice airport|cap d'antibes":                      [110,  130],
+  "nice airport|saint jean cap ferrat":              [110,  130],
+  "nice airport|antibes":                            [90,   100],
+  "nice airport|beaulieu sur mer":                   [90,   100],
+  "nice airport|villefranche sur mer":               [90,   100],
+  "nice airport|menton":                             [140,  150],
+  "nice airport|grasse":                             [140,  150],
+  "nice airport|saint-tropez":                       [290,  350],
+  "nice airport|st tropez":                          [290,  350],
+  "nice airport|saint tropez":                       [290,  350],
+  "nice airport|saint rafael / frejus":              [190,  220],
+  "nice airport|saint rafael":                       [190,  220],
+  "nice airport|frejus":                             [190,  220],
+  "nice airport|sanremo":                            [230,  250],
+  "nice airport|milan":                              [800,  900],
+  "nice airport|paris":                              [1900, 2200],
+  "nice airport|marseille":                          [520,  670],
+  "nice airport|théoule-sur-mer":                    [90,   100],
+  "nice airport|theoule-sur-mer":                    [90,   100],
 
-function selectCar(carName) {
-  // Deselect all
+  // ── City-to-City ────────────────────────────────────────────────────
+  "cannes|monaco":                                   [195,  250],
+  "monaco|saint-tropez":                             [390,  440],
+  "monaco|st tropez":                                [390,  440],
+  "monaco|saint tropez":                             [390,  440],
+  "monaco|milan":                                    [800,  900],
+  "cannes|saint-tropez":                             [260,  280],
+  "cannes|st tropez":                                [260,  280],
+  "cannes|saint tropez":                             [260,  280],
+  "cannes|marseille":                                [500,  650],
+  "marseille|nice city":                             [520,  670],
+  "marseille|nice":                                  [520,  670],
+  "marseille|monaco":                                [590,  700],
+  "marseille|saint-tropez":                          [300,  370],
+  "marseille|st tropez":                             [300,  370],
+  "marseille|saint tropez":                          [300,  370],
+  "nice|monaco":                                     [90,   100],
+  "nice city|monaco":                                [90,   100],
+  "monaco|antibes":                                  [110,  130],
+  "monaco|nice city":                                [90,   100],
+};
+
+// ── Approximate distance table (km) for fallback formula ─────────────
+// Used when route is not in the table above
+const CITY_DISTANCES = {
+  "nice airport":         { lat: 43.665, lng: 7.215 },
+  "nice city":            { lat: 43.710, lng: 7.262 },
+  "nice":                 { lat: 43.710, lng: 7.262 },
+  "cannes":               { lat: 43.552, lng: 7.017 },
+  "monaco":               { lat: 43.738, lng: 7.424 },
+  "cap d'antibes":        { lat: 43.560, lng: 7.128 },
+  "saint jean cap ferrat":{ lat: 43.691, lng: 7.333 },
+  "antibes":              { lat: 43.580, lng: 7.128 },
+  "beaulieu sur mer":     { lat: 43.706, lng: 7.330 },
+  "villefranche sur mer": { lat: 43.704, lng: 7.307 },
+  "menton":               { lat: 43.775, lng: 7.503 },
+  "grasse":               { lat: 43.660, lng: 6.924 },
+  "saint-tropez":         { lat: 43.272, lng: 6.638 },
+  "st tropez":            { lat: 43.272, lng: 6.638 },
+  "saint tropez":         { lat: 43.272, lng: 6.638 },
+  "saint rafael / frejus":{ lat: 43.435, lng: 6.768 },
+  "saint rafael":         { lat: 43.435, lng: 6.768 },
+  "frejus":               { lat: 43.435, lng: 6.768 },
+  "théoule-sur-mer":      { lat: 43.517, lng: 6.941 },
+  "theoule-sur-mer":      { lat: 43.517, lng: 6.941 },
+  "sanremo":              { lat: 43.817, lng: 7.776 },
+  "milan":                { lat: 45.464, lng: 9.190 },
+  "paris":                { lat: 48.857, lng: 2.352 },
+  "marseille":            { lat: 43.296, lng: 5.370 },
+};
+
+// Rate per km for fallback (derived from known routes avg)
+const RATE_STANDARD_PER_KM = 2.9;  // €/km
+const RATE_VCLASS_PER_KM   = 3.45; // €/km
+const MIN_FARE_STANDARD = 60;
+const MIN_FARE_VCLASS   = 80;
+
+function haversineKm(loc1, loc2) {
+  const R = 6371;
+  const dLat = (loc2.lat - loc1.lat) * Math.PI / 180;
+  const dLng = (loc2.lng - loc1.lng) * Math.PI / 180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(loc1.lat * Math.PI/180) * Math.cos(loc2.lat * Math.PI/180) *
+            Math.sin(dLng/2) * Math.sin(dLng/2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function normalizeCity(raw) {
+  return raw.trim().toLowerCase()
+    .replace(/\(nce\)/gi, '')
+    .replace(/airport/gi, 'airport')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function lookupPrice(pickup, dropoff, isVclass) {
+  const p = normalizeCity(pickup);
+  const d = normalizeCity(dropoff);
+
+  // Check both orderings
+  const key1 = p + '|' + d;
+  const key2 = d + '|' + p;
+
+  let prices = PRICE_TABLE[key1] || PRICE_TABLE[key2];
+  if (prices) {
+    return { price: prices[isVclass ? 1 : 0], method: 'exact' };
+  }
+
+  // Fallback: distance-based formula
+  const locP = CITY_DISTANCES[p];
+  const locD = CITY_DISTANCES[d];
+  if (locP && locD) {
+    const km = haversineKm(locP, locD);
+    // Add 15% road factor (straight-line is shorter than road distance)
+    const roadKm = km * 1.15;
+    const rate = isVclass ? RATE_VCLASS_PER_KM : RATE_STANDARD_PER_KM;
+    const minFare = isVclass ? MIN_FARE_VCLASS : MIN_FARE_STANDARD;
+    const raw = Math.max(minFare, Math.round(roadKm * rate / 5) * 5);
+    return { price: raw, method: 'estimated', km: Math.round(roadKm) };
+  }
+
+  return null;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════════════════════
+let selectedCar      = '';
+let selectedCarLabel = '';
+let selectedCarType  = 'standard'; // 'standard' | 'vclass'
+let currentPrice     = null;
+let isNightTariff    = false;
+
+// ══════════════════════════════════════════════════════════════════════════════
+// CAR SELECTOR
+// ══════════════════════════════════════════════════════════════════════════════
+function selectCar(carName, carLabel, carType) {
   document.querySelectorAll('.car-option').forEach(el => el.classList.remove('selected'));
-  // Find the matching card by data-car attribute
-  const match = document.querySelector(`.car-option[data-car="${carName}"]`);
+  const match = document.querySelector(`.car-option[data-car-label="${carLabel}"]`);
   if (match) {
     match.classList.add('selected');
-    selectedCar = carName;
-    document.getElementById('selected-car-input').value = carName;
+    selectedCar      = carName;
+    selectedCarLabel = carLabel;
+    selectedCarType  = carType;
+    document.getElementById('selected-car-input').value = carLabel;
   }
+  updateEstimator();
 }
 
 document.querySelectorAll('.car-option').forEach(card => {
-  card.addEventListener('click', () => selectCar(card.dataset.car));
+  card.addEventListener('click', () => {
+    selectCar(card.dataset.car, card.dataset.carLabel, card.dataset.car);
+  });
 });
 
-// ── Form Submit ───────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+// AUTOCOMPLETE ENGINE
+// ══════════════════════════════════════════════════════════════════════════════
+const CITY_LIST = [
+  'Nice Airport (NCE)',
+  'Nice City',
+  'Cannes',
+  'Monaco',
+  "Cap d'Antibes",
+  'Saint Jean Cap Ferrat',
+  'Antibes',
+  'Beaulieu sur Mer',
+  'Villefranche sur Mer',
+  'Menton',
+  'Grasse',
+  'Saint-Tropez',
+  'Théoule-sur-Mer',
+  'Saint Rafael / Frejus',
+  'Sanremo',
+  'Milan',
+  'Paris',
+  'Marseille',
+];
+
+function buildAutocomplete(inputId, listId) {
+  const input   = document.getElementById(inputId);
+  const list    = document.getElementById(listId);
+  let activeIdx = -1;
+
+  function showSuggestions(query) {
+    const q = query.trim().toLowerCase();
+    list.innerHTML = '';
+    activeIdx = -1;
+    if (!q) { list.classList.remove('open'); return; }
+
+    const matches = CITY_LIST.filter(city =>
+      city.toLowerCase().includes(q)
+    );
+
+    if (!matches.length) { list.classList.remove('open'); return; }
+
+    matches.forEach((city, i) => {
+      const li = document.createElement('li');
+      li.className = 'autocomplete-item';
+      // Highlight matching portion
+      const idx = city.toLowerCase().indexOf(q);
+      if (idx > -1) {
+        li.innerHTML =
+          city.substring(0, idx) +
+          '<strong>' + city.substring(idx, idx + q.length) + '</strong>' +
+          city.substring(idx + q.length);
+      } else {
+        li.textContent = city;
+      }
+      li.addEventListener('mousedown', function(e) {
+        e.preventDefault(); // don't blur first
+        input.value = city;
+        list.classList.remove('open');
+        list.innerHTML = '';
+        updateEstimator();
+      });
+      list.appendChild(li);
+    });
+    list.classList.add('open');
+  }
+
+  input.addEventListener('input', () => showSuggestions(input.value));
+  input.addEventListener('focus', () => { if (input.value) showSuggestions(input.value); });
+
+  input.addEventListener('blur', () => {
+    setTimeout(() => { list.classList.remove('open'); }, 150);
+  });
+
+  input.addEventListener('keydown', function(e) {
+    const items = list.querySelectorAll('.autocomplete-item');
+    if (!items.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      activeIdx = Math.min(activeIdx + 1, items.length - 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      activeIdx = Math.max(activeIdx - 1, 0);
+    } else if (e.key === 'Enter' && activeIdx >= 0) {
+      e.preventDefault();
+      input.value = items[activeIdx].textContent;
+      list.classList.remove('open');
+      list.innerHTML = '';
+      updateEstimator();
+      return;
+    } else if (e.key === 'Escape') {
+      list.classList.remove('open');
+      return;
+    }
+    items.forEach((it, i) => it.classList.toggle('active', i === activeIdx));
+    if (activeIdx >= 0) items[activeIdx].scrollIntoView({ block: 'nearest' });
+  });
+}
+
+buildAutocomplete('pickup-input',  'pickup-list');
+buildAutocomplete('dropoff-input', 'dropoff-list');
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ESTIMATOR LOGIC
+// ══════════════════════════════════════════════════════════════════════════════
+function updateEstimator() {
+  const pickup  = document.getElementById('pickup-input').value.trim();
+  const dropoff = document.getElementById('dropoff-input').value.trim();
+  const panel   = document.getElementById('price-estimator-panel');
+
+  if (!pickup || !dropoff || !selectedCar) {
+    panel.classList.remove('visible');
+    currentPrice = null;
+    return;
+  }
+
+  const isVclass = (selectedCarType === 'vclass');
+  const result   = lookupPrice(pickup, dropoff, isVclass);
+
+  if (!result) {
+    panel.classList.remove('visible');
+    currentPrice = null;
+    return;
+  }
+
+  // Base price — no automatic surcharge applied to the displayed number
+  // Night surcharge is communicated as a notice only
+  const basePrice = result.price;
+  currentPrice = basePrice;
+
+  // Update price display
+  document.getElementById('estimator-price-value').textContent = basePrice.toLocaleString('fr-FR');
+
+  // Route info
+  const routeText = pickup + ' → ' + dropoff +
+    (result.method === 'estimated' ? ` (~${result.km} km)` : '');
+  document.getElementById('estimator-route-info').textContent = routeText;
+
+  // Vehicle tag
+  const tagVehicle = document.getElementById('tag-vehicle');
+  tagVehicle.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+    ${isVclass ? 'V-Class' : 'Standard'}
+  `;
+
+  // Night notice — informational only, no price modification
+  const nightNotice = document.getElementById('night-notice');
+  nightNotice.style.display = isNightTariff ? 'flex' : 'none';
+
+  // Hidden form field
+  const priceNote = `~€${basePrice}${result.method === 'estimated' ? ' (estimate)' : ''}${isNightTariff ? ' — night tariff may apply (+10%)' : ''}`;
+  document.getElementById('form-price-input').value = priceNote;
+
+  panel.classList.add('visible');
+}
+
+// Trigger on input / change
+document.getElementById('pickup-input').addEventListener('input', updateEstimator);
+document.getElementById('dropoff-input').addEventListener('input', updateEstimator);
+document.getElementById('pickup-input').addEventListener('change', updateEstimator);
+document.getElementById('dropoff-input').addEventListener('change', updateEstimator);
+
+// Auto-detect night tariff from pickup datetime — informational notice only
+document.getElementById('pickup-datetime').addEventListener('change', function() {
+  if (!this.value) return;
+  const hour = new Date(this.value).getHours();
+  isNightTariff = (hour >= 22 || hour < 6);
+  updateEstimator();
+});
+
+// Show price on button click
+const btnShowPrice = document.getElementById('btn-show-price');
+if (btnShowPrice) {
+  btnShowPrice.addEventListener('click', () => {
+    const pickup  = document.getElementById('pickup-input').value.trim();
+    const dropoff = document.getElementById('dropoff-input').value.trim();
+
+    if (!selectedCar) {
+      alert('Please select a vehicle first.');
+      const carSec = document.querySelector('.car-selector-section');
+      if (carSec) carSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    if (!pickup) {
+      document.getElementById('pickup-input').focus();
+      return;
+    }
+    if (!dropoff) {
+      document.getElementById('dropoff-input').focus();
+      return;
+    }
+
+    updateEstimator();
+
+    const panel = document.getElementById('price-estimator-panel');
+    if (panel) {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STRIPE MODAL
+// ══════════════════════════════════════════════════════════════════════════════
+// ⚠️  REPLACE the href below with your actual Stripe Payment Link
+// To create one: stripe.com → Dashboard → Payment Links → Create
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/REPLACE_WITH_YOUR_LINK';
+
+function openStripeModal() {
+  const pickup  = document.getElementById('pickup-input').value.trim();
+  const dropoff = document.getElementById('dropoff-input').value.trim();
+
+  // Update modal summary
+  document.getElementById('modal-route').textContent =
+    (pickup && dropoff) ? pickup + ' → ' + dropoff : 'Not specified';
+  document.getElementById('modal-vehicle').textContent =
+    selectedCarLabel || 'Not selected';
+  document.getElementById('modal-total').textContent =
+    currentPrice ? '~€' + currentPrice.toLocaleString('fr-FR') : 'To be confirmed';
+
+  // Build Stripe URL with prefill if possible
+  let stripeUrl = STRIPE_PAYMENT_LINK;
+  try {
+    const clientRef = encodeURIComponent(
+      (pickup ? pickup.substring(0,20) : 'TBD') + ' → ' +
+      (dropoff ? dropoff.substring(0,20) : 'TBD')
+    );
+    stripeUrl += (STRIPE_PAYMENT_LINK.includes('?') ? '&' : '?') +
+                 'client_reference_id=' + clientRef;
+  } catch(e) {}
+  document.getElementById('stripe-pay-link').href = stripeUrl;
+
+  document.getElementById('stripe-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeStripeModal() {
+  document.getElementById('stripe-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleStripeClick(e) {
+  if (STRIPE_PAYMENT_LINK.includes('REPLACE_WITH_YOUR_LINK')) {
+    e.preventDefault();
+    alert('⚙️ Stripe Payment Link not yet configured.\n\nTo activate online payments:\n1. Create an account at stripe.com\n2. Go to Dashboard → Payment Links → Create\n3. Set the price to your preferred amount\n4. Copy the link and replace STRIPE_PAYMENT_LINK in request.html');
+    return;
+  }
+  // Let the link open in new tab normally
+  closeStripeModal();
+}
+
+// Close modal on overlay click
+document.getElementById('stripe-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeStripeModal();
+});
+
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeStripeModal();
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// FORM SUBMIT
+// ══════════════════════════════════════════════════════════════════════════════
 document.querySelector('.booking-form').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  // Inject selected car into form just before submission
-  document.getElementById('selected-car-input').value = selectedCar || 'Not specified';
+  // Inject selected car
+  document.getElementById('selected-car-input').value = selectedCarLabel || 'Not specified';
+  document.getElementById('form-vehicle-input').value  = selectedCarLabel || 'Not specified';
 
-  const form = e.target;
-  const formData = new FormData(form);
+  const form      = e.target;
+  const formData  = new FormData(form);
   const submitBtn = form.querySelector('.btn-submit');
 
-  submitBtn.innerText = translations[document.documentElement.lang].request.sending;
-  submitBtn.disabled = true;
+  const lang = document.documentElement.lang || 'en';
+  const t    = (typeof translations !== 'undefined' && translations[lang])
+               ? translations[lang].request : {};
+
+  submitBtn.innerText = t.sending || 'Sending…';
+  submitBtn.disabled  = true;
 
   fetch(form.action, {
     method: form.method,
@@ -295,39 +788,54 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
     headers: { 'Accept': 'application/json' }
   }).then(response => {
     if (response.ok) {
-      alert(translations[document.documentElement.lang].request.success);
+      alert(t.success || '✓ Your request has been sent! We will confirm within the hour.');
       form.reset();
       document.querySelectorAll('.car-option').forEach(el => el.classList.remove('selected'));
-      selectedCar = '';
+      selectedCar = ''; selectedCarLabel = ''; currentPrice = null;
+      document.getElementById('price-estimator-panel').classList.remove('visible');
     } else {
-      alert(translations[document.documentElement.lang].request.error);
+      alert(t.error || 'Something went wrong. Please try again or call us directly.');
     }
   }).catch(() => {
-    alert(translations[document.documentElement.lang].request.error);
+    alert(t.error || 'Something went wrong. Please try again or call us directly.');
   }).finally(() => {
-    submitBtn.innerText = translations[document.documentElement.lang].request.btn_submit;
-    submitBtn.disabled = false;
+    submitBtn.innerText = t.btn_submit || 'Request Quote';
+    submitBtn.disabled  = false;
   });
 });
 
-// ── Pre-fill from URL params ──────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+// PRE-FILL FROM URL PARAMS
+// ══════════════════════════════════════════════════════════════════════════════
 (function() {
-  const params = new URLSearchParams(window.location.search);
-  const pickup   = params.get('pickup');
-  const dropoff  = params.get('dropoff');
-  const carParam = params.get('car');
+  const params  = new URLSearchParams(window.location.search);
+  const pickup  = params.get('pickup');
+  const dropoff = params.get('dropoff');
+  const carParam= params.get('car');
 
-  if (pickup)  document.getElementById('pickup-input').value  = pickup;
-  if (dropoff) document.getElementById('dropoff-input').value = dropoff;
-  if (carParam) selectCar(carParam);
+  if (pickup)  { document.getElementById('pickup-input').value  = pickup;  }
+  if (dropoff) { document.getElementById('dropoff-input').value = dropoff; }
+  if (carParam) {
+    // Match by label or type
+    document.querySelectorAll('.car-option').forEach(card => {
+      if (card.dataset.carLabel.toLowerCase().includes(carParam.toLowerCase())) {
+        selectCar(card.dataset.car, card.dataset.carLabel, card.dataset.car);
+      }
+    });
+  }
+  // Trigger estimator if params present
+  if (pickup || dropoff) updateEstimator();
 })();
-// Scroll Progress Bar
+
+// ══════════════════════════════════════════════════════════════════════════════
+// SCROLL PROGRESS BAR
+// ══════════════════════════════════════════════════════════════════════════════
 window.addEventListener('scroll', () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    const pb = document.getElementById('scrollProgress');
-    if (pb) pb.style.width = scrolled + '%';
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height    = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled  = (winScroll / height) * 100;
+  const pb = document.getElementById('scrollProgress');
+  if (pb) pb.style.width = scrolled + '%';
 });
 </script>
 <script>

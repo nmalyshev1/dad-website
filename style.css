@@ -602,7 +602,7 @@ html {
 
 .mobile-lang-btn {
     display: flex;
-    align-items: center;
+    align-items: center; 
     gap: 8px;
     padding: 8px 14px;
     border: 1px solid rgba(188, 163, 127, 0.3);
@@ -2594,3 +2594,821 @@ html {
 .faq-answer p {
     color: #444; /* Dark gray for legibility on white */
 }
+
+/* ========================================================================
+   SHOW PRICE BUTTON
+   ======================================================================== */
+
+.show-price-container {
+    grid-column: span 2;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.btn-show-price {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: transparent;
+    color: var(--champagne-bronze);
+    padding: 14px 28px;
+    border: 2px solid var(--champagne-bronze);
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    font-family: inherit;
+}
+
+.btn-show-price:hover {
+    background-color: var(--champagne-bronze);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(196, 162, 101, 0.15);
+}
+
+.btn-show-price:active {
+    transform: translateY(0);
+}
+
+.btn-show-price svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.btn-show-price:hover svg {
+    transform: scale(1.1);
+}
+
+/* ========================================================================
+   PRICE ESTIMATOR PANEL
+   ======================================================================== */
+
+.price-estimator-panel {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #0F1D32 0%, #1a2d4a 100%);
+    border: 0 solid rgba(196, 162, 101, 0.35);
+    border-radius: 8px;
+    padding: 0 32px;
+    margin-top: 0;
+    max-height: 0;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease,
+                transform 0.4s ease,
+                max-height 0.4s ease,
+                padding 0.4s ease,
+                margin 0.4s ease,
+                border-width 0.4s ease;
+    pointer-events: none;
+}
+
+.price-estimator-panel::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196, 162, 101, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.price-estimator-panel.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    max-height: 600px; /* plenty of room for details + disclaimer */
+    padding: 28px 32px;
+    margin-top: 15px;
+    border-width: 1px;
+}
+
+.estimator-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.estimator-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(196, 162, 101, 0.15);
+    border: 1px solid rgba(196, 162, 101, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.estimator-icon svg {
+    color: var(--champagne-bronze);
+}
+
+.estimator-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--champagne-bronze);
+}
+
+.estimator-body {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.estimator-price-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.estimator-from {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.estimator-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1;
+    transition: all 0.3s ease;
+}
+
+.estimator-price .currency {
+    font-size: 1.6rem;
+    vertical-align: super;
+    margin-right: 2px;
+    color: var(--champagne-bronze);
+}
+
+.estimator-route-info {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 6px;
+    font-style: italic;
+}
+
+.estimator-extras {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.estimator-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(196, 162, 101, 0.12);
+    border: 1px solid rgba(196, 162, 101, 0.25);
+    color: rgba(255,255,255,0.8);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.estimator-tag.active {
+    background: rgba(196, 162, 101, 0.25);
+    border-color: var(--champagne-bronze);
+    color: var(--champagne-bronze);
+}
+
+.estimator-disclaimer {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.5px;
+    line-height: 1.5;
+}
+
+/* Night tariff checkbox row */
+.night-tariff-row {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: rgba(196, 162, 101, 0.05);
+    border: 1px solid rgba(196, 162, 101, 0.15);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease;
+    user-select: none;
+}
+
+.night-tariff-row:hover {
+    background: rgba(196, 162, 101, 0.1);
+    border-color: rgba(196, 162, 101, 0.3);
+}
+
+.night-tariff-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--champagne-bronze);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.night-tariff-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sea-navy);
+    cursor: pointer;
+}
+
+.night-tariff-sub {
+    font-size: 10px;
+    color: #888;
+    margin-left: auto;
+    font-style: italic;
+}
+
+/* ========================================================================
+   BOOK & PAY BUTTON (Stripe)
+   ======================================================================== */
+
+.btn-actions-row {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 4px;
+}
+
+.btn-submit {
+    /* keep existing, now inside the actions row */
+    grid-column: unset;
+    margin-top: 0;
+}
+
+.btn-pay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #0F1D32 0%, #1a2d4a 100%);
+    color: #fff;
+    padding: 18px;
+    border: 2px solid rgba(196, 162, 101, 0.5);
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.btn-pay:hover {
+    background: linear-gradient(135deg, #1a3055 0%, #243d5e 100%);
+    border-color: var(--champagne-bronze);
+    box-shadow: 0 15px 35px rgba(15, 29, 50, 0.35), 0 0 0 1px rgba(196, 162, 101, 0.2);
+    transform: translateY(-3px) scale(1.01);
+    color: #fff;
+}
+
+.btn-pay svg {
+    flex-shrink: 0;
+    opacity: 0.9;
+}
+
+.btn-pay-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 9px;
+    letter-spacing: 1px;
+    background: rgba(196, 162, 101, 0.15);
+    color: var(--champagne-bronze);
+    padding: 3px 8px;
+    border-radius: 20px;
+    border: 1px solid rgba(196, 162, 101, 0.3);
+    white-space: nowrap;
+}
+
+/* Stripe modal overlay */
+.stripe-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 18, 30, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.stripe-overlay.open {
+    display: flex;
+}
+
+.stripe-modal {
+    background: #fff;
+    border-radius: 12px;
+    width: min(480px, 92vw);
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    animation: modalIn 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.94) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.stripe-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 22px;
+    line-height: 1;
+    padding: 6px;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+}
+
+.stripe-modal-close:hover {
+    color: var(--sea-navy);
+    background: #f5f5f5;
+}
+
+.stripe-modal-header {
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.stripe-modal-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--sea-navy);
+    margin-bottom: 6px;
+}
+
+.stripe-modal-header p {
+    font-size: 13px;
+    color: #888;
+    letter-spacing: 0.3px;
+}
+
+.stripe-modal-summary {
+    background: linear-gradient(135deg, #0F1D32 0%, #1a2d4a 100%);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+}
+
+.stripe-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.7);
+    padding: 5px 0;
+}
+
+.stripe-summary-row.total {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 10px;
+    padding-top: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+}
+
+.stripe-summary-row.total .amount {
+    color: var(--champagne-bronze);
+    font-size: 18px;
+    font-family: 'Playfair Display', serif;
+}
+
+.stripe-payment-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #f8f9fb;
+    border: 1px solid #e8eaf0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    font-size: 12px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.stripe-payment-note svg {
+    flex-shrink: 0;
+    color: var(--champagne-bronze);
+    margin-top: 1px;
+}
+
+.stripe-secure-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 10px;
+    color: #bbb;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-top: 16px;
+}
+
+.stripe-secure-row svg {
+    color: #4CAF50;
+}
+
+.btn-stripe-confirm {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #635bff 0%, #7b73ff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.btn-stripe-confirm:hover {
+    background: linear-gradient(135deg, #7b73ff 0%, #9490ff 100%);
+    box-shadow: 0 10px 25px rgba(99, 91, 255, 0.4);
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+/* ========================================================================
+   BOOKING SUCCESS PAGE
+   ======================================================================== */
+
+.success-page {
+    background: linear-gradient(135deg, #0F1D32 0%, #0d1625 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.success-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+}
+
+.success-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 60px 50px;
+    max-width: 560px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    animation: successIn 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes successIn {
+    from { opacity: 0; transform: scale(0.9) translateY(30px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.success-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--bronze-gradient);
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+    border: 2px solid rgba(76, 175, 80, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    animation: pulseSuccess 2s ease-in-out infinite;
+}
+
+@keyframes pulseSuccess {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.15); }
+    50%       { box-shadow: 0 0 0 14px rgba(76, 175, 80, 0); }
+}
+
+.success-icon svg {
+    color: #4CAF50;
+}
+
+.success-card h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--sea-navy);
+    margin-bottom: 12px;
+}
+
+.success-card .success-subtitle {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 36px;
+    letter-spacing: 0.3px;
+    line-height: 1.6;
+}
+
+.success-steps {
+    text-align: left;
+    margin-bottom: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.success-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #f8f9fb;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.success-step-num {
+    width: 26px;
+    height: 26px;
+    background: var(--bronze-gradient);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.success-step-text {
+    font-size: 13px;
+    color: var(--sea-navy);
+    line-height: 1.5;
+}
+
+.success-step-text strong {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.success-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-success-home {
+    display: block;
+    padding: 15px;
+    background: linear-gradient(135deg, #0F1D32 0%, #1a2d4a 100%);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-success-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(15, 29, 50, 0.3);
+    color: #fff;
+}
+
+.btn-success-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px;
+    border: 1.5px solid rgba(196, 162, 101, 0.4);
+    border-radius: 6px;
+    color: var(--sea-navy);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-success-whatsapp:hover {
+    border-color: var(--champagne-bronze);
+    background: rgba(196, 162, 101, 0.05);
+    color: var(--sea-navy);
+}
+
+/* Responsive adjustments for booking form */
+@media (max-width: 768px) {
+    .show-price-container {
+        grid-column: span 1;
+    }
+    .price-estimator-panel {
+        grid-column: span 1;
+    }
+    .night-tariff-row {
+        grid-column: span 1;
+    }
+    .btn-actions-row {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+    }
+    .estimator-body {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .estimator-extras {
+        align-items: flex-start;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .success-card {
+        padding: 40px 24px;
+    }
+    .stripe-modal {
+        padding: 28px 20px;
+    }
+}
+
+/* ========================================================================
+   GOOGLE MAPS-STYLE AUTOCOMPLETE
+   ======================================================================== */
+
+.autocomplete-wrapper {
+    position: relative;
+}
+
+.autocomplete-list {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid rgba(196, 162, 101, 0.25);
+    border-radius: 6px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    z-index: 500;
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    max-height: 260px;
+    overflow-y: auto;
+    animation: acDropIn 0.15s ease;
+}
+
+.autocomplete-list.open {
+    display: block;
+}
+
+@keyframes acDropIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.autocomplete-item {
+    padding: 11px 16px;
+    font-size: 13px;
+    color: var(--sea-navy);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.15s ease;
+    line-height: 1.3;
+}
+
+.autocomplete-item::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23C4A265' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'%3E%3C/path%3E%3Ccircle cx='12' cy='10' r='3'%3E%3C/circle%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.7;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.active {
+    background: rgba(196, 162, 101, 0.08);
+}
+
+.autocomplete-item.active {
+    background: rgba(196, 162, 101, 0.14);
+}
+
+.autocomplete-item strong {
+    color: var(--champagne-bronze);
+    font-weight: 700;
+}
+
+/* Scrollbar for autocomplete */
+.autocomplete-list::-webkit-scrollbar {
+    width: 4px;
+}
+.autocomplete-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+.autocomplete-list::-webkit-scrollbar-thumb {
+    background: rgba(196, 162, 101, 0.3);
+    border-radius: 2px;
+}
+
+/* ========================================================================
+   NIGHT TARIFF NOTICE (inside estimator panel)
+   ======================================================================== */
+
+.night-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(255, 191, 0, 0.10);
+    border: 1px solid rgba(255, 191, 0, 0.25);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-top: 14px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+}
+
+.night-notice svg {
+    flex-shrink: 0;
+    color: #ffd060;
+    margin-top: 1px;
+}
+
+.night-notice strong {
+    color: #ffd060;
+}
+
