@@ -162,7 +162,6 @@
         </div>
         <div class="estimator-body">
           <div class="estimator-price-block">
-            <span class="estimator-from">From</span>
             <div class="estimator-price" id="estimator-price-display">
               <span class="currency">€</span><span id="estimator-price-value">—</span>
             </div>
@@ -448,25 +447,42 @@ function matchKnownLocation(address) {
   if (!address) return null;
   const norm = address.toLowerCase();
   
-  if (norm.includes('nice airport') || /\bnce\b/i.test(norm)) return 'nice airport';
-  if (norm.includes('monaco') || norm.includes('monte carlo') || norm.includes('monte-carlo')) return 'monaco';
-  if (norm.includes('cannes')) return 'cannes';
-  if (norm.includes("cap d'antibes")) return "cap d'antibes";
-  if (norm.includes('saint jean cap ferrat') || norm.includes('cap ferrat')) return 'saint jean cap ferrat';
-  if (norm.includes('beaulieu')) return 'beaulieu sur mer';
-  if (norm.includes('villefranche')) return 'villefranche sur mer';
-  if (norm.includes('antibes')) return 'antibes'; // must be after cap d'antibes
-  if (norm.includes('menton')) return 'menton';
-  if (norm.includes('grasse')) return 'grasse';
-  if (norm.includes('saint-tropez') || norm.includes('st tropez') || norm.includes('saint tropez')) return 'saint-tropez';
-  if (norm.includes('théoule') || norm.includes('theoule')) return 'théoule-sur-mer';
-  if (norm.includes('rafael') || norm.includes('raphel') || norm.includes('raphaël')) return 'saint rafael';
-  if (norm.includes('frejus') || norm.includes('fréjus')) return 'frejus';
-  if (norm.includes('sanremo') || norm.includes('san remo')) return 'sanremo';
-  if (norm.includes('milan') || norm.includes('milano')) return 'milan';
-  if (norm.includes('paris')) return 'paris';
-  if (norm.includes('marseille')) return 'marseille';
-  if (norm.includes('nice')) return 'nice city'; // default for nice city
+  const mapping = [
+    { key: 'nice airport', terms: ['nice airport', 'nce', 'aeroport de nice', 'aéroport de nice', 'nice aéroport', 'nice aeroport', 'аэропорт ниццы', 'аэропорт ницца', 'ниццы аэропорт', 'аэропорт лазурный берег'] },
+    { key: 'monaco', terms: ['monaco', 'monte carlo', 'monte-carlo', 'монако', 'монте карло', 'монте-карло'] },
+    { key: 'cannes', terms: ['cannes', 'канны', 'канн'] },
+    { key: "cap d'antibes", terms: ["cap d'antibes", 'мыс антиб', "кап д'антиб", "кап д’антиб"] },
+    { key: 'saint jean cap ferrat', terms: ['saint jean cap ferrat', 'cap ferrat', 'saint-jean-cap-ferrat', 'сен-жан-кап-ферра', 'кап-ферра', 'сен жан кап ферра', 'кап ферра'] },
+    { key: 'beaulieu sur mer', terms: ['beaulieu sur mer', 'beaulieu-sur-mer', 'болье-сюр-мер', 'болье сюр мер', 'больё-сюр-мер', 'больё сюр мер'] },
+    { key: 'villefranche sur mer', terms: ['villefranche sur mer', 'villefranche-sur-mer', 'вильфранш-сюр-мер', 'вильфранш сюр мер'] },
+    { key: 'antibes', terms: ['antibes', 'антиб', 'антибы'] },
+    { key: 'menton', terms: ['menton', 'ментона', 'ментон'] },
+    { key: 'grasse', terms: ['grasse', 'грасс', 'грас'] },
+    { key: 'saint-tropez', terms: ['saint-tropez', 'st tropez', 'saint tropez', 'сен-тропе', 'сан-тропе', 'сен тропе', 'сан тропе'] },
+    { key: 'théoule-sur-mer', terms: ['théoule-sur-mer', 'theoule-sur-mer', 'théoule', 'theoule', 'теоль-сюр-мер', 'теоль сюр мер', 'теоль'] },
+    { key: 'saint rafael', terms: ['rafael', 'raphel', 'raphaël', 'рафаэль', 'рафаель'] },
+    { key: 'frejus', terms: ['frejus', 'fréjus', 'фрежюс', 'фрежус'] },
+    { key: 'sanremo', terms: ['sanremo', 'san remo', 'санремо', 'сан-ремо', 'сан ремо'] },
+    { key: 'milan', terms: ['milan', 'milano', 'милан'] },
+    { key: 'paris', terms: ['paris', 'париж'] },
+    { key: 'marseille', terms: ['marseille', 'марсель'] },
+    { key: 'nice city', terms: ['nice', 'ницца'] }
+  ];
+
+  for (const item of mapping) {
+    for (const term of item.terms) {
+      if (term === 'nce') {
+        const regex = /\bnce\b/i;
+        if (regex.test(norm)) {
+          return item.key;
+        }
+      } else {
+        if (norm.includes(term)) {
+          return item.key;
+        }
+      }
+    }
+  }
   
   return null;
 }
@@ -714,6 +730,12 @@ function buildAutocomplete(inputId, listId) {
             
             li.dataset.value = fullAddressString;
 
+            const coords = feat.geometry ? feat.geometry.coordinates : null;
+            if (coords && coords.length >= 2) {
+              li.dataset.lng = coords[0];
+              li.dataset.lat = coords[1];
+            }
+
             li.innerHTML = `
               <div style="display: flex; flex-direction: column;">
                 <span class="addr-main" style="font-weight: 600; color: var(--sea-navy); font-size: 13px;">${addr.main}</span>
@@ -724,6 +746,13 @@ function buildAutocomplete(inputId, listId) {
             li.addEventListener('mousedown', function(e) {
               e.preventDefault();
               input.value = fullAddressString;
+              if (li.dataset.lat) {
+                input.dataset.lat = li.dataset.lat;
+                input.dataset.lng = li.dataset.lng;
+              } else {
+                delete input.dataset.lat;
+                delete input.dataset.lng;
+              }
               list.classList.remove('open');
               list.innerHTML = '';
               updateEstimator();
@@ -764,8 +793,13 @@ function buildAutocomplete(inputId, listId) {
       e.preventDefault();
       const selectedItem = items[activeIdx];
       input.value = selectedItem.dataset.value || selectedItem.textContent.trim();
-      input.dataset.lat = selectedItem.dataset.lat || '';
-      input.dataset.lng = selectedItem.dataset.lng || '';
+      if (selectedItem.dataset.lat) {
+        input.dataset.lat = selectedItem.dataset.lat;
+        input.dataset.lng = selectedItem.dataset.lng;
+      } else {
+        delete input.dataset.lat;
+        delete input.dataset.lng;
+      }
       list.classList.remove('open');
       list.innerHTML = '';
       updateEstimator();
@@ -827,9 +861,20 @@ function updateEstimator() {
 
   // Vehicle tag
   const tagVehicle = document.getElementById('tag-vehicle');
+  let displayName = 'Standard';
+  if (selectedCarLabel.includes('E-Class')) {
+    displayName = 'E-Class';
+  } else if (selectedCarLabel.includes('V-Class')) {
+    displayName = 'V-Class';
+  } else if (selectedCarLabel.includes('Renault') || selectedCarLabel.includes('Trafic')) {
+    displayName = 'Renault Trafic';
+  } else if (selectedCarLabel) {
+    displayName = selectedCarLabel;
+  }
+  
   tagVehicle.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-    ${isVclass ? 'V-Class' : 'Standard'}
+    ${displayName}
   `;
 
   // Night notice — informational only, no price modification
