@@ -90,15 +90,7 @@
             <strong>Mercedes E-Class</strong>
             <span>Up to 3 passengers · Executive sedan</span>
           </div>
-          <div class="car-option-check">✓</div>
-        </div>
 
-        <div class="car-option" data-car="vclass" data-car-label="Mercedes V-Class" id="car-vclass">
-          <img src="images/fleet_v_class.png" alt="Mercedes V-Class">
-          <div class="car-option-info">
-            <strong>Mercedes V-Class</strong>
-            <span>Up to 7 passengers · Premium luxury van</span>
-          </div>
           <div class="car-option-check">✓</div>
         </div>
 
@@ -108,6 +100,17 @@
             <strong>Renault Trafic SpaceClass</strong>
             <span>Up to 8 passengers · Groups &amp; events</span>
           </div>
+
+          <div class="car-option-check">✓</div>
+        </div>
+
+        <div class="car-option" data-car="vclass" data-car-label="Mercedes V-Class" id="car-vclass">
+          <img src="images/fleet_v_class.png" alt="Mercedes V-Class">
+          <div class="car-option-info">
+            <strong>Mercedes V-Class</strong>
+            <span>Up to 7 passengers · Premium luxury van</span>
+          </div>
+
           <div class="car-option-check">✓</div>
         </div>
 
@@ -152,11 +155,25 @@
       </div>
 
 
-      <!-- Live Price Estimator Panel -->
+      <div class="form-group">
+        <label data-i18n="request.passengers">Passengers</label>
+        <input type="number" name="passengers" min="1" max="14" value="1" required>
+      </div>
+      <div class="form-group">
+        <label data-i18n="request.luggage">Luggage Pieces</label>
+        <input type="number" name="luggage" min="0" max="15" value="0" required>
+      </div>
+
+      <div class="form-group full-width">
+        <label data-i18n="request.special_req">Special Requirements (Optional)</label>
+        <input type="text" name="requirements" placeholder="Child seats, heavy luggage, extra stops..." data-i18n="request.placeholder_req">
+      </div>
+
+      <!-- Live Price Estimator Panel (shown when car + both locations are selected) -->
       <div class="price-estimator-panel" id="price-estimator-panel">
         <div class="estimator-header">
           <div class="estimator-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M4 14h9M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12a7.9 7.9 0 0 0 7.8 8 7.7 7.7 0 0 0 5.2-2"></path></svg>
           </div>
           <span class="estimator-label">Estimated Price</span>
         </div>
@@ -198,29 +215,12 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
           <span>Night tariff applies (22:00–06:00) — a <strong>+10% surcharge</strong> will be added to the price above.</span>
         </div>
-        <div class="estimator-disclaimer">
-          ✦ Approximate estimate based on fixed rates — final confirmed price will be sent to your email. Additional charges may apply for trips over 5 hours or on major event dates (Cannes Film Festival, Monaco Grand Prix, etc.).
-        </div>
+
       </div>
 
-      <div class="form-group">
-        <label data-i18n="request.passengers">Passengers</label>
-        <input type="number" name="passengers" min="1" max="14" value="1" required>
-      </div>
-      <div class="form-group">
-        <label data-i18n="request.luggage">Luggage Pieces</label>
-        <input type="number" name="luggage" min="0" max="15" value="0" required>
-      </div>
-
-      <div class="form-group full-width">
-        <label data-i18n="request.special_req">Special Requirements (Optional)</label>
-        <input type="text" name="requirements" placeholder="Child seats, heavy luggage, extra stops..." data-i18n="request.placeholder_req">
-      </div>
-
-      <!-- Action Buttons Row -->
+      <!-- Action Button Row: Book & Pay Only -->
       <div class="btn-actions-row">
-        <button type="submit" class="btn-submit" data-i18n="request.btn_submit">Request Quote</button>
-        <button type="button" class="btn-pay" id="btn-book-pay" onclick="openStripeModal()">
+        <button type="button" class="btn-pay btn-pay-full" id="btn-book-pay" onclick="openStripeModal()">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
           Book &amp; Pay Online
           <span class="btn-pay-badge">Stripe · Secure</span>
@@ -488,20 +488,10 @@ function matchKnownLocation(address) {
 }
 
 function lookupPrice(pickup, dropoff, isVclass) {
-  // 1. Try to match exact route in PRICE_TABLE
   const knownP = matchKnownLocation(pickup);
   const knownD = matchKnownLocation(dropoff);
   
-  if (knownP && knownD) {
-    const key1 = knownP + '|' + knownD;
-    const key2 = knownD + '|' + knownP;
-    const prices = PRICE_TABLE[key1] || PRICE_TABLE[key2];
-    if (prices) {
-      return { price: prices[isVclass ? 1 : 0], method: 'exact' };
-    }
-  }
-
-  // 2. Try to get lat/lng coordinates stored on input datasets (from Photon selections)
+  // Try to get lat/lng coordinates stored on input datasets (from Photon selections or CITY_DISTANCES fallback)
   const pickupInput = document.getElementById('pickup-input');
   const dropoffInput = document.getElementById('dropoff-input');
   
@@ -525,14 +515,29 @@ function lookupPrice(pickup, dropoff, isVclass) {
     locD = CITY_DISTANCES[knownD];
   }
 
+  let calculatedKm = null;
   if (locP && locD) {
     const km = haversineKm(locP, locD);
     // Add 15% road factor (straight-line is shorter than road distance)
-    const roadKm = km * 1.15;
+    calculatedKm = Math.round(km * 1.15);
+  }
+
+  // 1. Try to match exact route in PRICE_TABLE
+  if (knownP && knownD) {
+    const key1 = knownP + '|' + knownD;
+    const key2 = knownD + '|' + knownP;
+    const prices = PRICE_TABLE[key1] || PRICE_TABLE[key2];
+    if (prices) {
+      return { price: prices[isVclass ? 1 : 0], method: 'exact', km: calculatedKm };
+    }
+  }
+
+  // 2. Fallback to estimated price
+  if (locP && locD && calculatedKm !== null) {
     const rate = isVclass ? RATE_VCLASS_PER_KM : RATE_STANDARD_PER_KM;
     const minFare = isVclass ? MIN_FARE_VCLASS : MIN_FARE_STANDARD;
-    const raw = Math.max(minFare, Math.round(roadKm * rate / 5) * 5);
-    return { price: raw, method: 'estimated', km: Math.round(roadKm) };
+    const raw = Math.max(minFare, Math.round(calculatedKm * rate / 5) * 5);
+    return { price: raw, method: 'estimated', km: calculatedKm };
   }
 
   return null;
@@ -580,6 +585,7 @@ const POPULAR_SPOTS = [
       fr: "Aéroport Nice Côte d'Azur (NCE) - Terminal 1",
       ru: "Аэропорт Ницца Лазурный Берег (NCE) - Терминал 1"
     },
+    keywords: ["nice", "nice airport", "nce", "ницца", "ница", "аэропорт ниццы", "nice aeroport", "аэропорт"],
     lat: 43.6653, lng: 7.2154
   },
   {
@@ -588,6 +594,7 @@ const POPULAR_SPOTS = [
       fr: "Aéroport Nice Côte d'Azur (NCE) - Terminal 2",
       ru: "Аэропорт Ницца Лазурный Берег (NCE) - Терминал 2"
     },
+    keywords: ["nice", "nice airport", "nce", "ницца", "ница", "аэропорт ниццы", "nice aeroport", "аэропорт"],
     lat: 43.6612, lng: 7.2061
   },
   {
@@ -596,6 +603,7 @@ const POPULAR_SPOTS = [
       fr: "Gare de Nice-Ville (Centre)",
       ru: "Железнодорожный вокзал Ниццы (Gare de Nice-Ville)"
     },
+    keywords: ["nice", "nice station", "gare de nice", "ницца", "ница", "вокзал ниццы", "вокзал"],
     lat: 43.7049, lng: 7.2619
   },
   {
@@ -604,6 +612,7 @@ const POPULAR_SPOTS = [
       fr: "Promenade des Anglais, Nice",
       ru: "Променад дез Англе, Ницца"
     },
+    keywords: ["nice", "promenade", "anglais", "ницца", "ница", "променад"],
     lat: 43.6957, lng: 7.2538
   },
   {
@@ -612,6 +621,7 @@ const POPULAR_SPOTS = [
       fr: "Port de Nice (Port Lympia)",
       ru: "Порт Ниццы (Port Lympia)"
     },
+    keywords: ["nice", "port", "olympia", "lympia", "ницца", "ница", "порт"],
     lat: 43.6974, lng: 7.2864
   },
 
@@ -622,6 +632,7 @@ const POPULAR_SPOTS = [
       fr: "Palais des Festivals, Cannes",
       ru: "Дворец фестивалей, Канны"
     },
+    keywords: ["cannes", "palais", "festivals", "канны", "канн", "дворец фестивалей"],
     lat: 43.5515, lng: 7.0169
   },
   {
@@ -630,6 +641,7 @@ const POPULAR_SPOTS = [
       fr: "Boulevard de la Croisette, Cannes",
       ru: "Бульвар Круазет, Канны"
     },
+    keywords: ["cannes", "croisette", "канны", "канн", "круазет"],
     lat: 43.5489, lng: 7.0278
   },
   {
@@ -638,6 +650,7 @@ const POPULAR_SPOTS = [
       fr: "Aéroport de Cannes-Mandelieu (CEQ)",
       ru: "Аэропорт Канны-Мандельё (CEQ)"
     },
+    keywords: ["cannes", "cannes airport", "ceq", "mandelieu", "канны", "канн", "манделье", "аэропорт"],
     lat: 43.5422, lng: 6.9535
   },
   {
@@ -646,6 +659,7 @@ const POPULAR_SPOTS = [
       fr: "Vieux Port de Cannes",
       ru: "Старый порт Канн"
     },
+    keywords: ["cannes", "port", "vieux port", "канны", "канн", "порт канн"],
     lat: 43.5505, lng: 7.0125
   },
 
@@ -656,6 +670,7 @@ const POPULAR_SPOTS = [
       fr: "Casino de Monte-Carlo (Place du Casino)",
       ru: "Казино Монте-Карло"
     },
+    keywords: ["monaco", "monte carlo", "casino", "монако", "монте карло", "казино"],
     lat: 43.7393, lng: 7.4281
   },
   {
@@ -664,6 +679,7 @@ const POPULAR_SPOTS = [
       fr: "Port Hercule, Monaco",
       ru: "Порт Эркюль, Монако"
     },
+    keywords: ["monaco", "port", "hercule", "монако", "порт монако"],
     lat: 43.7347, lng: 7.4249
   },
   {
@@ -672,6 +688,7 @@ const POPULAR_SPOTS = [
       fr: "Héliport de Monaco",
       ru: "Вертодром Монако (Heliport)"
     },
+    keywords: ["monaco", "heliport", "helicopter", "монако", "вертодром", "вертолет"],
     lat: 43.7262, lng: 7.4202
   },
   {
@@ -680,6 +697,7 @@ const POPULAR_SPOTS = [
       fr: "Hôtel de Paris Monte-Carlo",
       ru: "Отель де Пари, Монте-Карло"
     },
+    keywords: ["monaco", "hotel de paris", "hotel", "монако", "монте карло", "отель де пари"],
     lat: 43.7391, lng: 7.4274
   },
   {
@@ -688,6 +706,7 @@ const POPULAR_SPOTS = [
       fr: "Monte-Carlo Bay Hotel & Resort",
       ru: "Монте-Карло Бэй Отель"
     },
+    keywords: ["monaco", "monte carlo bay", "hotel", "монако", "монте карло", "отель бэй"],
     lat: 43.7481, lng: 7.4431
   },
 
@@ -698,6 +717,7 @@ const POPULAR_SPOTS = [
       fr: "Port de Saint-Tropez",
       ru: "Порт Сен-Тропе"
     },
+    keywords: ["st tropez", "saint tropez", "saint-tropez", "port", "сен тропе", "сен-тропе", "порт"],
     lat: 43.2727, lng: 6.6384
   },
   {
@@ -706,6 +726,7 @@ const POPULAR_SPOTS = [
       fr: "Place des Lices, Saint-Tropez",
       ru: "Площадь Лис, Сен-Тропе"
     },
+    keywords: ["st tropez", "saint tropez", "lices", "сен тропе", "сен-тропе", "площадь лис"],
     lat: 43.2706, lng: 6.6409
   },
   {
@@ -714,6 +735,7 @@ const POPULAR_SPOTS = [
       fr: "Plage de Pampelonne (Club 55), Ramatuelle",
       ru: "Пляж Пампелон (Клуб 55), Раматюэль"
     },
+    keywords: ["st tropez", "saint tropez", "pampelonne", "beach", "club 55", "сен тропе", "сен-тропе", "пляж", "пампелон", "клуб 55"],
     lat: 43.2284, lng: 6.6625
   },
 
@@ -724,6 +746,7 @@ const POPULAR_SPOTS = [
       fr: "Port Vauban, Antibes",
       ru: "Порт Вобан, Антиб"
     },
+    keywords: ["antibes", "port", "vauban", "антиб", "антибы", "порт вобан"],
     lat: 43.5866, lng: 7.1274
   },
   {
@@ -732,6 +755,7 @@ const POPULAR_SPOTS = [
       fr: "Hôtel du Cap-Eden-Roc, Cap d'Antibes",
       ru: "Отель Дю Кап-Эден-Рок, Кап-д'Антиб"
     },
+    keywords: ["antibes", "cap", "eden roc", "hotel", "антиб", "антибы", "кап", "эден рок"],
     lat: 43.5475, lng: 7.1205
   },
   {
@@ -740,6 +764,7 @@ const POPULAR_SPOTS = [
       fr: "Gare d'Antibes",
       ru: "Железнодорожный вокзал Антиба"
     },
+    keywords: ["antibes", "station", "gare", "антиб", "антибы", "вокзал антиб"],
     lat: 43.5855, lng: 7.1215
   },
 
@@ -750,6 +775,7 @@ const POPULAR_SPOTS = [
       fr: "Saint-Jean-Cap-Ferrat (Grand-Hôtel)",
       ru: "Сен-Жан-Кап-Ферра (Гранд-Отель)"
     },
+    keywords: ["cap ferrat", "saint jean", "grand hotel", "кап ферра", "сен жан"],
     lat: 43.6787, lng: 7.3386
   },
   {
@@ -758,6 +784,7 @@ const POPULAR_SPOTS = [
       fr: "Théoule-sur-Mer (Port)",
       ru: "Теоль-сюр-Мер (Порт)"
     },
+    keywords: ["theoule", "théoule", "port", "теоль"],
     lat: 43.5069, lng: 6.9423
   },
   {
@@ -766,6 +793,7 @@ const POPULAR_SPOTS = [
       fr: "Gare de Marseille-Saint-Charles",
       ru: "Вокзал Сен-Шарль, Марсель"
     },
+    keywords: ["marseille", "station", "saint charles", "марсель", "вокзал марсель"],
     lat: 43.3027, lng: 5.3806
   }
 ];
@@ -900,10 +928,12 @@ function buildAutocomplete(inputId, listId) {
     const currentLang = document.documentElement.lang || 'en';
     const displayLang = ['en', 'fr', 'ru'].includes(currentLang) ? currentLang : 'en';
 
-    // Find matching popular spots (across all translated names)
+    // Find matching popular spots (across all translated names or custom keywords)
     const normQ = q.toLowerCase();
     const matchedSpots = POPULAR_SPOTS.filter(spot => {
-      return Object.values(spot.names).some(name => name.toLowerCase().includes(normQ));
+      const nameMatch = Object.values(spot.names).some(name => name.toLowerCase().includes(normQ));
+      const keywordMatch = spot.keywords && spot.keywords.some(kw => kw.toLowerCase().includes(normQ));
+      return nameMatch || keywordMatch;
     });
 
     // Render matched popular spots immediately
@@ -925,6 +955,17 @@ function buildAutocomplete(inputId, listId) {
         mainHTML = displayName.substring(0, idx) +
                    '<strong>' + displayName.substring(idx, idx + q.length) + '</strong>' +
                    displayName.substring(idx + q.length);
+      } else {
+        // Try bolding via matched keyword if name bolding isn't straightforward
+        const matchedKw = spot.keywords.find(kw => kw.includes(normQ));
+        if (matchedKw) {
+          const kwIdx = displayName.toLowerCase().indexOf(matchedKw);
+          if (kwIdx > -1) {
+            mainHTML = displayName.substring(0, kwIdx) +
+                       '<strong>' + displayName.substring(kwIdx, kwIdx + matchedKw.length) + '</strong>' +
+                       displayName.substring(kwIdx + matchedKw.length);
+          }
+        }
       }
 
       li.innerHTML = `
@@ -968,6 +1009,15 @@ function buildAutocomplete(inputId, listId) {
 
           const features = data.features || [];
           features.forEach((feat) => {
+            const props = feat.properties || {};
+            const countryCode = props.countrycode || '';
+            const country = props.country || '';
+            
+            // Limit results only to France (FR), Monaco (MC), and Italy (IT)
+            const isAllowedCountry = ['FR', 'MC', 'IT'].includes(countryCode.toUpperCase()) || 
+                                     ['france', 'monaco', 'italy', 'италия', 'франция', 'монако'].includes(country.toLowerCase());
+            if (!isAllowedCountry) return;
+
             const addr = formatPhotonAddress(feat);
             const fullAddressString = addr.secondary ? `${addr.main}, ${addr.secondary}` : addr.main;
             
@@ -1108,7 +1158,7 @@ function updateEstimator() {
   document.getElementById('estimator-dropoff-value').textContent = dropoff;
 
   const distEl = document.getElementById('estimator-distance-info');
-  if (result.method === 'estimated') {
+  if (result.km) {
     distEl.textContent = `📏 Distance: ~${result.km} km`;
     distEl.style.display = 'block';
   } else {
@@ -1247,6 +1297,35 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
     headers: { 'Accept': 'application/json' }
   }).then(response => {
     if (response.ok) {
+      // Send Telegram notification (Optional: Update with your dad's chat ID)
+      const telegramToken = '8679301073:AAFR_t0iOonpkxFRjz10Ms-eJ3NY5Pq81Ew';
+      const chatId = 'YOUR_TELEGRAM_CHAT_ID';
+      
+      if (telegramToken && chatId !== 'YOUR_TELEGRAM_CHAT_ID') {
+        const messageText = `🚗 *New Booking Request!*\n\n` +
+          `👤 *Name:* ${formData.get('name')}\n` +
+          `✉️ *Email:* ${formData.get('email')}\n` +
+          `📞 *Phone:* ${formData.get('phone')}\n` +
+          `📅 *Date/Time:* ${formData.get('pickup_datetime')}\n` +
+          `📍 *From:* ${formData.get('pickup')}\n` +
+          `📍 *To:* ${formData.get('dropoff')}\n` +
+          `👥 *Passengers:* ${formData.get('passengers')}\n` +
+          `💼 *Luggage:* ${formData.get('luggage')}\n` +
+          `💬 *Special Req:* ${formData.get('requirements') || 'None'}\n` +
+          `🚗 *Car Selected:* ${selectedCarLabel || 'Not specified'}\n` +
+          `💰 *Estimated Price:* ${currentPrice ? '€' + currentPrice : 'To be confirmed'}`;
+
+        fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: messageText,
+            parse_mode: 'Markdown'
+          })
+        }).catch(err => console.error('Telegram notification error:', err));
+      }
+
       alert(t.success || '✓ Your request has been sent! We will confirm within the hour.');
       form.reset();
       document.querySelectorAll('.car-option').forEach(el => el.classList.remove('selected'));

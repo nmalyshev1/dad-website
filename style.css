@@ -2203,6 +2203,7 @@ html {
     transform: scale(1);
 }
 
+
 @media (max-width: 900px) {
     .car-selector-grid {
         grid-template-columns: 1fr;
@@ -2696,6 +2697,7 @@ html {
 .estimator-header {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     margin-bottom: 18px;
 }
@@ -2939,15 +2941,23 @@ html {
 .btn-actions-row {
     grid-column: span 2;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 16px;
-    margin-top: 4px;
+    margin-top: 8px;
 }
 
 .btn-submit {
     /* keep existing, now inside the actions row */
     grid-column: unset;
     margin-top: 0;
+}
+
+.btn-pay-full {
+    width: 100%;
+    grid-column: 1 / -1;
+    padding: 20px;
+    font-size: 12px;
+    letter-spacing: 3px;
 }
 
 .btn-pay {
@@ -3349,6 +3359,10 @@ html {
     }
     .price-estimator-panel {
         grid-column: span 1;
+        padding: 0 18px;
+    }
+    .price-estimator-panel.visible {
+        padding: 22px 18px;
     }
     .night-tariff-row {
         grid-column: span 1;
@@ -3356,6 +3370,11 @@ html {
     .btn-actions-row {
         grid-column: span 1;
         grid-template-columns: 1fr;
+    }
+    .btn-pay-full {
+        font-size: 10px;
+        letter-spacing: 2px;
+        padding: 18px;
     }
     .estimator-body {
         flex-direction: column;
@@ -3367,11 +3386,37 @@ html {
         flex-direction: row;
         flex-wrap: wrap;
     }
+    .estimator-price {
+        font-size: clamp(42px, 12vw, 68px);
+    }
+    .estimator-route-display {
+        gap: 10px;
+    }
+    .route-row-value {
+        font-size: 11px;
+        word-break: break-word;
+    }
+    .autocomplete-list {
+        max-height: 200px;
+    }
     .success-card {
         padding: 40px 24px;
     }
     .stripe-modal {
         padding: 28px 20px;
+        margin: 20px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .car-selector-grid {
+        grid-template-columns: 1fr;
+    }
+    .car-option {
+        flex-direction: row;
+        align-items: center;
+    }
+    .car-option img {
+        max-width: 80px;
     }
 }
 
