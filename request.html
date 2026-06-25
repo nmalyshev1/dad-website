@@ -432,30 +432,71 @@ function haversineKm(loc1, loc2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
-function normalizeCity(raw) {
-  return raw.trim().toLowerCase()
-    .replace(/\(nce\)/gi, '')
-    .replace(/airport/gi, 'airport')
-    .replace(/\s+/g, ' ')
-    .trim();
+function matchKnownLocation(address) {
+  if (!address) return null;
+  const norm = address.toLowerCase();
+  
+  if (norm.includes('nice airport') || norm.includes('nce')) return 'nice airport';
+  if (norm.includes('monaco') || norm.includes('monte carlo') || norm.includes('monte-carlo')) return 'monaco';
+  if (norm.includes('cannes')) return 'cannes';
+  if (norm.includes("cap d'antibes")) return "cap d'antibes";
+  if (norm.includes('saint jean cap ferrat') || norm.includes('cap ferrat')) return 'saint jean cap ferrat';
+  if (norm.includes('beaulieu')) return 'beaulieu sur mer';
+  if (norm.includes('villefranche')) return 'villefranche sur mer';
+  if (norm.includes('antibes')) return 'antibes'; // must be after cap d'antibes
+  if (norm.includes('menton')) return 'menton';
+  if (norm.includes('grasse')) return 'grasse';
+  if (norm.includes('saint-tropez') || norm.includes('st tropez') || norm.includes('saint tropez')) return 'saint-tropez';
+  if (norm.includes('théoule') || norm.includes('theoule')) return 'théoule-sur-mer';
+  if (norm.includes('rafael') || norm.includes('raphel') || norm.includes('raphaël')) return 'saint rafael';
+  if (norm.includes('frejus') || norm.includes('fréjus')) return 'frejus';
+  if (norm.includes('sanremo') || norm.includes('san remo')) return 'sanremo';
+  if (norm.includes('milan') || norm.includes('milano')) return 'milan';
+  if (norm.includes('paris')) return 'paris';
+  if (norm.includes('marseille')) return 'marseille';
+  if (norm.includes('nice')) return 'nice city'; // default for nice city
+  
+  return null;
 }
 
 function lookupPrice(pickup, dropoff, isVclass) {
-  const p = normalizeCity(pickup);
-  const d = normalizeCity(dropoff);
-
-  // Check both orderings
-  const key1 = p + '|' + d;
-  const key2 = d + '|' + p;
-
-  let prices = PRICE_TABLE[key1] || PRICE_TABLE[key2];
-  if (prices) {
-    return { price: prices[isVclass ? 1 : 0], method: 'exact' };
+  // 1. Try to match exact route in PRICE_TABLE
+  const knownP = matchKnownLocation(pickup);
+  const knownD = matchKnownLocation(dropoff);
+  
+  if (knownP && knownD) {
+    const key1 = knownP + '|' + knownD;
+    const key2 = knownD + '|' + knownP;
+    const prices = PRICE_TABLE[key1] || PRICE_TABLE[key2];
+    if (prices) {
+      return { price: prices[isVclass ? 1 : 0], method: 'exact' };
+    }
   }
 
-  // Fallback: distance-based formula
-  const locP = CITY_DISTANCES[p];
-  const locD = CITY_DISTANCES[d];
+  // 2. Try to get lat/lng coordinates stored on input datasets (from Photon selections)
+  const pickupInput = document.getElementById('pickup-input');
+  const dropoffInput = document.getElementById('dropoff-input');
+  
+  const latP = parseFloat(pickupInput.dataset.lat);
+  const lngP = parseFloat(pickupInput.dataset.lng);
+  const latD = parseFloat(dropoffInput.dataset.lat);
+  const lngD = parseFloat(dropoffInput.dataset.lng);
+
+  let locP = null;
+  let locD = null;
+
+  if (!isNaN(latP) && !isNaN(lngP)) {
+    locP = { lat: latP, lng: lngP };
+  } else if (knownP) {
+    locP = CITY_DISTANCES[knownP];
+  }
+
+  if (!isNaN(latD) && !isNaN(lngD)) {
+    locD = { lat: latD, lng: lngD };
+  } else if (knownD) {
+    locD = CITY_DISTANCES[knownD];
+  }
+
   if (locP && locD) {
     const km = haversineKm(locP, locD);
     // Add 15% road factor (straight-line is shorter than road distance)
@@ -524,38 +565,94 @@ const CITY_LIST = [
   'Marseille',
 ];
 
+function getPhotonLang() {
+  const lang = document.documentElement.lang || 'en';
+  if (lang === 'fr') return 'fr';
+  if (lang === 'it') return 'it';
+  return 'en';
+}
+
+function formatPhotonAddress(feature) {
+  const p = feature.properties;
+  
+  // 1. House number and street/place name
+  let mainText = '';
+  if (p.housenumber) {
+    mainText += p.housenumber + ' ';
+  }
+  if (p.name) {
+    mainText += p.name;
+  }
+  
+  // 2. City, Postcode, Country
+  const subParts = [];
+  
+  if (p.city && p.city !== p.name) {
+    subParts.push(p.city);
+  } else if (p.locality && p.locality !== p.name) {
+    subParts.push(p.locality);
+  }
+  
+  if (p.postcode) {
+    subParts.push(p.postcode);
+  }
+  
+  if (p.state && p.state !== p.city && p.state !== p.name) {
+    subParts.push(p.state);
+  }
+  
+  if (p.country) {
+    subParts.push(p.country);
+  }
+  
+  const subText = subParts.join(', ');
+  
+  return {
+    main: mainText || p.city || p.locality || p.country || 'Unknown Location',
+    secondary: mainText ? subText : subParts.filter(x => x !== (p.city || p.locality)).join(', ')
+  };
+}
+
 function buildAutocomplete(inputId, listId) {
   const input   = document.getElementById(inputId);
   const list    = document.getElementById(listId);
   let activeIdx = -1;
+  let debounceTimer;
 
-  function showSuggestions(query) {
-    const q = query.trim().toLowerCase();
+  function showLocalFallback(q) {
     list.innerHTML = '';
-    activeIdx = -1;
-    if (!q) { list.classList.remove('open'); return; }
-
     const matches = CITY_LIST.filter(city =>
-      city.toLowerCase().includes(q)
+      city.toLowerCase().includes(q.toLowerCase())
     );
 
-    if (!matches.length) { list.classList.remove('open'); return; }
+    if (!matches.length) {
+      list.classList.remove('open');
+      return;
+    }
 
     matches.forEach((city, i) => {
       const li = document.createElement('li');
       li.className = 'autocomplete-item';
-      // Highlight matching portion
-      const idx = city.toLowerCase().indexOf(q);
+      li.dataset.value = city;
+
+      const idx = city.toLowerCase().indexOf(q.toLowerCase());
+      let mainHTML = '';
       if (idx > -1) {
-        li.innerHTML =
-          city.substring(0, idx) +
-          '<strong>' + city.substring(idx, idx + q.length) + '</strong>' +
-          city.substring(idx + q.length);
+        mainHTML = city.substring(0, idx) +
+                   '<strong>' + city.substring(idx, idx + q.length) + '</strong>' +
+                   city.substring(idx + q.length);
       } else {
-        li.textContent = city;
+        mainHTML = city;
       }
+
+      li.innerHTML = `
+        <div style="display: flex; flex-direction: column;">
+          <span class="addr-main" style="font-weight: 600; color: var(--sea-navy); font-size: 13px;">${mainHTML}</span>
+        </div>
+      `;
+
       li.addEventListener('mousedown', function(e) {
-        e.preventDefault(); // don't blur first
+        e.preventDefault();
         input.value = city;
         list.classList.remove('open');
         list.innerHTML = '';
@@ -566,11 +663,80 @@ function buildAutocomplete(inputId, listId) {
     list.classList.add('open');
   }
 
-  input.addEventListener('input', () => showSuggestions(input.value));
+  function showSuggestions(query) {
+    const q = query.trim();
+    if (!q) {
+      list.innerHTML = '';
+      list.classList.remove('open');
+      return;
+    }
+
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      // Show loading indicator
+      list.innerHTML = '<li class="autocomplete-item loading" style="color: #999; font-style: italic; pointer-events: none; padding: 12px 16px; font-size: 13px;">Searching...</li>';
+      list.classList.add('open');
+
+      const apiLang = getPhotonLang();
+      // Bias searches to Nice Côte d'Azur coordinates (43.6653 lat, 7.2154 lon)
+      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&lat=43.6653&lon=7.2154&limit=5&lang=${apiLang}`;
+
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          list.innerHTML = '';
+          activeIdx = -1;
+
+          const features = data.features || [];
+          if (!features.length) {
+            showLocalFallback(q);
+            return;
+          }
+
+          features.forEach((feat, i) => {
+            const li = document.createElement('li');
+            li.className = 'autocomplete-item';
+
+            const addr = formatPhotonAddress(feat);
+            const fullAddressString = addr.secondary ? `${addr.main}, ${addr.secondary}` : addr.main;
+            
+            li.dataset.value = fullAddressString;
+
+            li.innerHTML = `
+              <div style="display: flex; flex-direction: column;">
+                <span class="addr-main" style="font-weight: 600; color: var(--sea-navy); font-size: 13px;">${addr.main}</span>
+                ${addr.secondary ? `<span class="addr-sub" style="font-size: 11px; color: #777;">${addr.secondary}</span>` : ''}
+              </div>
+            `;
+
+            li.addEventListener('mousedown', function(e) {
+              e.preventDefault();
+              input.value = fullAddressString;
+              list.classList.remove('open');
+              list.innerHTML = '';
+              updateEstimator();
+            });
+
+            list.appendChild(li);
+          });
+          list.classList.add('open');
+        })
+        .catch(err => {
+          console.error('Photon autocomplete error:', err);
+          showLocalFallback(q);
+        });
+    }, 250);
+  }
+
+  input.addEventListener('input', () => {
+    delete input.dataset.lat;
+    delete input.dataset.lng;
+    showSuggestions(input.value);
+  });
   input.addEventListener('focus', () => { if (input.value) showSuggestions(input.value); });
 
   input.addEventListener('blur', () => {
-    setTimeout(() => { list.classList.remove('open'); }, 150);
+    setTimeout(() => { list.classList.remove('open'); }, 200);
   });
 
   input.addEventListener('keydown', function(e) {
@@ -584,7 +750,10 @@ function buildAutocomplete(inputId, listId) {
       activeIdx = Math.max(activeIdx - 1, 0);
     } else if (e.key === 'Enter' && activeIdx >= 0) {
       e.preventDefault();
-      input.value = items[activeIdx].textContent;
+      const selectedItem = items[activeIdx];
+      input.value = selectedItem.dataset.value || selectedItem.textContent.trim();
+      input.dataset.lat = selectedItem.dataset.lat || '';
+      input.dataset.lng = selectedItem.dataset.lng || '';
       list.classList.remove('open');
       list.innerHTML = '';
       updateEstimator();
