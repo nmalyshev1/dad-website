@@ -218,12 +218,11 @@
 
       </div>
 
-      <!-- Action Button Row: Book & Pay Only -->
+      <!-- Action Button Row: Book Now (Stripe bypassed for testing) -->
       <div class="btn-actions-row">
-        <button type="button" class="btn-pay btn-pay-full" id="btn-book-pay" onclick="openStripeModal()">
+        <button type="submit" class="btn-pay btn-pay-full btn-submit" id="btn-book-pay">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-          Book &amp; Pay Online
-          <span class="btn-pay-badge">Stripe · Secure</span>
+          Book Now
         </button>
       </div>
     </form>
@@ -1297,11 +1296,11 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
     headers: { 'Accept': 'application/json' }
   }).then(response => {
     if (response.ok) {
-      // Send Telegram notification (Optional: Update with your dad's chat ID)
-      const telegramToken = '8679301073:AAFR_t0iOonpkxFRjz10Ms-eJ3NY5Pq81Ew';
-      const chatId = 'YOUR_TELEGRAM_CHAT_ID';
+      // Send Telegram notification to dad
+      const telegramToken = '8679301073:AAFR_t0iOonpkxFRjz1OMs-eJ3NY5Pq81Ew';
+      const chatId = '8918454205';
       
-      if (telegramToken && chatId !== 'YOUR_TELEGRAM_CHAT_ID') {
+      {
         const messageText = `🚗 *New Booking Request!*\n\n` +
           `👤 *Name:* ${formData.get('name')}\n` +
           `✉️ *Email:* ${formData.get('email')}\n` +

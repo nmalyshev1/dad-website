@@ -237,6 +237,30 @@
           }
         }).then(response => {
           if (response.ok) {
+            // Send Telegram notification to dad
+            const telegramToken = '8679301073:AAFR_t0iOonpkxFRjz1OMs-eJ3NY5Pq81Ew';
+            const chatId = '8918454205';
+            
+            const messageText = `✨ *New Bespoke Quote Request!*\n\n` +
+              `👤 *Name:* ${formData.get('name')}\n` +
+              `✉️ *Email:* ${formData.get('email')}\n` +
+              `📞 *Phone:* ${formData.get('phone')}\n` +
+              `📅 *Date/Time:* ${formData.get('pickup_datetime')}\n` +
+              `📍 *From:* ${formData.get('pickup')}\n` +
+              `📍 *To:* ${formData.get('dropoff')}\n` +
+              `👥 *Passengers:* ${formData.get('passengers')}\n` +
+              `💬 *Special Req:* ${formData.get('requirements') || 'None'}`;
+
+            fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                chat_id: chatId,
+                text: messageText,
+                parse_mode: 'Markdown'
+              })
+            }).catch(err => console.error('Telegram notification error:', err));
+
             alert(translations[document.documentElement.lang].request.success);
             form.reset();
           } else {
