@@ -572,6 +572,204 @@ document.querySelectorAll('.car-option').forEach(card => {
 // ══════════════════════════════════════════════════════════════════════════════
 // AUTOCOMPLETE ENGINE
 // ══════════════════════════════════════════════════════════════════════════════
+const POPULAR_SPOTS = [
+  // ── Nice & Nice Airport ───────────────────────────────────────────
+  {
+    names: {
+      en: "Nice Côte d'Azur Airport (NCE) - Terminal 1",
+      fr: "Aéroport Nice Côte d'Azur (NCE) - Terminal 1",
+      ru: "Аэропорт Ницца Лазурный Берег (NCE) - Терминал 1"
+    },
+    lat: 43.6653, lng: 7.2154
+  },
+  {
+    names: {
+      en: "Nice Côte d'Azur Airport (NCE) - Terminal 2",
+      fr: "Aéroport Nice Côte d'Azur (NCE) - Terminal 2",
+      ru: "Аэропорт Ницца Лазурный Берег (NCE) - Терминал 2"
+    },
+    lat: 43.6612, lng: 7.2061
+  },
+  {
+    names: {
+      en: "Nice Ville Train Station (Gare de Nice-Ville)",
+      fr: "Gare de Nice-Ville (Centre)",
+      ru: "Железнодорожный вокзал Ниццы (Gare de Nice-Ville)"
+    },
+    lat: 43.7049, lng: 7.2619
+  },
+  {
+    names: {
+      en: "Promenade des Anglais, Nice",
+      fr: "Promenade des Anglais, Nice",
+      ru: "Променад дез Англе, Ницца"
+    },
+    lat: 43.6957, lng: 7.2538
+  },
+  {
+    names: {
+      en: "Port of Nice (Port Lympia)",
+      fr: "Port de Nice (Port Lympia)",
+      ru: "Порт Ниццы (Port Lympia)"
+    },
+    lat: 43.6974, lng: 7.2864
+  },
+
+  // ── Cannes ────────────────────────────────────────────────────────
+  {
+    names: {
+      en: "Palais des Festivals, Cannes",
+      fr: "Palais des Festivals, Cannes",
+      ru: "Дворец фестивалей, Канны"
+    },
+    lat: 43.5515, lng: 7.0169
+  },
+  {
+    names: {
+      en: "Boulevard de la Croisette, Cannes",
+      fr: "Boulevard de la Croisette, Cannes",
+      ru: "Бульвар Круазет, Канны"
+    },
+    lat: 43.5489, lng: 7.0278
+  },
+  {
+    names: {
+      en: "Cannes-Mandelieu Airport (CEQ)",
+      fr: "Aéroport de Cannes-Mandelieu (CEQ)",
+      ru: "Аэропорт Канны-Мандельё (CEQ)"
+    },
+    lat: 43.5422, lng: 6.9535
+  },
+  {
+    names: {
+      en: "Port of Cannes (Vieux Port)",
+      fr: "Vieux Port de Cannes",
+      ru: "Старый порт Канн"
+    },
+    lat: 43.5505, lng: 7.0125
+  },
+
+  // ── Monaco / Monte-Carlo ──────────────────────────────────────────
+  {
+    names: {
+      en: "Monte-Carlo Casino (Place du Casino)",
+      fr: "Casino de Monte-Carlo (Place du Casino)",
+      ru: "Казино Монте-Карло"
+    },
+    lat: 43.7393, lng: 7.4281
+  },
+  {
+    names: {
+      en: "Port Hercule, Monaco",
+      fr: "Port Hercule, Monaco",
+      ru: "Порт Эркюль, Монако"
+    },
+    lat: 43.7347, lng: 7.4249
+  },
+  {
+    names: {
+      en: "Monaco Heliport",
+      fr: "Héliport de Monaco",
+      ru: "Вертодром Монако (Heliport)"
+    },
+    lat: 43.7262, lng: 7.4202
+  },
+  {
+    names: {
+      en: "Hotel de Paris Monte-Carlo",
+      fr: "Hôtel de Paris Monte-Carlo",
+      ru: "Отель де Пари, Монте-Карло"
+    },
+    lat: 43.7391, lng: 7.4274
+  },
+  {
+    names: {
+      en: "Monte-Carlo Bay Hotel & Resort",
+      fr: "Monte-Carlo Bay Hotel & Resort",
+      ru: "Монте-Карло Бэй Отель"
+    },
+    lat: 43.7481, lng: 7.4431
+  },
+
+  // ── Saint-Tropez ──────────────────────────────────────────────────
+  {
+    names: {
+      en: "Port of Saint-Tropez",
+      fr: "Port de Saint-Tropez",
+      ru: "Порт Сен-Тропе"
+    },
+    lat: 43.2727, lng: 6.6384
+  },
+  {
+    names: {
+      en: "Place des Lices, Saint-Tropez",
+      fr: "Place des Lices, Saint-Tropez",
+      ru: "Площадь Лис, Сен-Тропе"
+    },
+    lat: 43.2706, lng: 6.6409
+  },
+  {
+    names: {
+      en: "Pampelonne Beach (Club 55), Ramatuelle",
+      fr: "Plage de Pampelonne (Club 55), Ramatuelle",
+      ru: "Пляж Пампелон (Клуб 55), Раматюэль"
+    },
+    lat: 43.2284, lng: 6.6625
+  },
+
+  // ── Antibes & Cap d'Antibes ───────────────────────────────────────
+  {
+    names: {
+      en: "Port Vauban, Antibes",
+      fr: "Port Vauban, Antibes",
+      ru: "Порт Вобан, Антиб"
+    },
+    lat: 43.5866, lng: 7.1274
+  },
+  {
+    names: {
+      en: "Hotel du Cap-Eden-Roc, Cap d'Antibes",
+      fr: "Hôtel du Cap-Eden-Roc, Cap d'Antibes",
+      ru: "Отель Дю Кап-Эден-Рок, Кап-д'Антиб"
+    },
+    lat: 43.5475, lng: 7.1205
+  },
+  {
+    names: {
+      en: "Antibes Train Station (Gare d'Antibes)",
+      fr: "Gare d'Antibes",
+      ru: "Железнодорожный вокзал Антиба"
+    },
+    lat: 43.5855, lng: 7.1215
+  },
+
+  // ── Other Key Towns ───────────────────────────────────────────────
+  {
+    names: {
+      en: "Saint-Jean-Cap-Ferrat (Grand-Hôtel)",
+      fr: "Saint-Jean-Cap-Ferrat (Grand-Hôtel)",
+      ru: "Сен-Жан-Кап-Ферра (Гранд-Отель)"
+    },
+    lat: 43.6787, lng: 7.3386
+  },
+  {
+    names: {
+      en: "Théoule-sur-Mer (Port)",
+      fr: "Théoule-sur-Mer (Port)",
+      ru: "Теоль-сюр-Мер (Порт)"
+    },
+    lat: 43.5069, lng: 6.9423
+  },
+  {
+    names: {
+      en: "Marseille Saint-Charles Station",
+      fr: "Gare de Marseille-Saint-Charles",
+      ru: "Вокзал Сен-Шарль, Марсель"
+    },
+    lat: 43.3027, lng: 5.3806
+  }
+];
+
 const CITY_LIST = [
   'Nice Airport (NCE)',
   'Nice City',
@@ -699,35 +897,86 @@ function buildAutocomplete(inputId, listId) {
       return;
     }
 
+    const currentLang = document.documentElement.lang || 'en';
+    const displayLang = ['en', 'fr', 'ru'].includes(currentLang) ? currentLang : 'en';
+
+    // Find matching popular spots (across all translated names)
+    const normQ = q.toLowerCase();
+    const matchedSpots = POPULAR_SPOTS.filter(spot => {
+      return Object.values(spot.names).some(name => name.toLowerCase().includes(normQ));
+    });
+
+    // Render matched popular spots immediately
+    list.innerHTML = '';
+    activeIdx = -1;
+
+    matchedSpots.forEach(spot => {
+      const li = document.createElement('li');
+      li.className = 'autocomplete-item popular-spot';
+      const displayName = spot.names[displayLang];
+      li.dataset.value = displayName;
+      li.dataset.lat = spot.lat;
+      li.dataset.lng = spot.lng;
+
+      // Bold the matching part
+      const idx = displayName.toLowerCase().indexOf(normQ);
+      let mainHTML = displayName;
+      if (idx > -1) {
+        mainHTML = displayName.substring(0, idx) +
+                   '<strong>' + displayName.substring(idx, idx + q.length) + '</strong>' +
+                   displayName.substring(idx + q.length);
+      }
+
+      li.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 14px; color: var(--champagne-bronze);">📍</span>
+          <div style="display: flex; flex-direction: column;">
+            <span class="addr-main" style="font-weight: 600; color: var(--sea-navy); font-size: 13px;">${mainHTML}</span>
+            <span style="font-size: 10px; color: var(--champagne-bronze); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Popular Spot</span>
+          </div>
+        </div>
+      `;
+
+      li.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        input.value = displayName;
+        input.dataset.lat = spot.lat;
+        input.dataset.lng = spot.lng;
+        list.classList.remove('open');
+        list.innerHTML = '';
+        updateEstimator();
+      });
+
+      list.appendChild(li);
+    });
+
+    if (matchedSpots.length > 0) {
+      list.classList.add('open');
+    }
+
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-      // Show loading indicator
-      list.innerHTML = '<li class="autocomplete-item loading" style="color: #999; font-style: italic; pointer-events: none; padding: 12px 16px; font-size: 13px;">Searching...</li>';
-      list.classList.add('open');
-
       const apiLang = getPhotonLang();
-      // Bias searches to Nice Côte d'Azur coordinates (43.6653 lat, 7.2154 lon)
       const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&lat=43.6653&lon=7.2154&limit=5&lang=${apiLang}`;
 
       fetch(url)
         .then(res => res.json())
         .then(data => {
-          list.innerHTML = '';
-          activeIdx = -1;
+          // Remove previous non-popular items
+          const nonPopular = list.querySelectorAll('.autocomplete-item:not(.popular-spot)');
+          nonPopular.forEach(el => el.remove());
 
           const features = data.features || [];
-          if (!features.length) {
-            showLocalFallback(q);
-            return;
-          }
-
-          features.forEach((feat, i) => {
-            const li = document.createElement('li');
-            li.className = 'autocomplete-item';
-
+          features.forEach((feat) => {
             const addr = formatPhotonAddress(feat);
             const fullAddressString = addr.secondary ? `${addr.main}, ${addr.secondary}` : addr.main;
             
+            // Skip if this address matches one of the matched popular spots
+            const isDuplicate = matchedSpots.some(spot => spot.names[displayLang].toLowerCase() === fullAddressString.toLowerCase());
+            if (isDuplicate) return;
+
+            const li = document.createElement('li');
+            li.className = 'autocomplete-item';
             li.dataset.value = fullAddressString;
 
             const coords = feat.geometry ? feat.geometry.coordinates : null;
@@ -737,9 +986,12 @@ function buildAutocomplete(inputId, listId) {
             }
 
             li.innerHTML = `
-              <div style="display: flex; flex-direction: column;">
-                <span class="addr-main" style="font-weight: 600; color: var(--sea-navy); font-size: 13px;">${addr.main}</span>
-                ${addr.secondary ? `<span class="addr-sub" style="font-size: 11px; color: #777;">${addr.secondary}</span>` : ''}
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 14px; color: #aaa;">📍</span>
+                <div style="display: flex; flex-direction: column;">
+                  <span class="addr-main" style="font-weight: 600; color: var(--sea-navy); font-size: 13px;">${addr.main}</span>
+                  ${addr.secondary ? `<span class="addr-sub" style="font-size: 11px; color: #777;">${addr.secondary}</span>` : ''}
+                </div>
               </div>
             `;
 
@@ -760,13 +1012,17 @@ function buildAutocomplete(inputId, listId) {
 
             list.appendChild(li);
           });
-          list.classList.add('open');
+
+          if (list.children.length > 0) {
+            list.classList.add('open');
+          } else {
+            list.classList.remove('open');
+          }
         })
         .catch(err => {
           console.error('Photon autocomplete error:', err);
-          showLocalFallback(q);
         });
-    }, 250);
+    }, 300);
   }
 
   input.addEventListener('input', () => {
