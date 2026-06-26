@@ -7,7 +7,7 @@ var translations = {
             'routes': 'Routes',
             'faq': 'FAQ',
             'contact': 'Contact',
-            'request_quote': 'Request Quote',
+            'request_quote': 'Request Car',
             'call_now': 'Call Now'
         },
         'footer': {
@@ -29,7 +29,7 @@ var translations = {
         'index': {
             'hero_title': "VIP Transport Cote D'Azur",
             'hero_subtitle': 'Arrive in Style. Every Time.',
-            'enquire_now': 'Enquire Now',
+            'enquire_now': 'Request Car',
             'fleet_title': 'THE FLEET',
             'fleet_v_class_desc': 'The ultimate in spacious luxury. Perfect for families, executive teams, or those who travel with extra luggage. Featuring premium leather conference seating.',
             'fleet_e_class_desc': "Sophisticated, quiet, and incredibly comfortable. The E-Class is the standard for premium executive travel across the Cote d'Azur.",
@@ -48,7 +48,7 @@ var translations = {
             'why_desc3': 'We bridge the gap between an ordinary premium taxi and a private concierge. V-TRANSFER is built on discretion and exclusivity, offering a quiet, secure, and highly reliable environment so you can work, relax, or simply enjoy the ride with absolute peace of mind.',
             'cta_banner_title': "Touching down in the Cote d'Azur?",
             'cta_banner_desc': "Your vacation should begin the moment you land. Skip the taxi lines and step directly into uncompromising luxury. We don't just provide a ride; we curate a seamless arrival experience. Whether you are heading to a coastal villa or a luxury resort, let us handle the journey while you simply enjoy the view.",
-            'request_bespoke': 'Request a Quote'
+            'request_bespoke': 'Request Car'
         },
         'services': {
             'title': 'Chauffeur Services',
@@ -59,7 +59,7 @@ var translations = {
             'learn_more': 'Learn More',
             'bespoke_pricing': 'Custom Pricing',
             'bespoke_desc': 'Every journey is unique. Rather than fixed rates, we provide customized quotes tailored precisely to your itinerary, vehicle preference, and schedule.',
-            'request_custom': 'Request a Custom Quote'
+            'request_custom': 'Request Custom Booking'
         },
         'airport': {
             'title': 'Airport Transfers',
@@ -101,8 +101,8 @@ var translations = {
             'email': 'Email'
         },
         'request': {
-            'title': 'Service Request',
-            'desc': 'Enter your trip details to receive a concierge quotation.',
+            'title': 'Book Your Car',
+            'desc': 'Enter your trip details to request your private driver. We will verify availability and send you a link to secure your car.',
             'full_name': 'Full Name',
             'email_addr': 'Email Address',
             'phone_num': 'Phone Number',
@@ -112,8 +112,8 @@ var translations = {
             'passengers': 'Passengers',
             'luggage': 'Luggage Pieces',
             'special_req': 'Special Requirements (Optional)',
-            'btn_submit': 'Request Bespoke Quote',
-            'btn_book_pay': 'Request Booking',
+            'btn_submit': 'Request Car',
+            'btn_book_pay': 'Request Car',
             'show_price': 'Show Price',
             'sending': 'Sending...',
             'success': 'Thank you! Your booking request has been received. We are checking driver availability and will email you the secure payment link shortly.',
@@ -123,7 +123,8 @@ var translations = {
             'placeholder_phone': '+33 6 XX XX XX XX',
             'placeholder_pickup': 'e.g. Nice Airport (NCE)',
             'placeholder_dropoff': 'e.g. Cannes',
-            'placeholder_req': 'Child seats, heavy luggage, extra stops...'
+            'placeholder_req': 'Child seats, heavy luggage, extra stops...',
+            'select_vehicle': 'Select Your Vehicle'
         },
         'routes': {
             'title': 'Popular Routes',
@@ -145,10 +146,10 @@ var translations = {
         'faq': {
             'title': 'Frequently Asked Questions',
             'subtitle': 'Everything you need to know before booking your transfer',
-            'q1': 'How do I book a transfer?',
-            'a1': "Simply click Request Quote or click on any route card on this page. Fill out your pickup location, destination, date, and preferred vehicle — we'll confirm your booking and send a fixed-price quote directly to your email within the hour.",
+            'q1': 'How do I book a car?',
+            'a1': "Simply click Request Car or select any route on this page. Fill out your pickup location, destination, date, and preferred vehicle — we will confirm availability and send a secure invoice to your email to complete your booking within the hour.",
             'q2': 'Are prices fixed or metered?',
-            'a2': 'All V-Transfer prices are fixed and agreed before departure. There are no meters, no surge pricing, and no hidden fees. The price you see in your quote is exactly what you pay.',
+            'a2': 'All V-Transfer prices are fixed and agreed before departure. There are no meters, no surge pricing, and no hidden fees. The price you see is exactly what you pay.',
             'q3': 'Do you track my flight?',
             'a3': 'Yes. For all airport pickups, your chauffeur monitors your flight in real-time. If your flight is delayed, your driver adjusts automatically — you will never be left waiting, and you will never be charged extra for flight delays.',
             'q4': 'What vehicles are available?',
@@ -156,9 +157,9 @@ var translations = {
             'q5': 'Is there a meet & greet at the airport?',
             'a5': 'Absolutely. Your driver will be waiting in the arrivals hall with a personalised name board. They will assist with your luggage and escort you directly to the vehicle — no searching, no stress.',
             'q6': 'Can I book a return journey or all-day chauffeur?',
-            'a6': 'Yes. We offer one-way transfers, return journeys, and full-day private chauffeur hire. Use the quote form to describe your needs and we will tailor an itinerary around you.',
+            'a6': 'Yes. We offer one-way transfers, return journeys, and full-day private chauffeur hire. Use the booking form to request your car and describe your needs, and we will set up the trip for you.',
             'q7': "Do you serve destinations outside the Côte d'Azur?",
-            'a7': "Yes. We cover long-distance routes including Marseille, Sanremo (Italy), Courchevel, and Paris upon request. Contact us directly for custom quotes on routes beyond the French Riviera.",
+            'a7': "Yes. We cover long-distance routes including Marseille, Sanremo (Italy), Courchevel, and Paris upon request. Contact us directly to book custom routes beyond the French Riviera.",
             'q8': 'How far in advance should I book?',
             'a8': 'We recommend booking at least 24 hours in advance, though last-minute bookings can often be accommodated. During peak summer season (July–August), booking 48–72 hours ahead is strongly advised.'
         },
@@ -176,7 +177,7 @@ var translations = {
             'routes': 'Маршруты',
             'faq': 'Частые вопросы',
             'contact': 'Контакты',
-            'request_quote': 'Заказать расчет',
+            'request_quote': 'Заказать машину',
             'call_now': 'Позвонить'
         },
         'footer': {
@@ -198,7 +199,7 @@ var translations = {
         'index': {
             'hero_title': "VIP транспорт на Лазурном Берегу",
             'hero_subtitle': 'Прибывайте со вкусом. Каждый раз.',
-            'enquire_now': 'Запросить расчет',
+            'enquire_now': 'Заказать машину',
             'fleet_title': 'НАШ АВТОПАРК',
             'fleet_v_class_desc': 'Вершина просторной роскоши. Идеально подходит для семей, делегаций или тех, кто путешествует с багажом. Салон с кожаными сиденьями в конфигурации конференц-зала.',
             'fleet_e_class_desc': "Изысканный, тихий и невероятно комфортный. E-Class — это стандарт премиальных поездок по всему побережью.",
@@ -217,7 +218,7 @@ var translations = {
             'why_desc3': 'V-TRANSFER — это не просто такси, это ваш персональный консьерж. Мы гарантируем тишину, безопасность и надежность, чтобы вы могли работать, отдыхать или просто наслаждаться поездкой.',
             'cta_banner_title': "Прилетаете на Лазурный Берег?",
             'cta_banner_desc': "Ваш отдых должен начинаться с момента приземления. Минуйте очереди на такси и окунитесь в атмосферу роскоши. Мы создаем безупречный опыт прибытия от аэропорта до вашей виллы или отеля.",
-            'request_bespoke': 'Заказать расчет стоимости'
+            'request_bespoke': 'Заказать машину'
         },
         'services': {
             'title': 'Услуги шофера',
@@ -228,7 +229,7 @@ var translations = {
             'learn_more': 'Подробнее',
             'bespoke_pricing': 'Индивидуальный расчет',
             'bespoke_desc': 'Каждая поездка уникальна. Вместо фиксированных тарифов мы предлагаем расчет стоимости, основанный на вашем маршруте и предпочтениях.',
-            'request_custom': 'Запросить стоимость'
+            'request_custom': 'Заказать индивидуальную поездку'
         },
         'airport': {
             'title': 'Трансфер в аэропорт',
@@ -270,8 +271,8 @@ var translations = {
             'email': 'Эл. почта'
         },
         'request': {
-            'title': 'Запрос на обслуживание',
-            'desc': 'Введите детали поездки, чтобы получить расчет стоимости.',
+            'title': 'Забронировать машину',
+            'desc': 'Введите детали поездки, чтобы заказать машину с личным водителем. Мы проверим наличие машины и отправим ссылку для оплаты.',
             'full_name': 'Полное имя',
             'email_addr': 'Эл. почта',
             'phone_num': 'Номер телефона',
@@ -281,8 +282,8 @@ var translations = {
             'passengers': 'Пассажиры',
             'luggage': 'Количество багажа',
             'special_req': 'Особые пожелания (необязательно)',
-            'btn_submit': 'Запросить расчет',
-            'btn_book_pay': 'Запросить бронирование',
+            'btn_submit': 'Заказать машину',
+            'btn_book_pay': 'Заказать машину',
             'show_price': 'Показать стоимость',
             'sending': 'Отправка...',
             'success': 'Спасибо! Ваш запрос на бронирование получен. Мы проверяем наличие свободных машин и скоро отправим вам ссылку на оплату.',
@@ -292,7 +293,8 @@ var translations = {
             'placeholder_phone': '+7 XXX XXX XX XX',
             'placeholder_pickup': 'напр. Аэропорт Ниццы (NCE)',
             'placeholder_dropoff': 'напр. Канны',
-            'placeholder_req': 'Детские кресла, тяжелый багаж, дополнительные остановки...'
+            'placeholder_req': 'Детские кресла, тяжелый багаж, дополнительные остановки...',
+            'select_vehicle': 'Выберите автомобиль'
         },
         'routes': {
             'title': 'Популярные маршруты',
@@ -314,10 +316,10 @@ var translations = {
         'faq': {
             'title': 'Часто задаваемые вопросы',
             'subtitle': 'Все, что вам нужно знать перед заказом трансфера',
-            'q1': 'Как забронировать трансфер?',
-            'a1': "Просто нажмите «Запросить расчет» или выберите любой маршрут на этой странице. Укажите место подачи, пункт назначения, дату и предпочтительный автомобиль — мы подтвердим бронирование и пришлем расчет стоимости на вашу почту в течение часа.",
+            'q1': 'Как заказать машину?',
+            'a1': "Просто нажмите «Заказать машину» или выберите любой маршрут на сайте. Заполните данные поездки и тип автомобиля — мы подтвердим доступность машины и отправим ссылку для подтверждения на вашу почту в течение часа.",
             'q2': 'Цены фиксированные или по счетчику?',
-            'a2': 'Все цены V-Transfer фиксированы и согласуются до начала поездки. У нас нет счетчиков, скрытых платежей или доплат за пробки. Цена в расчете — это именно то, что вы платите.',
+            'a2': 'Все цены V-Transfer фиксированы и согласуются до начала поездки. У нас нет счетчиков, скрытых платежей или доплат за пробки. Цена при заказе — это именно то, что вы платите.',
             'q3': 'Вы отслеживаете мой рейс?',
             'a3': 'Да. Для всех встреч в аэропорту шофер отслеживает ваш рейс в реальном времени. Если рейс задерживается, водитель приедет вовремя — вам не придется ждать и доплачивать за ожидание из-за задержки самолета.',
             'q4': 'Какие автомобили доступны?',
@@ -325,9 +327,9 @@ var translations = {
             'q5': 'Есть ли услуга встречи в аэропорту?',
             'a5': 'Безусловно. Ваш водитель будет ждать в зале прибытия с именной табличкой. Он поможет с багажом и проводит вас к автомобилю — без лишних поисков и стресса.',
             'q6': 'Можно ли заказать обратный трансфер или водителя на весь день?',
-            'a6': 'Да. Мы предлагаем трансферы в одну сторону, поездки туда-обратно и почасовую аренду авто с водителем. Опишите ваши пожелания в форме запроса, и мы составим маршрут специально для вас.',
+            'a6': 'Да. Мы предлагаем трансферы в одну сторону, поездки туда-обратно и почасовую аренду авто с водителем. Опишите ваши пожелания в форме заказа, и мы организуем поездку для вас.',
             'q7': 'Вы работаете за пределами Лазурного Берега?',
-            'a7': 'Да. Мы выполняем поездки на дальние расстояния, включая Марсель, Сан-Ремо (Италия), Куршевель и Париж по запросу. Свяжитесь со мной для расчета стоимости маршрутов за пределами Ривьеры.',
+            'a7': 'Да. Мы выполняем поездки на дальние расстояния, включая Марсель, Сан-Ремо (Италия), Куршевель и Париж по запросу. Свяжитесь с нами напрямую, чтобы заказать поездку за пределы Лазурного Берега.',
             'q8': 'За какое время нужно бронировать?',
             'a8': 'Мы рекомендуем бронировать минимум за 24 часа, хотя часто можем принять и срочные заказы. В пик летнего сезона (июль–август) советуем бронировать за 48–72 часа.'
         },
@@ -345,7 +347,7 @@ var translations = {
             'routes': 'Itinéraires',
             'faq': 'FAQ',
             'contact': 'Contact',
-            'request_quote': 'Devis',
+            'request_quote': 'Réserver une voiture',
             'call_now': 'Appeler'
         },
         'footer': {
@@ -367,7 +369,7 @@ var translations = {
         'index': {
             'hero_title': "VIP Transport Côte d'Azur",
             'hero_subtitle': 'Arrivez avec style. À chaque fois.',
-            'enquire_now': 'Demander un devis',
+            'enquire_now': 'Réserver une voiture',
             'fleet_title': 'LA FLOTTE',
             'fleet_v_class_desc': 'Le summum du luxe spacieux. Parfait pour les familles, les équipes de direction ou ceux qui voyagent avec des bagages supplémentaires. Salon avec sièges conférence en cuir.',
             'fleet_e_class_desc': "Sophistiquée, calme et incroyablement confortable. La Classe E est la référence du voyage d'affaires sur la Côte d'Azur.",
@@ -386,7 +388,7 @@ var translations = {
             'why_desc3': "Nous comblons le fossé entre un taxi premium ordinaire et une conciergerie privée. V-TRANSFER repose sur la discrétion et l'exclusivité pour une tranquillité d'esprit absolue.",
             'cta_banner_title': "Arrivée sur la Côte d'Azur ?",
             'cta_banner_desc': "Vos vacances commencent dès l'atterrissage. Évitez les files d'attente de taxis et entrez directement dans le luxe. Nous créons une expérience d'arrivée fluide de l'aéroport à votre destination.",
-            'request_bespoke': 'Demander un devis personnalisé'
+            'request_bespoke': 'Réserver une voiture'
         },
         'services': {
             'title': 'Services de Chauffeur',
@@ -397,7 +399,7 @@ var translations = {
             'learn_more': 'En savoir plus',
             'bespoke_pricing': 'Tarification sur mesure',
             'bespoke_desc': "Chaque voyage est unique. Plutôt que des tarifs fixes, nous fournissons des devis personnalisés adaptés précisément à votre itinéraire et vos préférences.",
-            'request_custom': 'Demander un devis'
+            'request_custom': 'Réserver un trajet personnalisé'
         },
         'airport': {
             'title': 'Transferts Aéroport',
@@ -408,7 +410,7 @@ var translations = {
             'f2': 'Temps d\'attente offert',
             'f3': 'Accueil VIP personnalisé aux arrivées',
             'f4': 'Assistance bagages',
-            'btn': 'Réserver votre transfert'
+            'btn': 'Réserver une voiture'
         },
         'intercity': {
             'title': 'Transferts Inter-villes',
@@ -419,7 +421,7 @@ var translations = {
             'f2': 'Confidentialité totale (vitres teintées)',
             'f3': 'Espace généreux & WiFi à bord disponible',
             'f4': 'Chauffeurs professionnels et discrets',
-            'btn': 'Réserver votre transfert'
+            'btn': 'Réserver une voiture'
         },
         'excursions': {
             'title': 'Excursions Privées',
@@ -439,8 +441,8 @@ var translations = {
             'email': 'Email'
         },
         'request': {
-            'title': 'Demande de service',
-            'desc': 'Entrez les détails de votre voyage pour recevoir un devis personnalisé.',
+            'title': 'Réserver votre voiture',
+            'desc': 'Entrez les détails de votre voyage pour réserver votre chauffeur privé. Nous vérifierons la disponibilité et vous enverrons un lien pour sécuriser votre voiture.',
             'full_name': 'Nom complet',
             'email_addr': 'Adresse e-mail',
             'phone_num': 'Numéro de téléphone',
@@ -450,8 +452,8 @@ var translations = {
             'passengers': 'Passagers',
             'luggage': 'Nombre de bagages',
             'special_req': 'Demandes particulières (Optionnel)',
-            'btn_submit': 'Demander un devis',
-            'btn_book_pay': 'Demander une réservation',
+            'btn_submit': 'Réserver une voiture',
+            'btn_book_pay': 'Réserver une voiture',
             'show_price': 'Afficher le prix',
             'sending': 'Envoi en cours...',
             'success': 'Merci ! Votre demande de réservation a été reçue. Nous vérifions la disponibilité et vous enverrons le lien de paiement sécurisé sous peu.',
@@ -461,7 +463,8 @@ var translations = {
             'placeholder_phone': '+33 6 XX XX XX XX',
             'placeholder_pickup': 'ex. Aéroport de Nice (NCE)',
             'placeholder_dropoff': 'ex. Cannes',
-            'placeholder_req': 'Sièges enfants, bagages lourds, arrêts supplémentaires...'
+            'placeholder_req': 'Sièges enfants, bagages lourds, arrêts supplémentaires...',
+            'select_vehicle': 'Choisissez votre véhicule'
         },
         'routes': {
             'title': 'Itinéraires Populaires',
@@ -483,10 +486,10 @@ var translations = {
         'faq': {
             'title': 'Foire Aux Questions',
             'subtitle': 'Tout ce que vous devez savoir avant de réserver votre transfert',
-            'q1': 'Comment réserver un transfert ?',
-            'a1': "Cliquez simplement sur « Demander un devis » ou sur n'importe quel itinéraire. Indiquez vos lieux de départ et d'arrivée, la date et le véhicule choisi — nous confirmerons votre réservation et enverrons un devis à prix fixe par e-mail sous une heure.",
+            'q1': 'Comment réserver une voiture ?',
+            'a1': "Cliquez simplement sur « Réserver une voiture » ou sélectionnez un itinéraire. Remplissez les détails du trajet et le véhicule choisi — nous confirmerons la disponibilité et vous enverrons une facture sécurisée par e-mail dans l'heure.",
             'q2': 'Les prix sont-ils fixes ou au compteur ?',
-            'a2': 'Tous les tarifs V-Transfer sont fixes et convenus avant le départ. Il n\'y a pas de compteur, pas de majoration et pas de frais cachés. Le prix indiqué sur votre devis est exactement ce que vous paierez.',
+            'a2': 'Tous les tarifs V-Transfer sont fixes et convenus avant le départ. Il n\'y a pas de compteur, pas de majoration et pas de frais cachés. Le prix indiqué est exactement ce que vous devez payer.',
             'q3': 'Suivez-vous mon vol ?',
             'a3': "Oui. Pour toutes les prises en charge à l'aéroport, votre chauffeur suit votre vol en temps réel. Si votre vol est retardé, votre chauffeur s'adapte automatiquement — vous n'attendrez jamais et aucun frais supplémentaire ne sera facturé pour le retard.",
             'q4': 'Quels véhicules sont disponibles ?',
