@@ -3113,6 +3113,16 @@ html {
     font-family: 'Playfair Display', serif;
 }
 
+.stripe-summary-row.deposit {
+    border-top: 1px dashed rgba(255,255,255,0.2);
+    margin-top: 8px;
+    padding-top: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--champagne-bronze);
+}
+
+
 .stripe-payment-note {
     display: flex;
     align-items: flex-start;

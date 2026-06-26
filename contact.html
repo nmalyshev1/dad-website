@@ -221,6 +221,7 @@
       document.querySelector('.booking-form').addEventListener('submit', function(e) {
         e.preventDefault();
         
+        const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/REPLACE_WITH_YOUR_LINK';
         const form = e.target;
         const formData = new FormData(form);
         const submitBtn = form.querySelector('.btn-submit');
@@ -241,23 +242,66 @@
             const telegramToken = '8679301073:AAFR_t0iOonpkxFRjz1OMs-eJ3NY5Pq81Ew';
             const chatId = '8918454205';
             
-            const messageText = `✨ *New Bespoke Quote Request!*\n\n` +
-              `👤 *Name:* ${formData.get('name')}\n` +
-              `✉️ *Email:* ${formData.get('email')}\n` +
-              `📞 *Phone:* ${formData.get('phone')}\n` +
-              `📅 *Date/Time:* ${formData.get('pickup_datetime')}\n` +
-              `📍 *From:* ${formData.get('pickup')}\n` +
-              `📍 *To:* ${formData.get('dropoff')}\n` +
-              `👥 *Passengers:* ${formData.get('passengers')}\n` +
-              `💬 *Special Req:* ${formData.get('requirements') || 'None'}`;
+            const clientEmail = encodeURIComponent(formData.get('email'));
+            const clientPhone = formData.get('phone') ? formData.get('phone').replace(/[^0-9+]/g, '') : '';
+            const clientName = formData.get('name');
+            const routeStr = `${formData.get('pickup')} to ${formData.get('dropoff')}`;
+
+            // 1. Email link (notify that invoice was sent)
+            const emailSubject = encodeURIComponent(`Bespoke Quote Approved - V-TRANSFER`);
+            const emailBody = encodeURIComponent(
+              `Hello ${clientName},\n\n` +
+              `Thank you for your custom quote request for your transfer from ${routeStr}.\n\n` +
+              `We have approved your request and sent a secure Stripe invoice to your email inbox to complete your booking. Please click the link inside that invoice email to pay the deposit and secure your ride.\n\n` +
+              `Best regards,\nV-TRANSFER VIP`
+            );
+            const emailUrl = `mailto:${clientEmail}?subject=${emailSubject}&body=${emailBody}`;
+
+            // 2. WhatsApp link (notify that invoice was sent)
+            const waText = encodeURIComponent(
+              `Hello ${clientName}, thank you for your custom quote request from ${routeStr}. We have approved your request and emailed you a secure Stripe invoice to secure your ride. Please check your email to complete the payment. Thank you!`
+            );
+            const waUrl = clientPhone ? `https://wa.me/${clientPhone.replace('+', '')}?text=${waText}` : '';
+
+            const escapeHTML = str => (str || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            const messageHtml = `✨ <b>New Bespoke Quote Request!</b>\n\n` +
+              `👤 <b>Name:</b> ${escapeHTML(clientName)}\n` +
+              `✉️ <b>Email (Tap to Copy):</b> <code>${escapeHTML(formData.get('email'))}</code>\n` +
+              `📞 <b>Phone:</b> <code>${escapeHTML(formData.get('phone'))}</code>\n` +
+              `📅 <b>Date/Time:</b> ${escapeHTML(formData.get('pickup_datetime'))}\n` +
+              `📍 <b>From:</b> ${escapeHTML(formData.get('pickup'))}\n` +
+              `📍 <b>To:</b> ${escapeHTML(formData.get('dropoff'))}\n` +
+              `👥 <b>Passengers:</b> ${escapeHTML(formData.get('passengers'))}\n` +
+              `💬 <b>Special Req:</b> ${escapeHTML(formData.get('requirements') || 'None')}\n\n` +
+              `⚡ <b>Invoice Actions:</b>\n` +
+              `➕ <a href="https://dashboard.stripe.com/invoices/create">1. Create Stripe Invoice</a>\n\n` +
+              `⚡ <b>Client Notification:</b>\n` +
+              `📧 <a href="${escapeHTML(emailUrl)}">2. Confirm via Email</a>\n` +
+              (waUrl ? `💬 <a href="${escapeHTML(waUrl)}">2. Confirm via WhatsApp</a>` : `💬 <i>No valid phone for WhatsApp</i>`);
+
+            const inlineKeyboard = [
+              [
+                { text: "➕ 1. Create Stripe Invoice", url: "https://dashboard.stripe.com/invoices/create" }
+              ]
+            ];
+
+            if (waUrl) {
+              inlineKeyboard.push([
+                { text: "💬 2. Confirm via WhatsApp", url: waUrl }
+              ]);
+            }
 
             fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 chat_id: chatId,
-                text: messageText,
-                parse_mode: 'Markdown'
+                text: messageHtml,
+                parse_mode: 'HTML',
+                reply_markup: {
+                  inline_keyboard: inlineKeyboard
+                }
               })
             }).catch(err => console.error('Telegram notification error:', err));
 

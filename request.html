@@ -218,11 +218,11 @@
 
       </div>
 
-      <!-- Action Button Row: Book Now (Stripe bypassed for testing) -->
+      <!-- Action Button Row: Request Booking -->
       <div class="btn-actions-row">
         <button type="submit" class="btn-pay btn-pay-full btn-submit" id="btn-book-pay">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-          Book Now
+          <span data-i18n="request.btn_book_pay">Request Booking</span>
         </button>
       </div>
     </form>
@@ -238,7 +238,7 @@
 
     <div class="stripe-modal-header">
       <h3 id="stripe-modal-title">Confirm Your Booking</h3>
-      <p>Review your trip details and pay securely online</p>
+      <p>Your details have been submitted. Pay your deposit to guarantee the booking.</p>
     </div>
 
     <!-- Booking Summary -->
@@ -255,18 +255,22 @@
         <span>Estimated Price</span>
         <span class="amount" id="modal-total">—</span>
       </div>
+      <div class="stripe-summary-row deposit">
+        <span>Booking Deposit</span>
+        <span class="amount">€100,00</span>
+      </div>
     </div>
 
     <!-- Info Note -->
     <div class="stripe-payment-note">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-      <span>The estimated price is shown above. Final price will be confirmed by email. Payment is processed securely via Stripe.</span>
+      <span>A secure €100 booking deposit is required to confirm your ride. The remaining balance (total minus €100) is paid directly to your driver.</span>
     </div>
 
     <!-- Stripe Pay Button -->
     <a href="#" id="stripe-pay-link" class="btn-stripe-confirm" target="_blank" rel="noopener noreferrer" onclick="handleStripeClick(event)">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-      Pay via Stripe
+      Pay €100 Deposit
     </a>
 
     <div class="stripe-secure-row">
@@ -1287,7 +1291,12 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
   const t    = (typeof translations !== 'undefined' && translations[lang])
                ? translations[lang].request : {};
 
-  submitBtn.innerText = t.sending || 'Sending…';
+  const btnText = submitBtn.querySelector('span[data-i18n]');
+  if (btnText) {
+    btnText.textContent = t.sending || 'Sending…';
+  } else {
+    submitBtn.innerText = t.sending || 'Sending…';
+  }
   submitBtn.disabled  = true;
 
   fetch(form.action, {
@@ -1301,31 +1310,83 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
       const chatId = '8918454205';
       
       {
-        const messageText = `🚗 *New Booking Request!*\n\n` +
-          `👤 *Name:* ${formData.get('name')}\n` +
-          `✉️ *Email:* ${formData.get('email')}\n` +
-          `📞 *Phone:* ${formData.get('phone')}\n` +
-          `📅 *Date/Time:* ${formData.get('pickup_datetime')}\n` +
-          `📍 *From:* ${formData.get('pickup')}\n` +
-          `📍 *To:* ${formData.get('dropoff')}\n` +
-          `👥 *Passengers:* ${formData.get('passengers')}\n` +
-          `💼 *Luggage:* ${formData.get('luggage')}\n` +
-          `💬 *Special Req:* ${formData.get('requirements') || 'None'}\n` +
-          `🚗 *Car Selected:* ${selectedCarLabel || 'Not specified'}\n` +
-          `💰 *Estimated Price:* ${currentPrice ? '€' + currentPrice : 'To be confirmed'}`;
+        const escapeHTML = str => (str || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        const clientEmail = encodeURIComponent(formData.get('email'));
+        const clientPhone = formData.get('phone') ? formData.get('phone').replace(/[^0-9+]/g, '') : '';
+        const clientName = formData.get('name');
+        const routeStr = `${formData.get('pickup')} to ${formData.get('dropoff')}`;
+        const priceStr = currentPrice ? `€${currentPrice}` : 'To be confirmed';
+        const carStr = selectedCarLabel || 'Not specified';
+
+        // 1. Email link (notify that invoice was sent)
+        const emailSubject = encodeURIComponent(`Booking Request Approved - V-TRANSFER`);
+        const emailBody = encodeURIComponent(
+          `Hello ${clientName},\n\n` +
+          `Your transfer request from ${routeStr} has been approved!\n\n` +
+          `Vehicle: ${carStr}\n` +
+          `Total Price: ${priceStr}\n\n` +
+          `We have just emailed you a secure Stripe invoice to complete your reservation. Please check your email inbox and click the link inside that invoice email to pay the deposit and secure your ride.\n\n` +
+          `Best regards,\nV-TRANSFER VIP`
+        );
+        const emailUrl = `mailto:${clientEmail}?subject=${emailSubject}&body=${emailBody}`;
+
+        // 2. WhatsApp link (notify that invoice was sent)
+        const waText = encodeURIComponent(
+          `Hello ${clientName}, your V-TRANSFER booking from ${routeStr} is approved!\n\n` +
+          `Vehicle: ${carStr}\n` +
+          `Price: ${priceStr}\n\n` +
+          `We have emailed you a secure Stripe invoice to secure your ride. Please check your email to complete the payment. Thank you!`
+        );
+        const waUrl = clientPhone ? `https://wa.me/${clientPhone.replace('+', '')}?text=${waText}` : '';
+
+        const messageHtml = `🚗 <b>New Booking Request!</b>\n\n` +
+          `👤 <b>Name:</b> ${escapeHTML(clientName)}\n` +
+          `✉️ <b>Email (Tap to Copy):</b> <code>${escapeHTML(formData.get('email'))}</code>\n` +
+          `📞 <b>Phone:</b> <code>${escapeHTML(formData.get('phone'))}</code>\n` +
+          `📅 <b>Date/Time:</b> ${escapeHTML(formData.get('pickup_datetime'))}\n` +
+          `📍 <b>From:</b> ${escapeHTML(formData.get('pickup'))}\n` +
+          `📍 <b>To:</b> ${escapeHTML(formData.get('dropoff'))}\n` +
+          `👥 <b>Passengers:</b> ${escapeHTML(formData.get('passengers'))}\n` +
+          `💼 <b>Luggage:</b> ${escapeHTML(formData.get('luggage'))}\n` +
+          `💬 <b>Special Req:</b> ${escapeHTML(formData.get('requirements') || 'None')}\n` +
+          `🚗 <b>Car Selected:</b> ${escapeHTML(carStr)}\n` +
+          `💰 <b>Estimated Price (Tap to copy):</b> <code>${escapeHTML(currentPrice || '0')}</code> (Total: ${escapeHTML(priceStr)})\n\n` +
+          `⚡️ <b>Invoice Actions:</b>\n` +
+          `➕ <a href="https://dashboard.stripe.com/invoices/create">1. Create Stripe Invoice</a>\n\n` +
+          `⚡️ <b>Client Notification:</b>\n` +
+          `📧 <a href="${escapeHTML(emailUrl)}">2. Confirm via Email</a>\n` +
+          (waUrl ? `💬 <a href="${escapeHTML(waUrl)}">2. Confirm via WhatsApp</a>` : `💬 <i>No valid phone for WhatsApp</i>`);
+
+        const inlineKeyboard = [
+          [
+            { text: "➕ 1. Create Stripe Invoice", url: "https://dashboard.stripe.com/invoices/create" }
+          ]
+        ];
+
+        if (waUrl) {
+          inlineKeyboard.push([
+            { text: "💬 2. Confirm via WhatsApp", url: waUrl }
+          ]);
+        }
 
         fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             chat_id: chatId,
-            text: messageText,
-            parse_mode: 'Markdown'
+            text: messageHtml,
+            parse_mode: 'HTML',
+            reply_markup: {
+              inline_keyboard: inlineKeyboard
+            }
           })
         }).catch(err => console.error('Telegram notification error:', err));
       }
 
-      alert(t.success || '✓ Your request has been sent! We will confirm within the hour.');
+      alert(t.success || '✓ Your booking request has been received. We are checking driver availability and will email you the secure payment link shortly.');
+
+      // Reset form fields
       form.reset();
       document.querySelectorAll('.car-option').forEach(el => el.classList.remove('selected'));
       selectedCar = ''; selectedCarLabel = ''; currentPrice = null;
@@ -1336,7 +1397,11 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
   }).catch(() => {
     alert(t.error || 'Something went wrong. Please try again or call us directly.');
   }).finally(() => {
-    submitBtn.innerText = t.btn_submit || 'Request Quote';
+    if (btnText) {
+      btnText.textContent = t.btn_book_pay || 'Request Booking';
+    } else {
+      submitBtn.innerText = t.btn_book_pay || 'Request Booking';
+    }
     submitBtn.disabled  = false;
   });
 });
