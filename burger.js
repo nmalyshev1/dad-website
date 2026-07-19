@@ -73,9 +73,34 @@
         updateMobileLangButtons(savedLang);
     }
 
+    function initSmartHeader() {
+        const header = document.querySelector('.mainHeader');
+        if (!header) return;
+
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                // Scrolling down - hide header
+                header.classList.add('header--hidden');
+            } else {
+                // Scrolling up - show header
+                header.classList.remove('header--hidden');
+            }
+
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBurgerMenu);
+        document.addEventListener('DOMContentLoaded', () => {
+            initBurgerMenu();
+            initSmartHeader();
+        });
     } else {
         initBurgerMenu();
+        initSmartHeader();
     }
 })();

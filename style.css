@@ -46,7 +46,11 @@ html {
     z-index: 1001;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid rgba(188, 163, 127, 0.4);
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.header--hidden {
+    transform: translateY(-100%);
 }
 
 .logo-link {

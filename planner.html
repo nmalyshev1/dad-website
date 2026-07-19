@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V-TRANSFER | Operator Panel</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-deep: #0B132B;
+      --navy-medium: #1C2541;
+      --navy-light: #3A506B;
+      --gold-bronze: #C4A265;
+      --gold-bronze-dark: #8E6D3B;
+      --gold-gradient: linear-gradient(135deg, #C4A265 0%, #8E6D3B 100%);
+      --cream: #F0EBE3;
+      --white: #FAFAF8;
+      --card-bg: rgba(28, 37, 65, 0.7);
+      --card-border: rgba(196, 162, 101, 0.2);
+      --status-pending: #F3A953;
+      --status-confirmed: #2ECC71;
+      --status-cancelled: #E74C3C;
+      --status-completed: #3498DB;
+      --pay-paid: #2ECC71;
+      --pay-unpaid: #E74C3C;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Outfit', sans-serif; background-color: var(--navy-deep); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+    /* PIN SCREEN */
+    #pin-screen { position: fixed; inset: 0; z-index: 9999; background: var(--navy-deep); display: flex; align-items: center; justify-content: center; flex-direction: column; }
+    #pin-screen::before, #pin-screen::after { content: ''; position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+    #pin-screen::before { width: 500px; height: 500px; background: radial-gradient(circle, rgba(196,162,101,0.12) 0%, transparent 70%); top: -100px; left: -100px; animation: orb1 8s ease-in-out infinite alternate; }
+    #pin-screen::after { width: 400px; height: 400px; background: radial-gradient(circle, rgba(52,152,219,0.08) 0%, transparent 70%); bottom: -80px; right: -80px; animation: orb2 10s ease-in-out infinite alternate; }
+    @keyframes orb1 { from { transform: translate(0,0); } to { transform: translate(60px, 40px); } }
+    @keyframes orb2 { from { transform: translate(0,0); } to { transform: translate(-50px, -30px); } }
+    .pin-card { position: relative; background: rgba(28,37,65,0.85); border: 1px solid rgba(196,162,101,0.3); border-radius: 20px; padding: 48px 52px; width: 100%; max-width: 400px; text-align: center; backdrop-filter: blur(20px); box-shadow: 0 30px 80px rgba(0,0,0,0.4); animation: cardIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both; }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(30px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .pin-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px; }
+    .pin-logo-text { font-size: 1.3rem; font-weight: 800; letter-spacing: 6px; text-transform: uppercase; }
+    .pin-logo svg { color: var(--gold-bronze); }
+    .pin-subtitle { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(196,162,101,0.7); margin-bottom: 36px; }
+    .pin-label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(250,250,248,0.5); margin-bottom: 20px; }
+    .pin-dots { display: flex; justify-content: center; gap: 18px; margin-bottom: 32px; }
+    .pin-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(196,162,101,0.5); background: transparent; transition: all 0.2s cubic-bezier(0.175,0.885,0.32,1.275); }
+    .pin-dot.filled { background: var(--gold-gradient); border-color: var(--gold-bronze); transform: scale(1.15); box-shadow: 0 0 12px rgba(196,162,101,0.5); }
+    .pin-keypad { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 260px; margin: 0 auto 24px; }
+    .pin-key { background: rgba(11,19,43,0.6); border: 1px solid rgba(196,162,101,0.2); border-radius: 12px; color: var(--white); font-family: inherit; font-size: 1.4rem; font-weight: 600; padding: 18px 0; cursor: pointer; transition: all 0.15s ease; user-select: none; -webkit-tap-highlight-color: transparent; }
+    .pin-key:hover { background: rgba(196,162,101,0.12); border-color: rgba(196,162,101,0.5); transform: translateY(-1px); }
+    .pin-key:active { transform: scale(0.94); background: rgba(196,162,101,0.2); }
+    .pin-key.empty { visibility: hidden; }
+    .pin-key.backspace { font-size: 1.1rem; color: rgba(250,250,248,0.6); }
+    .pin-error { font-size: 0.85rem; color: var(--status-cancelled); min-height: 22px; }
+    .pin-shake { animation: shake 0.4s ease; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
+    .pin-screen-hidden { display: none !important; }
+
+    /* MAIN APP */
+    #app { display: none; flex-direction: column; min-height: 100vh; }
+    #app.visible { display: flex; animation: fadeIn 0.5s ease; }
+    header { background-color: rgba(11,19,43,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: 5px; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+    .logo-icon { color: var(--gold-bronze); }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .lock-btn { background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.3); color: rgba(231,76,60,0.8); padding: 6px 14px; border-radius: 20px; font-family: inherit; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+    .lock-btn:hover { background: rgba(231,76,60,0.18); color: var(--status-cancelled); }
+    .sync-status { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; background: rgba(196,162,101,0.1); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(196,162,101,0.2); }
+    .sync-indicator { width: 8px; height: 8px; border-radius: 50%; background-color: var(--status-pending); display: inline-block; }
+    .sync-indicator.online { background-color: var(--status-confirmed); box-shadow: 0 0 8px var(--status-confirmed); }
+    .sync-indicator.offline { background-color: var(--status-cancelled); box-shadow: 0 0 8px var(--status-cancelled); }
+
+    main { flex: 1; padding: 30px 40px; max-width: 1600px; width: 100%; margin: 0 auto; display: grid; grid-template-columns: 240px 1fr; gap: 30px; }
+    .sidebar { display: flex; flex-direction: column; gap: 10px; }
+    .nav-btn { background: transparent; border: 1px solid transparent; color: rgba(250,250,248,0.7); padding: 12px 20px; text-align: left; font-family: inherit; font-size: 0.95rem; font-weight: 500; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.3s ease; }
+    .nav-btn:hover { background: rgba(196,162,101,0.08); color: var(--white); }
+    .nav-btn.active { background: var(--gold-gradient); color: var(--navy-deep); font-weight: 600; box-shadow: 0 4px 15px rgba(196,162,101,0.3); }
+    .nav-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .content-area { min-width: 0; }
+    .tab-content { display: none; animation: fadeIn 0.4s ease; }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .panel { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-bottom: 25px; backdrop-filter: blur(10px); }
+    .panel-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold-bronze); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 20px; }
+    .form-grid.edit-mode { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full-width { grid-column: 1 / -1; }
+    label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(250,250,248,0.6); font-weight: 500; }
+    input, select, textarea { background: rgba(11,19,43,0.6); border: 1px solid rgba(196,162,101,0.3); border-radius: 6px; color: var(--white); padding: 10px 14px; font-family: inherit; font-size: 0.95rem; outline: none; transition: border-color 0.3s ease, box-shadow 0.3s ease; min-height: 44px; }
+    input:focus, select:focus, textarea:focus { border-color: var(--gold-bronze); box-shadow: 0 0 0 3px rgba(196,162,101,0.15); }
+    select option { background: var(--navy-medium); }
+
+    .btn { background: var(--gold-gradient); border: none; color: var(--navy-deep); padding: 12px 24px; font-family: inherit; font-size: 0.95rem; font-weight: 600; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s ease; text-decoration: none; }
+    .btn:hover { box-shadow: 0 5px 15px rgba(196,162,101,0.4); transform: translateY(-1px); }
+    .btn-secondary { background: rgba(250,250,248,0.1); border: 1px solid rgba(196,162,101,0.3); color: var(--white); }
+    .btn-secondary:hover { background: rgba(250,250,248,0.15); box-shadow: none; transform: none; }
+    .btn-danger { background: var(--status-cancelled); color: var(--white); }
+    .btn-danger:hover { box-shadow: 0 5px 15px rgba(231,76,60,0.4); }
+    .btn-return { background: rgba(52,152,219,0.15); border: 1px solid rgba(52,152,219,0.4); color: #5dade2; }
+    .btn-return:hover { background: rgba(52,152,219,0.25); box-shadow: none; transform: none; }
+
+    .grid-filters { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; align-items: center; }
+    .search-input { flex: 1; min-width: 220px; }
+
+    .excel-container { overflow-x: auto; border: 1px solid rgba(196,162,101,0.3); border-radius: 8px; }
+    .excel-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
+    .excel-table th { background-color: var(--navy-medium); color: var(--gold-bronze); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; padding: 12px 16px; border-bottom: 2px solid var(--gold-bronze); border-right: 1px solid rgba(196,162,101,0.2); cursor: pointer; white-space: nowrap; }
+    .excel-table td { padding: 10px 16px; border-bottom: 1px solid rgba(196,162,101,0.15); border-right: 1px solid rgba(196,162,101,0.1); vertical-align: middle; white-space: nowrap; }
+    .excel-table tr:hover { background-color: rgba(196,162,101,0.04); }
+
+    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+    .status-badge.pending  { background: rgba(243,169,83,0.15); color: var(--status-pending); border: 1px solid rgba(243,169,83,0.3); }
+    .status-badge.confirmed{ background: rgba(46,204,113,0.15); color: var(--status-confirmed); border: 1px solid rgba(46,204,113,0.3); }
+    .status-badge.cancelled{ background: rgba(231,76,60,0.15); color: var(--status-cancelled); border: 1px solid rgba(231,76,60,0.3); }
+    .status-badge.completed{ background: rgba(52,152,219,0.15); color: var(--status-completed); border: 1px solid rgba(52,152,219,0.3); }
+
+    /* PAYMENT BADGE */
+    .payment-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 12px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s ease; border: none; font-family: inherit; white-space: nowrap; }
+    .payment-badge.paid { background: rgba(46,204,113,0.15); color: var(--pay-paid); border: 1px solid rgba(46,204,113,0.3); }
+    .payment-badge.paid:hover { background: rgba(46,204,113,0.28); }
+    .payment-badge.unpaid { background: rgba(231,76,60,0.15); color: var(--pay-unpaid); border: 1px solid rgba(231,76,60,0.3); }
+    .payment-badge.unpaid:hover { background: rgba(231,76,60,0.28); }
+
+    /* CALENDAR */
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .calendar-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); }
+    .calendar-nav { display: flex; gap: 10px; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 8px; }
+    .calendar-day-header { text-align: center; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gold-bronze); padding: 10px 0; font-weight: 600; }
+    .calendar-day { background-color: rgba(11,19,43,0.4); border: 1px solid rgba(196,162,101,0.15); border-radius: 8px; min-height: 110px; padding: 8px; display: flex; flex-direction: column; gap: 4px; transition: all 0.3s ease; }
+    .calendar-day:hover { border-color: rgba(196,162,101,0.4); }
+    .calendar-day.today { border-color: var(--gold-bronze); box-shadow: inset 0 0 10px rgba(196,162,101,0.1); }
+    .calendar-day.other-month { opacity: 0.3; }
+    .calendar-day-num { font-size: 0.85rem; font-weight: 600; color: rgba(250,250,248,0.6); align-self: flex-end; }
+    .calendar-day.today .calendar-day-num { color: var(--gold-bronze); }
+    .calendar-event { font-size: 0.7rem; padding: 3px 7px; border-radius: 4px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; transition: transform 0.2s ease; display: flex; flex-direction: column; gap: 1px; }
+    .calendar-event:hover { transform: scale(1.03); }
+    .calendar-event.pending   { background: rgba(243,169,83,0.2); color: var(--status-pending); border-left: 3px solid var(--status-pending); }
+    .calendar-event.confirmed { background: rgba(46,204,113,0.2); color: var(--status-confirmed); border-left: 3px solid var(--status-confirmed); }
+    .calendar-event.cancelled { background: rgba(231,76,60,0.2); color: var(--status-cancelled); border-left: 3px solid var(--status-cancelled); }
+    .calendar-event.completed { background: rgba(52,152,219,0.2); color: var(--status-completed); border-left: 3px solid var(--status-completed); }
+    .calendar-event-time { font-weight: 700; opacity: 0.8; }
+
+    /* AGENDA VIEW - mobile calendar */
+    .agenda-view { display: none; }
+    .agenda-day-block { margin-bottom: 14px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(196,162,101,0.15); }
+    .agenda-day-header { background: var(--navy-medium); padding: 10px 16px; font-size: 0.85rem; font-weight: 700; color: var(--gold-bronze); letter-spacing: 0.5px; }
+    .agenda-day-header.today-header { background: linear-gradient(135deg, rgba(196,162,101,0.3) 0%, rgba(196,162,101,0.08) 100%); }
+    .agenda-event { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgba(196,162,101,0.08); cursor: pointer; transition: background 0.2s ease; }
+    .agenda-event:last-child { border-bottom: none; }
+    .agenda-event:hover { background: rgba(196,162,101,0.06); }
+    .agenda-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .agenda-dot.pending   { background: var(--status-pending); }
+    .agenda-dot.confirmed { background: var(--status-confirmed); }
+    .agenda-dot.cancelled { background: var(--status-cancelled); }
+    .agenda-dot.completed { background: var(--status-completed); }
+    .agenda-time { font-size: 0.85rem; font-weight: 700; color: var(--gold-bronze); min-width: 45px; }
+    .agenda-info { flex: 1; min-width: 0; }
+    .agenda-name { font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .agenda-route { font-size: 0.75rem; color: rgba(250,250,248,0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* RETURN JOURNEY BANNER */
+    .return-journey-box { background: rgba(52,152,219,0.07); border: 1px dashed rgba(52,152,219,0.4); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+    .return-journey-box svg { color: #5dade2; flex-shrink: 0; }
+    .return-journey-text { flex: 1; font-size: 0.88rem; color: rgba(250,250,248,0.85); }
+    .return-journey-text strong { color: #5dade2; }
+
+    /* TELEGRAM IMPORT */
+    .telegram-import-box { background: rgba(52,152,219,0.05); border: 1px dashed rgba(52,152,219,0.3); border-radius: 8px; padding: 15px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 10px; }
+    .telegram-import-box textarea { background: rgba(11,19,43,0.7); border: 1px solid rgba(52,152,219,0.3); resize: vertical; font-size: 0.85rem; }
+    .telegram-import-title { font-size: 0.9rem; font-weight: 600; color: var(--status-completed); display: flex; align-items: center; gap: 8px; }
+
+    /* ANALYTICS */
+    .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 18px; margin-bottom: 30px; }
+    .stat-card { background: rgba(28,37,65,0.6); border: 1px solid var(--card-border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 5px; }
+    .stat-val { font-size: 1.8rem; font-weight: 700; color: var(--gold-bronze); }
+    .stat-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(250,250,248,0.5); }
+    .stat-card.paid-card { border-color: rgba(46,204,113,0.3); }
+    .stat-card.paid-card .stat-val { color: var(--pay-paid); }
+    .stat-card.unpaid-card { border-color: rgba(231,76,60,0.3); }
+    .stat-card.unpaid-card .stat-val { color: var(--pay-unpaid); }
+
+    /* MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(11,19,43,0.8); backdrop-filter: blur(5px); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--navy-medium); border: 1px solid var(--gold-bronze); border-radius: 12px; width: 100%; max-width: 700px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: modalSlide 0.3s ease; display: flex; flex-direction: column; max-height: 92vh; }
+    @keyframes modalSlide { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .modal-header { padding: 20px 25px; border-bottom: 1px solid rgba(196,162,101,0.2); display: flex; justify-content: space-between; align-items: center; }
+    .modal-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold-bronze); }
+    .modal-close { background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; opacity: 0.7; transition: opacity 0.2s; }
+    .modal-close:hover { opacity: 1; }
+    .modal-body { padding: 25px; overflow-y: auto; }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 80px; right: 30px; background: var(--navy-medium); border: 1px solid var(--gold-bronze); color: var(--white); padding: 14px 22px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 9000; display: flex; align-items: center; gap: 10px; transform: translateY(100px); opacity: 0; transition: all 0.3s cubic-bezier(0.175,0.885,0.32,1.275); max-width: 380px; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* MISC */
+    .action-btn-row { display: flex; gap: 6px; }
+    .action-icon { background: none; border: none; color: var(--white); cursor: pointer; opacity: 0.6; transition: all 0.2s; padding: 4px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; }
+    .action-icon:hover { opacity: 1; background: rgba(250,250,248,0.1); }
+    .action-icon.edit-btn:hover { color: var(--gold-bronze); }
+    .action-icon.delete-btn:hover { color: var(--status-cancelled); }
+    .no-data { text-align: center; padding: 40px; color: rgba(250,250,248,0.4); font-style: italic; }
+    .booking-num { font-family: monospace; font-weight: 700; color: var(--gold-bronze); font-size: 0.85rem; }
+    .linked-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 0.65rem; color: var(--gold-bronze); background: rgba(196,162,101,0.12); border: 1px solid rgba(196,162,101,0.25); border-radius: 10px; padding: 1px 6px; margin-left: 4px; cursor: pointer; transition: all 0.2s ease; }
+    .linked-badge:hover { background: rgba(196,162,101,0.25); transform: translateY(-1px); }
+    .client-suggestion { display: none; align-items: center; gap: 10px; background: rgba(196,162,101,0.1); border: 1px solid rgba(196,162,101,0.3); border-radius: 10px; padding: 10px 16px; margin-bottom: 16px; animation: slideDown 0.3s ease; }
+    .client-suggestion.visible { display: flex; }
+    .client-suggestion-text { flex: 1; font-size: 0.85rem; color: var(--cream); }
+    .client-suggestion-text strong { color: var(--gold-bronze); }
+    .client-suggestion-btn { background: var(--gold-gradient); color: var(--navy-deep); border: none; border-radius: 8px; padding: 6px 14px; font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+    .client-suggestion-dismiss { background: none; border: none; color: rgba(250,250,248,0.4); font-size: 1.1rem; cursor: pointer; padding: 2px 6px; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+    .linked-transfers-section { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(196,162,101,0.15); }
+    .linked-transfers-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-bronze); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .linked-transfer-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(11,19,43,0.5); border: 1px solid rgba(196,162,101,0.1); border-radius: 8px; margin-bottom: 6px; cursor: pointer; transition: all 0.2s ease; font-size: 0.82rem; }
+    .linked-transfer-item:hover { background: rgba(196,162,101,0.1); border-color: rgba(196,162,101,0.3); transform: translateX(4px); }
+    .linked-transfer-num { font-weight: 700; color: var(--gold-bronze); min-width: 65px; }
+    .linked-transfer-route { flex: 1; color: rgba(250,250,248,0.7); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .linked-transfer-date { color: rgba(250,250,248,0.5); font-size: 0.75rem; white-space: nowrap; }
+    .linked-transfer-status { font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+    .linked-transfer-status.pending { background: rgba(243,169,83,0.2); color: var(--status-pending); }
+    .linked-transfer-status.confirmed { background: rgba(46,204,113,0.2); color: var(--status-confirmed); }
+    .linked-transfer-status.completed { background: rgba(52,152,219,0.2); color: var(--status-completed); }
+    .linked-transfer-status.cancelled { background: rgba(231,76,60,0.2); color: var(--status-cancelled); }
+
+    /* MOBILE BOTTOM NAV */
+    .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(11,19,43,0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--card-border); z-index: 200; padding: 6px 0 env(safe-area-inset-bottom, 6px); }
+    .mobile-bottom-nav-inner { display: flex; justify-content: space-around; align-items: center; }
+    .mobile-nav-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; color: rgba(250,250,248,0.45); font-family: inherit; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; cursor: pointer; padding: 6px 8px; border-radius: 10px; transition: all 0.2s ease; flex: 1; -webkit-tap-highlight-color: transparent; }
+    .mobile-nav-btn svg { width: 22px; height: 22px; }
+    .mobile-nav-btn.active { color: var(--gold-bronze); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      header { padding: 10px 16px; }
+      .logo { font-size: 0.95rem; letter-spacing: 3px; }
+      .header-right { gap: 6px; }
+      .sync-status { padding: 4px 8px; font-size: 0.72rem; }
+      #sync-text { display: none; }
+      .lock-btn { padding: 4px 10px; font-size: 0.72rem; }
+      main { grid-template-columns: 1fr; padding: 16px 12px 78px; gap: 0; }
+      .sidebar { display: none; }
+      .mobile-bottom-nav { display: block; }
+      .toast { bottom: 70px; right: 10px; left: 10px; max-width: 100%; }
+      .grid-filters { flex-direction: column; align-items: stretch; gap: 8px; }
+      .grid-filters > * { width: 100%; }
+      .search-input { min-width: 100%; }
+      .excel-table th, .excel-table td { padding: 8px 10px; font-size: 0.78rem; }
+      .hide-mobile { display: none; }
+      .status-badge, .payment-badge { padding: 3px 7px; font-size: 0.65rem; }
+      .calendar-grid-wrap { display: none !important; }
+      .agenda-view { display: block; }
+      .form-grid { grid-template-columns: 1fr; gap: 12px; }
+      .form-grid.edit-mode { grid-template-columns: 1fr; gap: 12px; }
+      .modal { width: 100%; max-height: 95vh; border-radius: 16px 16px 0 0; align-self: flex-end; }
+      .modal-overlay { align-items: flex-end; padding: 0; }
+      .modal-body { padding: 15px; }
+      .modal-header { padding: 14px 15px; }
+      .analytics-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-card { padding: 12px; }
+      .stat-val { font-size: 1.4rem; }
+      .return-journey-box { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+    @media (max-width: 480px) {
+      .pin-card { padding: 32px 20px; max-width: 92%; border-radius: 16px; }
+      .pin-keypad { gap: 8px; max-width: 220px; }
+      .pin-key { padding: 12px 0; font-size: 1.2rem; border-radius: 8px; }
+      .pin-dots { gap: 12px; margin-bottom: 24px; }
+      .pin-subtitle { margin-bottom: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PIN SCREEN -->
+  <div id="pin-screen">
+    <div class="pin-card" id="pin-card">
+      <div class="pin-logo">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 4 L12 21 L22 4"/><path d="M7 4 L12 12.5 L17 4"/>
+        </svg>
+        <span class="pin-logo-text">TRANSFER</span>
+      </div>
+      <div class="pin-subtitle">Operator Panel</div>
+      <div class="pin-label">Enter your PIN</div>
+      <div class="pin-dots" id="pin-dots">
+        <div class="pin-dot" id="dot-0"></div>
+        <div class="pin-dot" id="dot-1"></div>
+        <div class="pin-dot" id="dot-2"></div>
+        <div class="pin-dot" id="dot-3"></div>
+      </div>
+      <div class="pin-keypad">
+        <button class="pin-key" onclick="pinPress('1')">1</button>
+        <button class="pin-key" onclick="pinPress('2')">2</button>
+        <button class="pin-key" onclick="pinPress('3')">3</button>
+        <button class="pin-key" onclick="pinPress('4')">4</button>
+        <button class="pin-key" onclick="pinPress('5')">5</button>
+        <button class="pin-key" onclick="pinPress('6')">6</button>
+        <button class="pin-key" onclick="pinPress('7')">7</button>
+        <button class="pin-key" onclick="pinPress('8')">8</button>
+        <button class="pin-key" onclick="pinPress('9')">9</button>
+        <button class="pin-key empty"></button>
+        <button class="pin-key" onclick="pinPress('0')">0</button>
+        <button class="pin-key backspace" onclick="pinBackspace()">⌫</button>
+      </div>
+      <div class="pin-error" id="pin-error"></div>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app">
+    <header>
+      <div class="logo">
+        <svg class="logo-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 4 L12 21 L22 4"/><path d="M7 4 L12 12.5 L17 4"/>
+        </svg>
+        TRANSFER
+      </div>
+      <div class="header-right">
+        <div class="sync-status">
+          <span class="sync-indicator" id="sync-dot"></span>
+          <span id="sync-text">Cloud Sync</span>
+        </div>
+        <button class="lock-btn" onclick="lockApp()">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          Lock
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- SIDEBAR (desktop) -->
+      <div class="sidebar">
+        <button class="nav-btn active" id="nav-excel" onclick="switchTab('excel-tab',this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          Active Bookings
+        </button>
+        <button class="nav-btn" id="nav-calendar" onclick="switchTab('calendar-tab',this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          Calendar
+        </button>
+        <button class="nav-btn" id="nav-add" onclick="switchTab('add-tab',this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Add Booking
+        </button>
+        <button class="nav-btn" id="nav-archive" onclick="switchTab('archive-tab',this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+          Archive
+        </button>
+        <button class="nav-btn" id="nav-analytics" onclick="switchTab('analytics-tab',this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"/></svg>
+          Analytics
+        </button>
+        <div style="margin-top:auto;padding-top:30px;display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-secondary" style="padding:8px 12px;font-size:0.85rem;" onclick="exportCSV()">📤 Export CSV</button>
+          <button class="btn btn-secondary" style="padding:8px 12px;font-size:0.85rem;" onclick="syncNow()">🔄 Sync Now</button>
+        </div>
+      </div>
+
+      <!-- CONTENT AREA -->
+      <div class="content-area">
+
+        <!-- TAB: ACTIVE BOOKINGS -->
+        <div id="excel-tab" class="tab-content active">
+          <div class="panel">
+            <div class="panel-title">
+              Active Bookings
+              <span style="font-size:0.85rem;font-family:'Outfit',sans-serif;font-weight:400;color:rgba(250,250,248,0.5);">Double-click to edit</span>
+            </div>
+            <div class="grid-filters">
+              <input type="text" id="search-bar" class="search-input" placeholder="Search name, route, phone, car..." oninput="renderTable()">
+              <select id="filter-status" onchange="renderTable()">
+                <option value="ACTIVE">Active (excl. Completed)</option>
+                <option value="ALL">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+              <select id="filter-payment" onchange="renderTable()">
+                <option value="ALL">All Payments</option>
+                <option value="Unpaid">Unpaid</option>
+                <option value="Paid">Paid</option>
+              </select>
+              <select id="filter-car" onchange="renderTable()">
+                <option value="ALL">All Vehicles</option>
+                <option value="Mercedes E-Class">Mercedes E-Class</option>
+                <option value="Mercedes V-Class">Mercedes V-Class</option>
+                <option value="Renault Trafic SpaceClass">Renault Trafic</option>
+              </select>
+              <input type="date" id="filter-date" onchange="renderTable()">
+              <button class="btn btn-secondary" style="padding:10px 14px;" onclick="clearFilters()">Clear</button>
+            </div>
+            <div class="excel-container">
+              <table class="excel-table">
+                <thead><tr>
+                  <th onclick="sortTable('bookingNumber')"># ⇅</th>
+                  <th onclick="sortTable('datetime')">Date &amp; Time ⇅</th>
+                  <th onclick="sortTable('name')">Customer ⇅</th>
+                  <th class="hide-mobile">Contact</th>
+                  <th onclick="sortTable('pickup')">Route ⇅</th>
+                  <th class="hide-mobile">Vehicle</th>
+                  <th onclick="sortTable('price')">Price ⇅</th>
+                  <th class="hide-mobile">Pax/Bag</th>
+                  <th>Status</th>
+                  <th>Payment</th>
+                  <th>Actions</th>
+                </tr></thead>
+                <tbody id="excel-table-body"></tbody>
+              </table>
+              <div id="table-no-data" class="no-data" style="display:none;">No bookings match the filters.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: CALENDAR -->
+        <div id="calendar-tab" class="tab-content">
+          <div class="panel">
+            <div class="calendar-header">
+              <div class="calendar-title" id="calendar-month-year"></div>
+              <div class="calendar-nav">
+                <button class="btn btn-secondary" style="padding:8px 12px;" onclick="prevMonth()">◀</button>
+                <button class="btn btn-secondary" style="padding:8px 12px;" onclick="goToToday()">Today</button>
+                <button class="btn btn-secondary" style="padding:8px 12px;" onclick="nextMonth()">▶</button>
+              </div>
+            </div>
+            <div class="calendar-grid-wrap">
+              <div class="calendar-grid" id="cal-headers">
+                <div class="calendar-day-header">Mon</div><div class="calendar-day-header">Tue</div>
+                <div class="calendar-day-header">Wed</div><div class="calendar-day-header">Thu</div>
+                <div class="calendar-day-header">Fri</div><div class="calendar-day-header">Sat</div>
+                <div class="calendar-day-header">Sun</div>
+              </div>
+              <div class="calendar-grid" id="calendar-days-container"></div>
+            </div>
+            <div class="agenda-view" id="agenda-view-container"></div>
+          </div>
+        </div>
+
+        <!-- TAB: ADD BOOKING -->
+        <div id="add-tab" class="tab-content">
+          <div class="telegram-import-box">
+            <div class="telegram-import-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              Telegram Booking Auto-Parser
+            </div>
+            <p style="font-size:0.8rem;color:rgba(250,250,248,0.7);margin-bottom:5px;">Paste the raw Telegram notification below and click Parse — the form fills instantly!</p>
+            <textarea id="telegram-paste" rows="4" placeholder="Paste notification here..."></textarea>
+            <button class="btn btn-secondary" onclick="parseTelegramText()" style="align-self:flex-start;font-size:0.85rem;padding:8px 16px;">🪄 Parse &amp; Auto-fill</button>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Add Booking Manually</div>
+            <div class="return-journey-box" id="return-journey-banner" style="display:none;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+              <div class="return-journey-text">
+                <strong>Return Journey Mode</strong> — Customer &amp; vehicle pre-filled, route reversed. Enter the <strong>return date, flight info</strong> and adjust the price.
+              </div>
+              <button class="btn btn-secondary" style="font-size:0.8rem;padding:6px 12px;white-space:nowrap;" onclick="clearReturnMode()">✕ Clear</button>
+            </div>
+            <div class="client-suggestion" id="client-suggestion">
+              <span class="client-suggestion-text" id="client-suggestion-text">🔄 Returning client: <strong>—</strong></span>
+              <button class="client-suggestion-btn" onclick="fillReturningClient()">Auto-fill</button>
+              <button class="client-suggestion-dismiss" onclick="dismissClientSuggestion()">✕</button>
+            </div>
+            <form id="booking-manual-form" onsubmit="handleManualSubmit(event)">
+              <div class="form-grid">
+                <div class="form-group"><label>Customer Name</label><input type="text" id="m-name" placeholder="John Doe" required></div>
+                <div class="form-group"><label>Email</label><input type="email" id="m-email" placeholder="john@example.com" oninput="checkReturningClient()"></div>
+                <div class="form-group"><label>Phone</label><input type="tel" id="m-phone" placeholder="+33 6 12 34 56 78" oninput="checkReturningClient()"></div>
+                <div class="form-group"><label>Date &amp; Time</label><input type="datetime-local" id="m-datetime" required></div>
+                <div class="form-group"><label>Pickup Location</label><input type="text" id="m-pickup" placeholder="Nice Airport (NCE)" required></div>
+                <div class="form-group"><label>Dropoff Location</label><input type="text" id="m-dropoff" placeholder="Monaco" required></div>
+                <div class="form-group"><label>Vehicle</label>
+                  <select id="m-car">
+                    <option value="Mercedes E-Class">Mercedes E-Class (Sedan)</option>
+                    <option value="Mercedes V-Class">Mercedes V-Class (Premium Van)</option>
+                    <option value="Renault Trafic SpaceClass">Renault Trafic (Standard Van)</option>
+                  </select>
+                </div>
+                <div class="form-group"><label>Passengers</label><input type="number" id="m-passengers" min="1" max="15" value="1"></div>
+                <div class="form-group"><label>Carry-on Bags</label><input type="number" id="m-luggage" min="0" max="20" value="0"></div>
+                <div class="form-group"><label>Flight Info</label><input type="text" id="m-flightInfo" placeholder="13:00 — SK2795"></div>
+                <div class="form-group"><label>Child Seats</label><input type="number" id="m-childSeats" min="0" max="5" value="0"></div>
+                <div class="form-group"><label>Hold Bags</label><input type="number" id="m-holdBags" min="0" max="20" value="0"></div>
+                <div class="form-group"><label>Price (€)</label><input type="number" id="m-price" min="0" value="0"></div>
+                <div class="form-group"><label>Status</label>
+                  <select id="m-status">
+                    <option value="Pending">Pending Approval</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+                </div>
+                <div class="form-group full-width"><label>Notes &amp; Special Instructions</label><textarea id="m-requirements" rows="2" placeholder="Extra stops, special requests..."></textarea></div>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+                <button type="submit" class="btn">💾 Save Booking</button>
+                <button type="button" class="btn btn-return" onclick="prefillReturnJourney()">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                  Save &amp; Add Return Journey
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- TAB: ARCHIVE -->
+        <div id="archive-tab" class="tab-content">
+          <div class="panel">
+            <div class="panel-title">
+              Completed Transfers — Archive
+              <span id="archive-count" style="font-size:0.85rem;font-family:'Outfit',sans-serif;font-weight:400;color:rgba(250,250,248,0.5);">0 transfers</span>
+            </div>
+            <div class="grid-filters">
+              <input type="text" id="archive-search" class="search-input" placeholder="Search name, route, phone..." oninput="renderArchive()">
+              <select id="archive-filter-payment" onchange="renderArchive()">
+                <option value="ALL">All Payments</option>
+                <option value="Unpaid">Unpaid</option>
+                <option value="Paid">Paid</option>
+              </select>
+              <input type="date" id="archive-filter-date" onchange="renderArchive()">
+              <button class="btn btn-secondary" style="padding:10px 14px;" onclick="clearArchiveFilters()">Clear</button>
+            </div>
+            <div class="excel-container">
+              <table class="excel-table">
+                <thead><tr>
+                  <th onclick="sortArchive('bookingNumber')"># ⇅</th>
+                  <th onclick="sortArchive('datetime')">Date &amp; Time ⇅</th>
+                  <th onclick="sortArchive('name')">Customer ⇅</th>
+                  <th class="hide-mobile">Contact</th>
+                  <th>Route</th>
+                  <th class="hide-mobile">Vehicle</th>
+                  <th onclick="sortArchive('price')">Price ⇅</th>
+                  <th>Payment</th>
+                  <th>Actions</th>
+                </tr></thead>
+                <tbody id="archive-table-body"></tbody>
+              </table>
+              <div id="archive-no-data" class="no-data" style="display:none;">No completed transfers yet.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: ANALYTICS -->
+        <div id="analytics-tab" class="tab-content">
+          <div class="panel">
+            <div class="panel-title">Business Analytics &amp; Revenue</div>
+            <div class="analytics-grid">
+              <div class="stat-card"><span class="stat-val" id="stat-total">0</span><span class="stat-label">Total Bookings</span></div>
+              <div class="stat-card"><span class="stat-val" id="stat-confirmed-rev">€0</span><span class="stat-label">Confirmed Revenue</span></div>
+              <div class="stat-card paid-card"><span class="stat-val" id="stat-paid-rev">€0</span><span class="stat-label">✅ Paid to You</span></div>
+              <div class="stat-card unpaid-card"><span class="stat-val" id="stat-unpaid-rev">€0</span><span class="stat-label">💳 Awaiting Payment</span></div>
+              <div class="stat-card"><span class="stat-val" id="stat-pending-rev">€0</span><span class="stat-label">Pending Revenue</span></div>
+              <div class="stat-card"><span class="stat-val" id="stat-completed">0</span><span class="stat-label">Completed Transfers</span></div>
+              <div class="stat-card"><span class="stat-val" id="stat-top-car">—</span><span class="stat-label">Most Popular Vehicle</span></div>
+            </div>
+            <div class="panel-title" style="margin-top:20px;">Backup &amp; Data Management</div>
+            <p style="font-size:0.9rem;color:rgba(250,250,248,0.7);margin-bottom:20px;">Export for backup or Excel. Import a JSON backup to restore all data.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:15px;">
+              <button class="btn btn-secondary" onclick="exportCSV()">📥 Export CSV</button>
+              <button class="btn btn-secondary" onclick="exportJSON()">📥 Export JSON</button>
+              <label class="btn btn-secondary" style="display:inline-flex;align-items:center;cursor:pointer;font-weight:600;">
+                📤 Import JSON
+                <input type="file" id="import-json-file" accept=".json" style="display:none;" onchange="importJSON(event)">
+              </label>
+              <button class="btn btn-secondary" style="padding:8px 12px;font-size:0.85rem;" onclick="syncNow()">🔄 Sync Now</button>
+              <button class="btn" style="background:linear-gradient(135deg,#2980b9,#1a5c8a);color:#fff;" onclick="pushAllToCloud()" title="Upload ALL local bookings to cloud so others can see them">☁️ Push All to Cloud</button>
+              <button class="btn btn-danger" style="margin-left:auto;" onclick="purgeAllData()">⚠️ Reset / Wipe Database</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="mobile-bottom-nav">
+      <div class="mobile-bottom-nav-inner">
+        <button class="mobile-nav-btn active" id="mnav-excel" onclick="switchTab('excel-tab',document.getElementById('nav-excel'));setMobileNav('mnav-excel')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          Bookings
+        </button>
+        <button class="mobile-nav-btn" id="mnav-calendar" onclick="switchTab('calendar-tab',document.getElementById('nav-calendar'));setMobileNav('mnav-calendar')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          Calendar
+        </button>
+        <button class="mobile-nav-btn" id="mnav-add" onclick="switchTab('add-tab',document.getElementById('nav-add'));setMobileNav('mnav-add')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Add
+        </button>
+        <button class="mobile-nav-btn" id="mnav-archive" onclick="switchTab('archive-tab',document.getElementById('nav-archive'));setMobileNav('mnav-archive')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+          Archive
+        </button>
+        <button class="mobile-nav-btn" id="mnav-analytics" onclick="switchTab('analytics-tab',document.getElementById('nav-analytics'));setMobileNav('mnav-analytics')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"/></svg>
+          Stats
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div class="modal-overlay" id="details-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-title">Edit Booking</div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-booking-form" onsubmit="handleEditSubmit(event)">
+          <input type="hidden" id="edit-id">
+          <div class="form-grid edit-mode">
+            <div class="form-group"><label>Customer Name</label><input type="text" id="edit-name" required></div>
+            <div class="form-group"><label>Email</label><input type="email" id="edit-email"></div>
+            <div class="form-group"><label>Phone</label><input type="tel" id="edit-phone"></div>
+            <div class="form-group"><label>Date &amp; Time</label><input type="datetime-local" id="edit-datetime" required></div>
+            <div class="form-group"><label>Pickup Location</label><input type="text" id="edit-pickup" required></div>
+            <div class="form-group"><label>Dropoff Location</label><input type="text" id="edit-dropoff" required></div>
+            <div class="form-group"><label>Vehicle</label>
+              <select id="edit-car">
+                <option value="Mercedes E-Class">Mercedes E-Class</option>
+                <option value="Mercedes V-Class">Mercedes V-Class</option>
+                <option value="Renault Trafic SpaceClass">Renault Trafic SpaceClass</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Passengers</label><input type="number" id="edit-passengers" min="1" max="15"></div>
+            <div class="form-group"><label>Carry-on Bags</label><input type="number" id="edit-luggage" min="0"></div>
+            <div class="form-group"><label>Price (€)</label><input type="number" id="edit-price" min="0"></div>
+            <div class="form-group"><label>Booking Status</label>
+              <select id="edit-status">
+                <option value="Pending">Pending</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Payment Status</label>
+              <select id="edit-paymentStatus">
+                <option value="Unpaid">💳 Unpaid</option>
+                <option value="Paid">✅ Paid</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Flight Info</label><input type="text" id="edit-flightInfo"></div>
+            <div class="form-group"><label>Child Seats</label><input type="number" id="edit-childSeats" min="0"></div>
+            <div class="form-group"><label>Hold Bags</label><input type="number" id="edit-holdBags" min="0"></div>
+            <div class="form-group full-width"><label>Notes &amp; Instructions</label><textarea id="edit-requirements" rows="2"></textarea></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button type="submit" class="btn">Save Changes</button>
+          </div>
+        </form>
+        <div class="linked-transfers-section" id="linked-section" style="display:none;">
+          <div class="linked-transfers-title">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+            Linked Transfers (same client)
+          </div>
+          <div id="linked-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast-el"><span></span></div>
+
+  <script>
+    // ─── PIN ───────────────────────────────────────────────────────────────────
+    const CORRECT_PIN = '1101';
+    const SESSION_KEY = 'vtransfer_pin_session';
+    let currentPin = '';
+
+    function initPinScreen() {
+      if (sessionStorage.getItem(SESSION_KEY) === 'unlocked') unlockApp(false);
+    }
+    function pinPress(d) {
+      if (currentPin.length >= 4) return;
+      currentPin += d; updateDots();
+      if (currentPin.length === 4) setTimeout(checkPin, 120);
+    }
+    function pinBackspace() {
+      currentPin = currentPin.slice(0,-1); updateDots();
+      document.getElementById('pin-error').textContent = '';
+    }
+    function updateDots() {
+      for (let i=0;i<4;i++) document.getElementById('dot-'+i).classList.toggle('filled', i < currentPin.length);
+    }
+    function checkPin() {
+      if (currentPin === CORRECT_PIN) { sessionStorage.setItem(SESSION_KEY,'unlocked'); unlockApp(true); }
+      else {
+        const card = document.getElementById('pin-card');
+        card.classList.add('pin-shake');
+        document.getElementById('pin-error').textContent = 'Incorrect PIN. Please try again.';
+        setTimeout(()=>{ card.classList.remove('pin-shake'); currentPin=''; updateDots(); }, 500);
+      }
+    }
+    function unlockApp(animate) {
+      document.getElementById('pin-screen').classList.add('pin-screen-hidden');
+      document.getElementById('app').classList.add('visible');
+      if (animate) { loadLocalData(); renderTable(); renderArchive(); renderCalendar(); updateAnalytics(); syncNow(); }
+    }
+    function lockApp() {
+      if (!confirm('Lock the dashboard?')) return;
+      sessionStorage.removeItem(SESSION_KEY); currentPin=''; updateDots();
+      document.getElementById('pin-error').textContent='';
+      document.getElementById('pin-screen').classList.remove('pin-screen-hidden');
+      document.getElementById('app').classList.remove('visible');
+    }
+    document.addEventListener('keydown', e=>{
+      if (!document.getElementById('pin-screen').classList.contains('pin-screen-hidden')) {
+        if (e.key>='0'&&e.key<='9') pinPress(e.key);
+        if (e.key==='Backspace') pinBackspace();
+      }
+    });
+
+    // ─── STATE ─────────────────────────────────────────────────────────────────
+    const appKey = 'mzmvife9';
+    const listKey = 'vtransfer_booking_ids';
+    const COUNTER_KEY = 'vtransfer_booking_counter';
+    let bookings = [];
+    let calDate = new Date();
+    let sort = { col:'datetime', asc:true };
+    let archSort = { col:'datetime', asc:false };
+    let nextNum = 1;
+
+    document.addEventListener('DOMContentLoaded', initPinScreen);
+
+    // ─── MIGRATION ─────────────────────────────────────────────────────────────
+    function migrateBookings(arr) {
+      const map = {'Ожидает':'Pending','Подтвержден':'Confirmed','Завершен':'Completed','Отменен':'Cancelled'};
+      arr.forEach(b => {
+        if (map[b.status]) b.status = map[b.status];
+        if (!b.paymentStatus) b.paymentStatus = 'Unpaid';
+      });
+    }
+
+    // ─── DATA ──────────────────────────────────────────────────────────────────
+    function loadLocalData() {
+      try { bookings = JSON.parse(localStorage.getItem('vtransfer_bookings')||'[]'); } catch(e){ bookings=[]; }
+      const sc = localStorage.getItem(COUNTER_KEY);
+      if (sc) { nextNum = parseInt(sc)||1; }
+      else {
+        let max=0; bookings.forEach(b=>{ if(b.bookingNumber>max)max=b.bookingNumber; });
+        nextNum = max>0?max+1:1; localStorage.setItem(COUNTER_KEY,nextNum);
+      }
+      let migrated=false;
+      bookings.forEach(b=>{ if(!b.bookingNumber){b.bookingNumber=nextNum++;migrated=true;} });
+      migrateBookings(bookings);
+      if (migrated) { localStorage.setItem(COUNTER_KEY,nextNum); localStorage.setItem('vtransfer_bookings',JSON.stringify(bookings)); }
+    }
+    function saveLocalData() {
+      localStorage.setItem('vtransfer_bookings',JSON.stringify(bookings));
+      renderTable(); renderArchive(); renderCalendar(); updateAnalytics();
+    }
+    function showToast(msg, ok=true) {
+      const t=document.getElementById('toast-el');
+      t.style.borderColor = ok?'var(--gold-bronze)':'var(--status-cancelled)';
+      t.querySelector('span').innerHTML = (ok?'✓ ':'⚠️ ')+msg;
+      t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),4000);
+    }
+    function setSyncIndicator(st,txt) {
+      document.getElementById('sync-dot').className='sync-indicator '+st;
+      document.getElementById('sync-text').textContent=txt;
+    }
+    function syncNow() {
+      setSyncIndicator('pending','Syncing...');
+      fetch(`https://keyvalue.immanuel.co/api/KeyVal/GetValue/${appKey}/${listKey}`)
+        .then(r=>r.json()).then(ls=>{
+          if (!ls){setSyncIndicator('online','Empty cloud');return;}
+          const cl=(ls+'').replace(/^"+|"+$/g,'').trim();
+          if(!cl){setSyncIndicator('online','Up to date');return;}
+          const ids=cl.split(',');
+          Promise.all(ids.map(id=>
+            fetch(`https://keyvalue.immanuel.co/api/KeyVal/GetValue/${appKey}/vtransfer_b_${id}`)
+              .then(r=>r.json()).then(ds=>{
+                if(!ds)return null;
+                const cj=(ds+'').replace(/^"+|"+$/g,'').trim();
+                try{return JSON.parse(decodeURIComponent(cj));}catch(e){try{return JSON.parse(cj);}catch(e2){return null;}}
+              }).catch(()=>null)
+          )).then(cloudArr=>{
+            const valid=cloudArr.filter(b=>b!==null);
+            let merged=[...bookings], updated=0, maxN=nextNum-1;
+            valid.forEach(cb=>{
+              if(cb.bookingNumber>maxN)maxN=cb.bookingNumber;
+              const li=merged.findIndex(lb=>lb.id===cb.id);
+              if(li>=0){
+                const lt=new Date(merged[li].updated_at||merged[li].created_at).getTime();
+                const ct=new Date(cb.updated_at||cb.created_at).getTime();
+                if(ct>lt){merged[li]=cb;updated++;}else if(lt>ct)pushToCloud(merged[li]);
+              }else{merged.push(cb);updated++;}
+            });
+            bookings=merged; migrateBookings(bookings);
+            if(maxN>=nextNum){nextNum=maxN+1;localStorage.setItem(COUNTER_KEY,nextNum);}
+            saveLocalData(); setSyncIndicator('online',`Sync OK (${updated} new/updated)`);
+          });
+        }).catch(()=>setSyncIndicator('offline','No network'));
+    }
+    function pushToCloud(b) {
+      b.updated_at=new Date().toISOString();
+      const bk='vtransfer_b_'+b.id;
+      fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/${bk}/${encodeURIComponent(JSON.stringify(b))}`,{method:'POST',headers:{'Content-Length':'0'}})
+        .then(()=>{
+          fetch(`https://keyvalue.immanuel.co/api/KeyVal/GetValue/${appKey}/${listKey}`).then(r=>r.json()).then(ls=>{
+            let list=[]; if(ls){const c=(ls+'').replace(/^"+|"+$/g,'').trim();if(c)list=c.split(',');}
+            if(!list.includes(b.id)){list.push(b.id);if(list.length>500)list=list.slice(list.length-500);
+              fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/${listKey}/${encodeURIComponent(list.join(','))}`,{method:'POST',headers:{'Content-Length':'0'}});}
+          });
+        }).catch(e=>console.error('Cloud upload failed:',e));
+    }
+    // Push ALL local bookings to cloud (fixes missing sync for other users)
+    function pushAllToCloud(){
+      if(!bookings.length){showToast('No local bookings to push.',false);return;}
+      if(!confirm(`Push ALL ${bookings.length} local bookings to cloud? This will make them visible to everyone who opens the planner.`))return;
+      setSyncIndicator('pending',`Uploading ${bookings.length} bookings...`);
+      const ids=bookings.map(b=>b.id);
+      // First write the full ID list
+      fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/${listKey}/${encodeURIComponent(ids.join(','))}`,{method:'POST',headers:{'Content-Length':'0'}})
+        .then(()=>{
+          // Then upload each booking
+          let done=0;
+          const uploads=bookings.map(b=>{
+            b.updated_at=new Date().toISOString();
+            return fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/vtransfer_b_${b.id}/${encodeURIComponent(JSON.stringify(b))}`,{method:'POST',headers:{'Content-Length':'0'}})
+              .then(()=>{ done++; setSyncIndicator('pending',`Uploading... ${done}/${bookings.length}`); })
+              .catch(()=>{});
+          });
+          Promise.all(uploads).then(()=>{
+            localStorage.setItem('vtransfer_bookings',JSON.stringify(bookings));
+            setSyncIndicator('online',`All ${bookings.length} bookings pushed to cloud ✓`);
+            showToast(`All ${bookings.length} bookings are now in the cloud!`);
+          });
+        }).catch(()=>setSyncIndicator('offline','Push failed — no network'));
+    }
+
+    // ─── NAVIGATION ────────────────────────────────────────────────────────────
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(e=>e.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      if(btn) btn.classList.add('active');
+      if(tabId==='calendar-tab') renderCalendar();
+      else if(tabId==='excel-tab') renderTable();
+      else if(tabId==='archive-tab') renderArchive();
+      else if(tabId==='analytics-tab') updateAnalytics();
+    }
+    function setMobileNav(id) {
+      document.querySelectorAll('.mobile-nav-btn').forEach(b=>b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // ─── ACTIVE TABLE ──────────────────────────────────────────────────────────
+    function clearFilters(){
+      document.getElementById('search-bar').value='';
+      document.getElementById('filter-status').value='ACTIVE';
+      document.getElementById('filter-payment').value='ALL';
+      document.getElementById('filter-car').value='ALL';
+      document.getElementById('filter-date').value='';
+      renderTable();
+    }
+    function sortTable(col){
+      if(sort.col===col)sort.asc=!sort.asc;else{sort.col=col;sort.asc=true;} renderTable();
+    }
+    function renderTable(){
+      const tbody=document.getElementById('excel-table-body');
+      const noData=document.getElementById('table-no-data');
+      const srch=(document.getElementById('search-bar').value||'').toLowerCase();
+      const fSt=document.getElementById('filter-status').value;
+      const fPay=document.getElementById('filter-payment').value;
+      const fCar=document.getElementById('filter-car').value;
+      const fDate=document.getElementById('filter-date').value;
+      let filtered=bookings.filter(b=>{
+        const ms=!srch||(b.name||'').toLowerCase().includes(srch)||(b.phone||'').toLowerCase().includes(srch)||
+          (b.email||'').toLowerCase().includes(srch)||(b.pickup||'').toLowerCase().includes(srch)||
+          (b.dropoff||'').toLowerCase().includes(srch)||(b.car||'').toLowerCase().includes(srch)||
+          (b.bookingNumber+'').includes(srch);
+        let mSt; if(fSt==='ALL')mSt=true; else if(fSt==='ACTIVE')mSt=b.status!=='Completed'; else mSt=b.status===fSt;
+        const mPay=fPay==='ALL'||(b.paymentStatus||'Unpaid')===fPay;
+        const mCar=fCar==='ALL'||b.car===fCar;
+        const mDate=!fDate||(b.datetime||'').startsWith(fDate);
+        return ms&&mSt&&mPay&&mCar&&mDate;
+      });
+      filtered.sort((a,b)=>{
+        let va=a[sort.col]||'',vb=b[sort.col]||'';
+        if(sort.col==='price'||sort.col==='bookingNumber'){va=parseFloat(va)||0;vb=parseFloat(vb)||0;}
+        return sort.asc?(va<vb?-1:va>vb?1:0):(va<vb?1:va>vb?-1:0);
+      });
+      tbody.innerHTML='';
+      if(!filtered.length){noData.style.display='block';return;} noData.style.display='none';
+      filtered.forEach(b=>{ tbody.appendChild(buildRow(b,false)); });
+    }
+
+    function buildRow(b, archived) {
+      const tr=document.createElement('tr');
+      const dateStr=fmtDate(b.datetime);
+      const phone=(b.phone||'').trim(), email=(b.email||'').trim().toLowerCase();
+      let lc=0;
+      if(phone||email) lc=bookings.filter(o=>o.id!==b.id&&((phone&&o.phone&&o.phone.trim()===phone)||(email&&o.email&&o.email.trim().toLowerCase()===email))).length;
+      const lb=lc>0?`<span class="linked-badge" onclick="openModal('${b.id}');setTimeout(()=>document.getElementById('linked-section').scrollIntoView({behavior:'smooth'}),150)">🔗 x${lc+1}</span>`:'';
+      const pay=b.paymentStatus||'Unpaid';
+      const payIcon=pay==='Paid'?'✅':'💳';
+      const extraBS=(b.childSeats||b.holdBags)?`<div style="font-size:0.7rem;opacity:0.5;margin-top:2px;">👶${b.childSeats||0} / 📦${b.holdBags||0}</div>`:'';
+      if(!archived){
+        tr.innerHTML=`
+          <td class="booking-num">#${(b.bookingNumber||0).toString().padStart(5,'0')}</td>
+          <td style="font-weight:600">${dateStr}</td>
+          <td><div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px"><span>${esc(b.name)}</span>${lb}</div></td>
+          <td class="hide-mobile"><div style="font-size:0.78rem;opacity:0.8">📞 ${esc(b.phone||'N/A')}</div><div style="font-size:0.78rem;opacity:0.6">✉️ ${esc(b.email||'N/A')}</div></td>
+          <td><div style="max-width:200px;overflow:hidden;text-overflow:ellipsis">🛫 ${esc(b.pickup)}<br>🛬 ${esc(b.dropoff)}</div></td>
+          <td class="hide-mobile" style="color:var(--gold-bronze);font-weight:500">${esc(b.car)}</td>
+          <td style="font-weight:700">€${b.price}</td>
+          <td class="hide-mobile"><div>👤${b.passengers||1}/💼${b.luggage||0}</div>${extraBS}</td>
+          <td>
+            <select class="status-badge ${b.status.toLowerCase()}" onchange="changeStatus('${b.id}',this.value)" style="padding:4px;font-size:0.72rem;border:none;font-weight:700;background:transparent;cursor:pointer">
+              <option value="Pending" ${b.status==='Pending'?'selected':''}>⏳ Pending</option>
+              <option value="Confirmed" ${b.status==='Confirmed'?'selected':''}>✓ Confirmed</option>
+              <option value="Completed" ${b.status==='Completed'?'selected':''}>✈ Completed</option>
+              <option value="Cancelled" ${b.status==='Cancelled'?'selected':''}>✕ Cancelled</option>
+            </select>
+          </td>
+          <td><button class="payment-badge ${pay.toLowerCase()}" onclick="changePayment('${b.id}')">${payIcon} ${pay}</button></td>
+          <td><div class="action-btn-row">${actionBtns(b.id)}</div></td>`;
+      } else {
+        tr.innerHTML=`
+          <td class="booking-num">#${(b.bookingNumber||0).toString().padStart(5,'0')}</td>
+          <td style="font-weight:600">${dateStr}</td>
+          <td style="font-weight:500">${esc(b.name)}</td>
+          <td class="hide-mobile"><div style="font-size:0.78rem;opacity:0.8">📞 ${esc(b.phone||'N/A')}</div><div style="font-size:0.78rem;opacity:0.6">✉️ ${esc(b.email||'N/A')}</div></td>
+          <td><div style="max-width:200px;overflow:hidden;text-overflow:ellipsis">🛫 ${esc(b.pickup)}<br>🛬 ${esc(b.dropoff)}</div></td>
+          <td class="hide-mobile" style="color:var(--gold-bronze);font-weight:500">${esc(b.car)}</td>
+          <td style="font-weight:700">€${b.price}</td>
+          <td><button class="payment-badge ${pay.toLowerCase()}" onclick="changePayment('${b.id}')">${payIcon} ${pay}</button></td>
+          <td><div class="action-btn-row">${actionBtns(b.id)}</div></td>`;
+      }
+      tr.addEventListener('dblclick',e=>{
+        if(!['SELECT','BUTTON'].includes(e.target.tagName)&&!e.target.closest('.action-btn-row')) openModal(b.id);
+      });
+      return tr;
+    }
+
+    function actionBtns(id){
+      return `<button class="action-icon edit-btn" onclick="openModal('${id}')" title="Edit"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg></button>
+      <button class="action-icon" onclick="copyReport('${id}')" title="Copy"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      <button class="action-icon delete-btn" onclick="deleteBooking('${id}')" title="Delete"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3M4 7h16"/></svg></button>`;
+    }
+
+    function changeStatus(id,ns){
+      const i=bookings.findIndex(b=>b.id===id);
+      if(i>=0){bookings[i].status=ns;saveLocalData();pushToCloud(bookings[i]);showToast(`Status → ${ns}`);}
+    }
+    function changePayment(id){
+      const i=bookings.findIndex(b=>b.id===id);
+      if(i>=0){
+        bookings[i].paymentStatus=bookings[i].paymentStatus==='Paid'?'Unpaid':'Paid';
+        saveLocalData();pushToCloud(bookings[i]);showToast(`Payment → ${bookings[i].paymentStatus}`);
+      }
+    }
+
+    // ─── ARCHIVE TABLE ─────────────────────────────────────────────────────────
+    function clearArchiveFilters(){
+      document.getElementById('archive-search').value='';
+      document.getElementById('archive-filter-payment').value='ALL';
+      document.getElementById('archive-filter-date').value='';
+      renderArchive();
+    }
+    function sortArchive(col){
+      if(archSort.col===col)archSort.asc=!archSort.asc;else{archSort.col=col;archSort.asc=false;} renderArchive();
+    }
+    function renderArchive(){
+      const tbody=document.getElementById('archive-table-body');
+      const noData=document.getElementById('archive-no-data');
+      const cntEl=document.getElementById('archive-count');
+      const srch=(document.getElementById('archive-search').value||'').toLowerCase();
+      const fPay=document.getElementById('archive-filter-payment').value;
+      const fDate=document.getElementById('archive-filter-date').value;
+      const completed=bookings.filter(b=>b.status==='Completed');
+      let filtered=completed.filter(b=>{
+        const ms=!srch||(b.name||'').toLowerCase().includes(srch)||(b.phone||'').toLowerCase().includes(srch)||
+          (b.pickup||'').toLowerCase().includes(srch)||(b.dropoff||'').toLowerCase().includes(srch)||(b.bookingNumber+'').includes(srch);
+        const mPay=fPay==='ALL'||(b.paymentStatus||'Unpaid')===fPay;
+        const mDate=!fDate||(b.datetime||'').startsWith(fDate);
+        return ms&&mPay&&mDate;
+      });
+      filtered.sort((a,b)=>{
+        let va=a[archSort.col]||'',vb=b[archSort.col]||'';
+        if(archSort.col==='price'||archSort.col==='bookingNumber'){va=parseFloat(va)||0;vb=parseFloat(vb)||0;}
+        return archSort.asc?(va<vb?-1:va>vb?1:0):(va<vb?1:va>vb?-1:0);
+      });
+      cntEl.textContent=`${completed.length} transfer${completed.length!==1?'s':''}`;
+      tbody.innerHTML='';
+      if(!filtered.length){noData.style.display='block';return;} noData.style.display='none';
+      filtered.forEach(b=>{ tbody.appendChild(buildRow(b,true)); });
+    }
+
+    // ─── CALENDAR ──────────────────────────────────────────────────────────────
+    function prevMonth(){calDate.setMonth(calDate.getMonth()-1);renderCalendar();}
+    function nextMonth(){calDate.setMonth(calDate.getMonth()+1);renderCalendar();}
+    function goToToday(){calDate=new Date();renderCalendar();}
+    function renderCalendar(){ renderGridCal(); renderAgenda(); }
+
+    function renderGridCal(){
+      const c=document.getElementById('calendar-days-container');
+      const year=calDate.getFullYear(),month=calDate.getMonth();
+      document.getElementById('calendar-month-year').textContent=calDate.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+      let fi=new Date(year,month,1).getDay(); fi=fi===0?6:fi-1;
+      const dm=new Date(year,month+1,0).getDate(), dp=new Date(year,month,0).getDate();
+      c.innerHTML=''; const today=new Date();
+      for(let i=fi-1;i>=0;i--){const d=document.createElement('div');d.className='calendar-day other-month';d.innerHTML=`<span class="calendar-day-num">${dp-i}</span>`;c.appendChild(d);}
+      for(let day=1;day<=dm;day++){
+        const d=document.createElement('div'); d.className='calendar-day';
+        if(today.getDate()===day&&today.getMonth()===month&&today.getFullYear()===year)d.classList.add('today');
+        d.innerHTML=`<span class="calendar-day-num">${day}</span>`;
+        const ds=`${year}-${pad2(month+1)}-${pad2(day)}`;
+        const db=bookings.filter(b=>b.datetime&&b.datetime.startsWith(ds));
+        db.sort((a,b)=>(a.datetime||'').localeCompare(b.datetime||''));
+        db.forEach(b=>{
+          const ev=document.createElement('div'); ev.className=`calendar-event ${b.status.toLowerCase()}`;
+          let ts=''; try{ts=new Date(b.datetime).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}catch(e){}
+          ev.innerHTML=`<span class="calendar-event-time">${ts}</span><span>${esc(b.name)} (${b.price}€)</span>`;
+          ev.onclick=e=>{e.stopPropagation();openModal(b.id);}; d.appendChild(ev);
+        });
+        c.appendChild(d);
+      }
+      const tc=fi+dm, pad=(7-(tc%7))%7;
+      for(let i=1;i<=pad;i++){const d=document.createElement('div');d.className='calendar-day other-month';d.innerHTML=`<span class="calendar-day-num">${i}</span>`;c.appendChild(d);}
+    }
+
+    function renderAgenda(){
+      const c=document.getElementById('agenda-view-container');
+      const year=calDate.getFullYear(),month=calDate.getMonth();
+      const dm=new Date(year,month+1,0).getDate(); c.innerHTML='';
+      const today=new Date();
+      let hasAny=false;
+      for(let day=1;day<=dm;day++){
+        const ds=`${year}-${pad2(month+1)}-${pad2(day)}`;
+        const db=bookings.filter(b=>b.datetime&&b.datetime.startsWith(ds));
+        if(!db.length)continue; hasAny=true;
+        db.sort((a,b)=>(a.datetime||'').localeCompare(b.datetime||''));
+        const isToday=today.getDate()===day&&today.getMonth()===month&&today.getFullYear()===year;
+        const block=document.createElement('div'); block.className='agenda-day-block';
+        const date=new Date(year,month,day);
+        const hdr=document.createElement('div'); hdr.className='agenda-day-header'+(isToday?' today-header':'');
+        hdr.textContent=(isToday?'📍 Today — ':'')+date.toLocaleDateString('en-US',{weekday:'long',day:'numeric',month:'short'});
+        block.appendChild(hdr);
+        db.forEach(b=>{
+          let ts=''; try{ts=new Date(b.datetime).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}catch(e){}
+          const ev=document.createElement('div'); ev.className='agenda-event';
+          ev.innerHTML=`<div class="agenda-dot ${b.status.toLowerCase()}"></div><div class="agenda-time">${ts}</div>
+            <div class="agenda-info"><div class="agenda-name">${esc(b.name)} — €${b.price}</div>
+            <div class="agenda-route">🛫 ${esc(b.pickup)} → 🛬 ${esc(b.dropoff)}</div></div>
+            <div style="font-size:0.72rem;color:rgba(250,250,248,0.4);white-space:nowrap">${b.passengers||1} pax</div>`;
+          ev.onclick=()=>openModal(b.id); block.appendChild(ev);
+        });
+        c.appendChild(block);
+      }
+      if(!hasAny) c.innerHTML='<div class="no-data">No bookings this month.</div>';
+    }
+
+    // ─── TELEGRAM PARSER ───────────────────────────────────────────────────────
+    function parseTelegramText(){
+      const text=document.getElementById('telegram-paste').value.trim();
+      if(!text){alert('Please paste some text from Telegram first.');return;}
+      const pats={
+        name:/Name:<\/b>\s*([^\n]+)/i, email:/Email[^:]*:\s*<\/b>\s*`?([^`\n]+)`?/i,
+        phone:/Phone:<\/b>\s*`?([^`\n]+)`?/i, datetime:/Date\/Time:<\/b>\s*([^\n]+)/i,
+        pickup:/From:<\/b>\s*([^\n]+)/i, dropoff:/To:<\/b>\s*([^\n]+)/i,
+        passengers:/Passengers:<\/b>\s*([^\n]+)/i, luggage:/Carry.on[^:]*:\s*<\/b>\s*([^\n]+)/i,
+        flightInfo:/Flight Info:<\/b>\s*([^\n]+)/i, requirements:/Special Req:<\/b>\s*([^\n]+)/i,
+        car:/Car Selected:<\/b>\s*([^\n]+)/i, price:/Estimated Price[^:]*:\s*<\/b>\s*`?(\d+)/i
+      };
+      const p={};
+      for(const [k,r] of Object.entries(pats)){const m=text.match(r);p[k]=m?m[1].trim():'';}
+      const ch=s=>s.replace(/<\/?[^>]+(\>|$)/g,'').trim();
+      if(p.name){
+        document.getElementById('m-name').value=ch(p.name);
+        if(p.email)document.getElementById('m-email').value=ch(p.email);
+        if(p.phone)document.getElementById('m-phone').value=ch(p.phone);
+        if(p.pickup)document.getElementById('m-pickup').value=ch(p.pickup);
+        if(p.dropoff)document.getElementById('m-dropoff').value=ch(p.dropoff);
+        if(p.passengers)document.getElementById('m-passengers').value=parseInt(ch(p.passengers))||1;
+        if(p.luggage)document.getElementById('m-luggage').value=parseInt(ch(p.luggage))||0;
+        if(p.flightInfo)document.getElementById('m-flightInfo').value=ch(p.flightInfo);
+        if(p.requirements&&ch(p.requirements)!=='None'){
+          const rq=ch(p.requirements); document.getElementById('m-requirements').value=rq;
+          const cs=rq.match(/(\d+)\s*child\s*seat/i); if(cs)document.getElementById('m-childSeats').value=parseInt(cs[1])||0;
+        }
+        if(p.price)document.getElementById('m-price').value=parseInt(ch(p.price))||0;
+        const cs=ch(p.car).toLowerCase(), sel=document.getElementById('m-car');
+        if(cs.includes('v-class')||cs.includes('v class'))sel.value='Mercedes V-Class';
+        else if(cs.includes('trafic')||cs.includes('renault'))sel.value='Renault Trafic SpaceClass';
+        else sel.value='Mercedes E-Class';
+        const dts=ch(p.datetime);
+        if(dts){try{const d=new Date(dts);if(!isNaN(d))document.getElementById('m-datetime').value=d.toISOString().substring(0,16);}catch(e){}}
+        switchTab('add-tab',document.getElementById('nav-add'));
+        showToast('🪄 Booking parsed! Review fields and save.');
+      }else{alert('Could not parse booking. Make sure the format matches.');}
+    }
+
+    // ─── ADD BOOKING ───────────────────────────────────────────────────────────
+    let retClient=null;
+    function checkReturningClient(){
+      const email=(document.getElementById('m-email').value||'').trim().toLowerCase();
+      const phone=(document.getElementById('m-phone').value||'').trim();
+      const box=document.getElementById('client-suggestion');
+      const txt=document.getElementById('client-suggestion-text');
+      retClient=null;
+      if(!email&&!phone){box.classList.remove('visible');return;}
+      for(let i=bookings.length-1;i>=0;i--){
+        const b=bookings[i];
+        if((phone&&b.phone&&b.phone.trim()===phone)||(email&&b.email&&b.email.trim().toLowerCase()===email)){retClient=b;break;}
+      }
+      if(retClient){txt.innerHTML=`🔄 Returning client: <strong>${esc(retClient.name)}</strong>`;box.classList.add('visible');}
+      else box.classList.remove('visible');
+    }
+    function fillReturningClient(){
+      if(!retClient)return;
+      if(retClient.name)document.getElementById('m-name').value=retClient.name;
+      if(retClient.email)document.getElementById('m-email').value=retClient.email;
+      if(retClient.phone)document.getElementById('m-phone').value=retClient.phone;
+      document.getElementById('client-suggestion').classList.remove('visible');
+      showToast('Client details auto-filled!');
+    }
+    function dismissClientSuggestion(){document.getElementById('client-suggestion').classList.remove('visible');}
+
+    function buildBookingFromForm(){
+      return {
+        id:Date.now()+'_'+Math.random().toString(36).substring(2,9),
+        bookingNumber:nextNum++,
+        name:document.getElementById('m-name').value,
+        email:document.getElementById('m-email').value,
+        phone:document.getElementById('m-phone').value,
+        datetime:document.getElementById('m-datetime').value,
+        pickup:document.getElementById('m-pickup').value,
+        dropoff:document.getElementById('m-dropoff').value,
+        car:document.getElementById('m-car').value,
+        passengers:parseInt(document.getElementById('m-passengers').value)||1,
+        luggage:parseInt(document.getElementById('m-luggage').value)||0,
+        flightInfo:document.getElementById('m-flightInfo').value||'',
+        childSeats:parseInt(document.getElementById('m-childSeats').value)||0,
+        holdBags:parseInt(document.getElementById('m-holdBags').value)||0,
+        price:parseInt(document.getElementById('m-price').value)||0,
+        status:document.getElementById('m-status').value,
+        paymentStatus:'Unpaid',
+        requirements:document.getElementById('m-requirements').value||'None',
+        created_at:new Date().toISOString(),
+        updated_at:new Date().toISOString()
+      };
+    }
+
+    function handleManualSubmit(e){
+      e.preventDefault();
+      const nb=buildBookingFromForm();
+      localStorage.setItem(COUNTER_KEY,nextNum);
+      bookings.push(nb); saveLocalData(); pushToCloud(nb);
+      resetAddForm(); showToast(`Booking #${nb.bookingNumber} saved!`);
+      switchTab('excel-tab',document.getElementById('nav-excel')); setMobileNav('mnav-excel');
+    }
+
+    function resetAddForm(){
+      document.getElementById('booking-manual-form').reset();
+      document.getElementById('telegram-paste').value='';
+      document.getElementById('client-suggestion').classList.remove('visible');
+      document.getElementById('return-journey-banner').style.display='none';
+      retClient=null;
+    }
+
+    function prefillReturnJourney(){
+      const name=document.getElementById('m-name').value.trim();
+      const pickup=document.getElementById('m-pickup').value.trim();
+      const dropoff=document.getElementById('m-dropoff').value.trim();
+      const dt=document.getElementById('m-datetime').value;
+      if(!name||!pickup||!dropoff||!dt){showToast('⚠️ Fill in Customer Name, Route and Date first.',false);return;}
+      // Save outbound
+      const ob=buildBookingFromForm();
+      localStorage.setItem(COUNTER_KEY,nextNum);
+      bookings.push(ob); saveLocalData(); pushToCloud(ob);
+      showToast(`#${ob.bookingNumber} saved! Now fill return journey details.`);
+      // Pre-fill return
+      document.getElementById('m-name').value=ob.name;
+      document.getElementById('m-email').value=ob.email;
+      document.getElementById('m-phone').value=ob.phone;
+      document.getElementById('m-pickup').value=ob.dropoff;   // swapped!
+      document.getElementById('m-dropoff').value=ob.pickup;  // swapped!
+      document.getElementById('m-car').value=ob.car;
+      document.getElementById('m-passengers').value=ob.passengers;
+      document.getElementById('m-luggage').value=ob.luggage;
+      document.getElementById('m-childSeats').value=ob.childSeats;
+      document.getElementById('m-holdBags').value=ob.holdBags;
+      document.getElementById('m-requirements').value=ob.requirements!=='None'?ob.requirements:'';
+      document.getElementById('m-datetime').value='';
+      document.getElementById('m-flightInfo').value='';
+      document.getElementById('m-price').value='0';
+      document.getElementById('m-status').value='Pending';
+      document.getElementById('client-suggestion').classList.remove('visible');
+      document.getElementById('return-journey-banner').style.display='flex';
+      document.getElementById('add-tab').scrollIntoView({behavior:'smooth'});
+    }
+
+    function clearReturnMode(){
+      document.getElementById('return-journey-banner').style.display='none';
+      document.getElementById('booking-manual-form').reset();
+    }
+
+    // ─── EDIT MODAL ────────────────────────────────────────────────────────────
+    function openModal(id){
+      const b=bookings.find(x=>x.id===id); if(!b)return;
+      document.getElementById('modal-title').textContent=`Edit Booking #${(b.bookingNumber||0).toString().padStart(5,'0')}`;
+      document.getElementById('edit-id').value=b.id;
+      document.getElementById('edit-name').value=b.name||'';
+      document.getElementById('edit-email').value=b.email||'';
+      document.getElementById('edit-phone').value=b.phone||'';
+      document.getElementById('edit-datetime').value=b.datetime||'';
+      document.getElementById('edit-pickup').value=b.pickup||'';
+      document.getElementById('edit-dropoff').value=b.dropoff||'';
+      document.getElementById('edit-car').value=b.car||'Mercedes E-Class';
+      document.getElementById('edit-passengers').value=b.passengers||1;
+      document.getElementById('edit-luggage').value=b.luggage||0;
+      document.getElementById('edit-flightInfo').value=b.flightInfo||'';
+      document.getElementById('edit-childSeats').value=b.childSeats||0;
+      document.getElementById('edit-holdBags').value=b.holdBags||0;
+      document.getElementById('edit-price').value=b.price||0;
+      document.getElementById('edit-status').value=b.status||'Pending';
+      document.getElementById('edit-paymentStatus').value=b.paymentStatus||'Unpaid';
+      document.getElementById('edit-requirements').value=b.requirements||'';
+      // Linked
+      const ph=(b.phone||'').trim(), em=(b.email||'').trim().toLowerCase();
+      let lhtml='';
+      if(ph||em){
+        const lb=bookings.filter(o=>o.id!==b.id&&((ph&&o.phone&&o.phone.trim()===ph)||(em&&o.email&&o.email.trim().toLowerCase()===em)));
+        lb.sort((x,y)=>(y.datetime||'').localeCompare(x.datetime||''));
+        lb.forEach(l=>{
+          const ld=l.datetime?new Date(l.datetime).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'})+' '+new Date(l.datetime).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'TBD';
+          lhtml+=`<div class="linked-transfer-item" onclick="openModal('${l.id}')"><span class="linked-transfer-num">#${(l.bookingNumber||0).toString().padStart(5,'0')}</span><span class="linked-transfer-route">${esc(l.pickup)} ➝ ${esc(l.dropoff)}</span><span class="linked-transfer-date">${ld}</span><span class="linked-transfer-status ${l.status.toLowerCase()}">${l.status}</span></div>`;
+        });
+      }
+      const ls=document.getElementById('linked-section'), ll=document.getElementById('linked-list');
+      if(lhtml){ll.innerHTML=lhtml;ls.style.display='block';}else{ll.innerHTML='';ls.style.display='none';}
+      document.getElementById('details-modal').classList.add('open');
+    }
+    function closeModal(){document.getElementById('details-modal').classList.remove('open');}
+    function handleEditSubmit(e){
+      e.preventDefault();
+      const id=document.getElementById('edit-id').value, i=bookings.findIndex(b=>b.id===id);
+      if(i>=0){
+        bookings[i].name=document.getElementById('edit-name').value;
+        bookings[i].email=document.getElementById('edit-email').value;
+        bookings[i].phone=document.getElementById('edit-phone').value;
+        bookings[i].datetime=document.getElementById('edit-datetime').value;
+        bookings[i].pickup=document.getElementById('edit-pickup').value;
+        bookings[i].dropoff=document.getElementById('edit-dropoff').value;
+        bookings[i].car=document.getElementById('edit-car').value;
+        bookings[i].passengers=parseInt(document.getElementById('edit-passengers').value)||1;
+        bookings[i].luggage=parseInt(document.getElementById('edit-luggage').value)||0;
+        bookings[i].flightInfo=document.getElementById('edit-flightInfo').value;
+        bookings[i].childSeats=parseInt(document.getElementById('edit-childSeats').value)||0;
+        bookings[i].holdBags=parseInt(document.getElementById('edit-holdBags').value)||0;
+        bookings[i].price=parseInt(document.getElementById('edit-price').value)||0;
+        bookings[i].status=document.getElementById('edit-status').value;
+        bookings[i].paymentStatus=document.getElementById('edit-paymentStatus').value;
+        bookings[i].requirements=document.getElementById('edit-requirements').value;
+        bookings[i].updated_at=new Date().toISOString();
+        saveLocalData(); pushToCloud(bookings[i]); closeModal(); showToast('Changes saved!');
+      }
+    }
+    function deleteBooking(id){
+      if(!confirm('Permanently delete this booking?'))return;
+      const i=bookings.findIndex(b=>b.id===id);
+      if(i>=0){
+        bookings.splice(i,1); saveLocalData();
+        fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/vtransfer_b_${id}/`,{method:'POST',headers:{'Content-Length':'0'}})
+          .then(()=>fetch(`https://keyvalue.immanuel.co/api/KeyVal/GetValue/${appKey}/${listKey}`).then(r=>r.json()).then(ls=>{
+            let list=[]; if(ls){const c=(ls+'').replace(/^"+|"+$/g,'').trim();if(c)list=c.split(',');}
+            list=list.filter(x=>x!==id);
+            fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/${listKey}/${encodeURIComponent(list.join(','))}`,{method:'POST',headers:{'Content-Length':'0'}});
+          }));
+        showToast('Booking deleted.');
+      }
+    }
+    function copyReport(id){
+      const b=bookings.find(x=>x.id===id); if(!b)return;
+      const ds=b.datetime?new Date(b.datetime).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'TBD';
+      let lt=''; const ph=(b.phone||'').trim(),em=(b.email||'').trim().toLowerCase();
+      if(ph||em){
+        const lb=bookings.filter(o=>o.id!==b.id&&((ph&&o.phone&&o.phone.trim()===ph)||(em&&o.email&&o.email.trim().toLowerCase()===em)));
+        if(lb.length){lb.sort((x,y)=>(y.datetime||'').localeCompare(x.datetime||''));lt='\n\n🔗 *Linked Transfers*\n';lb.forEach(l=>{const ld=l.datetime?new Date(l.datetime).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}):'TBD';lt+=`• #${(l.bookingNumber||0).toString().padStart(5,'0')} - ${ld} - ${l.pickup} ➝ ${l.dropoff}\n`;});}
+      }
+      const pay=b.paymentStatus||'Unpaid';
+      const txt=`📋 *Booking #${(b.bookingNumber||0).toString().padStart(5,'0')}*\n\n`+
+        `👤 *Name:* ${b.name}\n📞 *Phone:* ${b.phone||'N/A'}\n✉️ *Email:* ${b.email||'N/A'}\n`+
+        `📅 *Date/Time:* ${ds}\n📍 *From:* ${b.pickup}\n📍 *To:* ${b.dropoff}\n`+
+        (b.flightInfo?`✈️ *Flight:* ${b.flightInfo}\n`:'')+
+        `👥 *Pax:* ${b.passengers||1} / 💼 *Bags:* ${b.luggage||0} / 📦 *Hold:* ${b.holdBags||0} / 👶 *Child:* ${b.childSeats||0}\n`+
+        `🚗 *Car:* ${b.car}\n💰 *Price:* €${b.price}\n⚡ *Status:* ${b.status}\n💳 *Payment:* ${pay}\n💬 *Notes:* ${b.requirements||'None'}`+lt;
+      navigator.clipboard.writeText(txt).then(()=>showToast('Booking details copied!'));
+    }
+
+    // ─── ANALYTICS ─────────────────────────────────────────────────────────────
+    function updateAnalytics(){
+      document.getElementById('stat-total').textContent=bookings.length;
+      const confRev=bookings.filter(b=>b.status==='Confirmed'||b.status==='Completed').reduce((s,b)=>s+(parseFloat(b.price)||0),0);
+      const pendRev=bookings.filter(b=>b.status==='Pending').reduce((s,b)=>s+(parseFloat(b.price)||0),0);
+      const paidRev=bookings.filter(b=>(b.paymentStatus||'Unpaid')==='Paid').reduce((s,b)=>s+(parseFloat(b.price)||0),0);
+      const unpaidRev=bookings.filter(b=>(b.status==='Confirmed'||b.status==='Completed')&&(b.paymentStatus||'Unpaid')==='Unpaid').reduce((s,b)=>s+(parseFloat(b.price)||0),0);
+      const comp=bookings.filter(b=>b.status==='Completed').length;
+      document.getElementById('stat-confirmed-rev').textContent='€'+confRev.toLocaleString('fr-FR');
+      document.getElementById('stat-pending-rev').textContent='€'+pendRev.toLocaleString('fr-FR');
+      document.getElementById('stat-paid-rev').textContent='€'+paidRev.toLocaleString('fr-FR');
+      document.getElementById('stat-unpaid-rev').textContent='€'+unpaidRev.toLocaleString('fr-FR');
+      document.getElementById('stat-completed').textContent=comp;
+      const cc={}; bookings.forEach(b=>{const c=b.car||'Mercedes E-Class';cc[c]=(cc[c]||0)+1;});
+      let top='—',mx=-1; for(const[c,n]of Object.entries(cc)){if(n>mx){mx=n;top=c;}}
+      document.getElementById('stat-top-car').textContent=top.split(' ')[1]||top;
+    }
+
+    // ─── EXPORTS ───────────────────────────────────────────────────────────────
+    function exportCSV(){
+      if(!bookings.length){alert('No bookings to export.');return;}
+      let csv='BookingNumber,ID,DateTime,Name,Email,Phone,Pickup,Dropoff,FlightInfo,Car,Pax,Bags,HoldBags,ChildSeats,Price,Status,Payment,Notes\n';
+      bookings.forEach(b=>{csv+=`"${b.bookingNumber||''}","${b.id}","${b.datetime||''}","${(b.name||'').replace(/"/g,'""')}","${b.email||''}","${b.phone||''}","${(b.pickup||'').replace(/"/g,'""')}","${(b.dropoff||'').replace(/"/g,'""')}","${(b.flightInfo||'').replace(/"/g,'""')}","${b.car||''}",${b.passengers||1},${b.luggage||0},${b.holdBags||0},${b.childSeats||0},${b.price},"${b.status}","${b.paymentStatus||'Unpaid'}","${(b.requirements||'').replace(/"/g,'""')}"\n`;});
+      const bl=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(bl);
+      a.setAttribute('download',`vtransfer_bookings_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    }
+    function exportJSON(){
+      const a=document.createElement('a');
+      a.setAttribute('href','data:text/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(bookings,null,2)));
+      a.setAttribute('download',`vtransfer_db_backup_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    }
+    function importJSON(e){
+      const file=e.target.files[0]; if(!file)return;
+      const reader=new FileReader();
+      reader.onload=function(ev){
+        try{
+          const imp=JSON.parse(ev.target.result);
+          if(Array.isArray(imp)){
+            bookings=imp; migrateBookings(bookings);
+            let mx=0; bookings.forEach(b=>{if(b.bookingNumber>mx)mx=b.bookingNumber;});
+            nextNum=mx>0?mx+1:1; localStorage.setItem(COUNTER_KEY,nextNum);
+            saveLocalData(); showToast('Database restored from backup!');
+            setSyncIndicator('pending','Syncing imported data...');
+            const ids=bookings.map(b=>b.id);
+            fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/${listKey}/${encodeURIComponent(ids.join(','))}`,{method:'POST',headers:{'Content-Length':'0'}})
+              .then(()=>{
+                Promise.all(bookings.map(b=>fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/vtransfer_b_${b.id}/${encodeURIComponent(JSON.stringify(b))}`,{method:'POST',headers:{'Content-Length':'0'}})))
+                  .then(()=>setSyncIndicator('online','Database restored and synced.'));
+              });
+          }else alert('Invalid backup file structure.');
+        }catch(err){alert('Failed to parse backup JSON file.');}
+      };
+      reader.readAsText(file);
+    }
+    function purgeAllData(){
+      if(!confirm('🚨 WARNING!\n\nThis will delete ALL bookings locally AND wipe the cloud database.\n\nThis cannot be undone. Are you absolutely sure?'))return;
+      bookings=[]; saveLocalData();
+      fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/${listKey}/`,{method:'POST',headers:{'Content-Length':'0'}})
+        .then(()=>{setSyncIndicator('online','Cloud database wiped.');showToast('Planner and cloud database wiped.');});
+    }
+
+    // ─── HELPERS ───────────────────────────────────────────────────────────────
+    function fmtDate(dt){
+      if(!dt)return'TBD';
+      try{const d=new Date(dt);return d.toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'})+' '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}catch(e){return'TBD';}
+    }
+    function pad2(n){return String(n).padStart(2,'0');}
+    function esc(s){return(s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');}
+  </script>
+</body>
+</html>
