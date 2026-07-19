@@ -154,6 +154,11 @@
         <ul class="autocomplete-list" id="dropoff-list"></ul>
       </div>
 
+      <div class="form-group" id="flight-number-group">
+        <label data-i18n="request.flight_number">Flight Number (Optional)</label>
+        <input type="text" name="flight_number" placeholder="e.g. AF1234">
+      </div>
+
 
       <div class="form-group">
         <label data-i18n="request.passengers">Passengers</label>
@@ -1304,7 +1309,73 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
     body: formData,
     headers: { 'Accept': 'application/json' }
   }).then(response => {
-    if (response.ok) {
+    if (!response.ok) console.warn('FormSubmit returned not ok');
+  }).catch(err => console.error('FormSubmit error:', err));
+
+  // Sync to keyvalue.immanuel.co cloud DB unconditionally
+  try {
+        const appKey = 'mzmvife9';
+        const listKey = 'vtransfer_booking_ids';
+        const bookingId = Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+        const bookingKey = 'vtransfer_b_' + bookingId;
+
+        const bookingData = {
+          id: bookingId,
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          datetime: formData.get('pickup_datetime'),
+          pickup: formData.get('pickup'),
+          dropoff: formData.get('dropoff'),
+          flightInfo: formData.get('flight_number') || '',
+          passengers: parseInt(formData.get('passengers')) || 1,
+          luggage: parseInt(formData.get('luggage')) || 0,
+          requirements: formData.get('requirements') || 'None',
+          car: selectedCarLabel || 'Not specified',
+          price: currentPrice || 0,
+          status: 'Pending',
+          created_at: new Date().toISOString()
+        };
+
+        const jsonStr = JSON.stringify(bookingData);
+        const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
+        const safeB64 = b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        const chunkSize = 200;
+        let chunks = [];
+        for (let i = 0; i < safeB64.length; i += chunkSize) {
+            chunks.push(safeB64.substring(i, i + chunkSize));
+        }
+        let promises = chunks.map((chunk, i) => 
+            fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/${bookingKey}_c${i}/${chunk}`, { method: 'POST', headers: { 'Content-Length': '0' }})
+        );
+        promises.push(fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/${bookingKey}_len/${chunks.length}`, { method: 'POST', headers: { 'Content-Length': '0' }}));
+
+        Promise.all(promises).then(() => {
+          return fetch(`https://keyvalue.immanuel.co/api/KeyVal/GetValue/${appKey}/${listKey}`)
+            .then(res => res.json())
+            .then(currentListStr => {
+              let list = [];
+              if (typeof currentListStr === 'string') {
+                const cleanStr = currentListStr.replace(/^"+|"+$/g, '').trim();
+                if (cleanStr && cleanStr !== 'EMPTY' && cleanStr !== 'NONE') {
+                  list = cleanStr.split(',').filter(id => id && id !== '[object Object]');
+                }
+              }
+              if (!list.includes(bookingId)) {
+                list.push(bookingId);
+              }
+              if (list.length > 500) {
+                list = list.slice(list.length - 500);
+              }
+              return fetch(`https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/${appKey}/${listKey}/${encodeURIComponent(list.join(','))}`, {
+                method: 'POST',
+                headers: { 'Content-Length': '0' }
+              });
+            });
+        })
+        .catch(err => console.error('Cloud DB Sync error:', err));
+
+
       // Send Telegram notification to dad
       const telegramToken = '8679301073:AAFR_t0iOonpkxFRjz1OMs-eJ3NY5Pq81Ew';
       const chatId = '8918454205';
@@ -1347,6 +1418,7 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
           `📅 <b>Date/Time:</b> ${escapeHTML(formData.get('pickup_datetime'))}\n` +
           `📍 <b>From:</b> ${escapeHTML(formData.get('pickup'))}\n` +
           `📍 <b>To:</b> ${escapeHTML(formData.get('dropoff'))}\n` +
+          (formData.get('flight_number') ? `✈️ <b>Flight Info:</b> ${escapeHTML(formData.get('flight_number'))}\n` : '') +
           `👥 <b>Passengers:</b> ${escapeHTML(formData.get('passengers'))}\n` +
           `💼 <b>Luggage:</b> ${escapeHTML(formData.get('luggage'))}\n` +
           `💬 <b>Special Req:</b> ${escapeHTML(formData.get('requirements') || 'None')}\n` +
@@ -1391,19 +1463,16 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
       document.querySelectorAll('.car-option').forEach(el => el.classList.remove('selected'));
       selectedCar = ''; selectedCarLabel = ''; currentPrice = null;
       document.getElementById('price-estimator-panel').classList.remove('visible');
-    } else {
-      alert(t.error || 'Something went wrong. Please try again or call us directly.');
-    }
-  }).catch(() => {
-    alert(t.error || 'Something went wrong. Please try again or call us directly.');
-  }).finally(() => {
-    if (btnText) {
-      btnText.textContent = t.btn_book_pay || 'Request Booking';
-    } else {
-      submitBtn.innerText = t.btn_book_pay || 'Request Booking';
-    }
-    submitBtn.disabled  = false;
-  });
+
+      if (btnText) {
+        btnText.textContent = t.btn_book_pay || 'Request Booking';
+      } else {
+        submitBtn.innerText = t.btn_book_pay || 'Request Booking';
+      }
+      submitBtn.disabled  = false;
+  } catch (err) {
+      console.error('Error in form submission flow:', err);
+  }
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
