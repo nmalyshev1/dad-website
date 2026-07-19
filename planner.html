@@ -1428,7 +1428,7 @@ function pushAllToCloud(skipConfirm = false) {
     Promise.all(ups).then(()=>{pushSettingsToCloud();setSyncIndicator('online','All pushed ✓');showToast(`✅ All data pushed to cloud!`);});
   }).catch(()=>setSyncIndicator('offline','Push failed'));
 }
-function startAutoSync() { if(autoSyncTimer)clearInterval(autoSyncTimer); autoSyncTimer=setInterval(()=>syncNow(true),30000); }
+function startAutoSync() { if(autoSyncTimer)clearInterval(autoSyncTimer); autoSyncTimer=setInterval(()=>syncNow(true),10000); }
 
 // ═══════════════════════════════════════════════════
 // NAVIGATION
