@@ -1500,6 +1500,7 @@ function buildRow(b,archived) {
   const payIcon=pay==='Paid'?'✅':'💳';
   const notBadge=b.notified?`<span class="notified-dot" title="Client notified"></span>`:'';
   const dateStr=fmtDateCompact(b.datetime);
+  const displayPrice=(b.price!==undefined && b.price!==null && !isNaN(b.price)) ? b.price : 0;
   const carDriver=[b.car?`<span style="color:var(--gold);font-weight:600;font-size:0.78rem">🚗 ${esc(b.car)}</span>`:'',b.driver?`<span style="font-size:0.76rem;color:var(--text-muted)">👤 ${esc(b.driver)}</span>`:''].filter(Boolean).join('<br>');
 
   if(!archived){
@@ -1511,15 +1512,15 @@ function buildRow(b,archived) {
       </td>
       <td style="white-space:normal">
         <div style="font-weight:600;font-size:0.82rem;color:var(--gold);white-space:nowrap">${dateStr}</div>
-        <div style="font-size:0.79rem;color:var(--text-secondary);margin-top:3px;font-weight:500">🛫 <span style="color:var(--text-primary)">${esc(b.pickup||'—')}</span></div>
-        <div style="font-size:0.79rem;color:var(--text-secondary);margin-top:2px;font-weight:500">🏁 <span style="color:var(--text-primary)">${esc(b.dropoff||'—')}</span></div>
+        <div style="font-size:0.79rem;color:var(--text-secondary);margin-top:3px;font-weight:500">🛫 <span style="color:var(--text-primary)">${esc(b.pickup||'TBD')}</span></div>
+        <div style="font-size:0.79rem;color:var(--text-secondary);margin-top:2px;font-weight:500">🏁 <span style="color:var(--text-primary)">${esc(b.dropoff||'TBD')}</span></div>
       </td>
       <td class="hide-mobile">${carDriver||'<span style="color:var(--text-muted);font-size:0.76rem">—</span>'}</td>
       <td>
-        <div style="font-weight:800;font-size:0.95rem">€${b.price}</div>
+        <div style="font-weight:800;font-size:0.95rem">€${displayPrice}</div>
         <button class="payment-badge ${pay.toLowerCase()}" onclick="changePayment('${b.id}')" style="margin-top:3px;font-size:0.62rem;padding:2px 7px">${payIcon} ${pay}</button>
       </td>
-      <td><select class="status-badge ${b.status.toLowerCase()}" onchange="changeStatus('${b.id}',this.value)" style="padding:3px 6px;font-size:0.68rem;border:none;font-weight:700;background:transparent;cursor:pointer;width:100%">
+      <td><select class="status-badge ${(b.status||'Pending').toLowerCase()}" onchange="changeStatus('${b.id}',this.value)" style="padding:3px 6px;font-size:0.68rem;border:none;font-weight:700;background:transparent;cursor:pointer;width:100%">
         <option value="Pending" ${b.status==='Pending'?'selected':''}>⏳ ${t('s_pending')}</option>
         <option value="Confirmed" ${b.status==='Confirmed'?'selected':''}>✓ ${t('s_confirmed')}</option>
         <option value="Completed" ${b.status==='Completed'?'selected':''}>✈ ${t('s_completed')}</option>
@@ -1535,12 +1536,12 @@ function buildRow(b,archived) {
       </td>
       <td style="white-space:normal">
         <div style="font-weight:600;font-size:0.82rem;color:var(--gold);white-space:nowrap">${dateStr}</div>
-        <div style="font-size:0.79rem;color:var(--text-secondary);margin-top:3px;font-weight:500">🛫 <span style="color:var(--text-primary)">${esc(b.pickup||'—')}</span></div>
-        <div style="font-size:0.79rem;color:var(--text-secondary);margin-top:2px;font-weight:500">🏁 <span style="color:var(--text-primary)">${esc(b.dropoff||'—')}</span></div>
+        <div style="font-size:0.79rem;color:var(--text-secondary);margin-top:3px;font-weight:500">🛫 <span style="color:var(--text-primary)">${esc(b.pickup||'TBD')}</span></div>
+        <div style="font-size:0.79rem;color:var(--text-secondary);margin-top:2px;font-weight:500">🏁 <span style="color:var(--text-primary)">${esc(b.dropoff||'TBD')}</span></div>
       </td>
       <td class="hide-mobile">${carDriver||'<span style="color:var(--text-muted);font-size:0.76rem">—</span>'}</td>
       <td>
-        <div style="font-weight:800;font-size:0.95rem">€${b.price}</div>
+        <div style="font-weight:800;font-size:0.95rem">€${displayPrice}</div>
         <button class="payment-badge ${pay.toLowerCase()}" onclick="changePayment('${b.id}')" style="margin-top:3px;font-size:0.62rem;padding:2px 7px">${payIcon} ${pay}</button>
       </td>
       <td><div class="action-btn-row">${actionBtns(b.id)}</div></td>`;

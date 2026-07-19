@@ -1319,21 +1319,41 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
         const bookingId = Date.now() + '_' + Math.random().toString(36).substring(2, 9);
         const bookingKey = 'vtransfer_b_' + bookingId;
 
+        const pickupVal = (document.getElementById('pickup-input')?.value || formData.get('pickup') || '').trim();
+        const dropoffVal = (document.getElementById('dropoff-input')?.value || formData.get('dropoff') || '').trim();
+        const datetimeVal = (document.getElementById('pickup-datetime')?.value || formData.get('pickup_datetime') || '').trim();
+        const nameVal = (document.getElementById('name-input')?.value || formData.get('name') || 'Client').trim();
+        const emailVal = (document.getElementById('email-input')?.value || formData.get('email') || '').trim();
+        const phoneVal = (document.getElementById('phone-input')?.value || formData.get('phone') || '').trim();
+        const flightVal = (document.getElementById('flight-number-input')?.value || formData.get('flight_number') || '').trim();
+        
+        let priceNum = 0;
+        if (typeof currentPrice === 'number' && !isNaN(currentPrice)) {
+          priceNum = currentPrice;
+        } else if (currentPrice) {
+          priceNum = parseFloat(currentPrice) || 0;
+        } else {
+          const fp = document.getElementById('form-price-input')?.value || '';
+          const match = fp.match(/(\d+(?:\.\d+)?)/);
+          if (match) priceNum = parseFloat(match[1]) || 0;
+        }
+
         const bookingData = {
           id: bookingId,
-          name: formData.get('name'),
-          email: formData.get('email'),
-          phone: formData.get('phone'),
-          datetime: formData.get('pickup_datetime'),
-          pickup: formData.get('pickup'),
-          dropoff: formData.get('dropoff'),
-          flightInfo: formData.get('flight_number') || '',
+          name: nameVal || 'Client',
+          email: emailVal,
+          phone: phoneVal,
+          datetime: datetimeVal,
+          pickup: pickupVal || 'TBD',
+          dropoff: dropoffVal || 'TBD',
+          flightInfo: flightVal,
           passengers: parseInt(formData.get('passengers')) || 1,
           luggage: parseInt(formData.get('luggage')) || 0,
           requirements: formData.get('requirements') || 'None',
-          car: selectedCarLabel || 'Not specified',
-          price: currentPrice || 0,
+          car: selectedCarLabel || 'Mercedes E-Class / Similar',
+          price: priceNum,
           status: 'Pending',
+          paymentStatus: 'Unpaid',
           created_at: new Date().toISOString()
         };
 
