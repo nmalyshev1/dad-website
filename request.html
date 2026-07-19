@@ -1403,12 +1403,12 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
       {
         const escapeHTML = str => (str || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-        const clientEmail = encodeURIComponent(formData.get('email'));
-        const clientPhone = formData.get('phone') ? formData.get('phone').replace(/[^0-9+]/g, '') : '';
-        const clientName = formData.get('name');
-        const routeStr = `${formData.get('pickup')} to ${formData.get('dropoff')}`;
-        const priceStr = currentPrice ? `€${currentPrice}` : 'To be confirmed';
-        const carStr = selectedCarLabel || 'Not specified';
+        const clientEmail = encodeURIComponent(emailVal);
+        const clientPhone = phoneVal ? phoneVal.replace(/[^0-9+]/g, '') : '';
+        const clientName = nameVal;
+        const routeStr = `${pickupVal} to ${dropoffVal}`;
+        const priceStr = priceNum ? `€${priceNum}` : 'To be confirmed';
+        const carStr = selectedCarLabel || 'Mercedes E-Class / Similar';
 
         // 1. Email link (notify that invoice was sent)
         const emailSubject = encodeURIComponent(`Booking Request Approved - V-TRANSFER`);
@@ -1433,17 +1433,17 @@ document.querySelector('.booking-form').addEventListener('submit', function(e) {
 
         const messageHtml = `🚗 <b>New Booking Request!</b>\n\n` +
           `👤 <b>Name:</b> ${escapeHTML(clientName)}\n` +
-          `✉️ <b>Email (Tap to Copy):</b> <code>${escapeHTML(formData.get('email'))}</code>\n` +
-          `📞 <b>Phone:</b> <code>${escapeHTML(formData.get('phone'))}</code>\n` +
-          `📅 <b>Date/Time:</b> ${escapeHTML(formData.get('pickup_datetime'))}\n` +
-          `📍 <b>From:</b> ${escapeHTML(formData.get('pickup'))}\n` +
-          `📍 <b>To:</b> ${escapeHTML(formData.get('dropoff'))}\n` +
-          (formData.get('flight_number') ? `✈️ <b>Flight Info:</b> ${escapeHTML(formData.get('flight_number'))}\n` : '') +
+          `✉️ <b>Email (Tap to Copy):</b> <code>${escapeHTML(emailVal)}</code>\n` +
+          `📞 <b>Phone:</b> <code>${escapeHTML(phoneVal)}</code>\n` +
+          `📅 <b>Date/Time:</b> ${escapeHTML(datetimeVal)}\n` +
+          `📍 <b>From:</b> ${escapeHTML(pickupVal)}\n` +
+          `📍 <b>To:</b> ${escapeHTML(dropoffVal)}\n` +
+          (flightVal ? `✈️ <b>Flight Info:</b> ${escapeHTML(flightVal)}\n` : '') +
           `👥 <b>Passengers:</b> ${escapeHTML(formData.get('passengers'))}\n` +
           `💼 <b>Luggage:</b> ${escapeHTML(formData.get('luggage'))}\n` +
           `💬 <b>Special Req:</b> ${escapeHTML(formData.get('requirements') || 'None')}\n` +
           `🚗 <b>Car Selected:</b> ${escapeHTML(carStr)}\n` +
-          `💰 <b>Estimated Price (Tap to copy):</b> <code>${escapeHTML(currentPrice || '0')}</code> (Total: ${escapeHTML(priceStr)})\n\n` +
+          `💰 <b>Estimated Price (Tap to copy):</b> <code>${escapeHTML(priceNum || '0')}</code> (Total: ${escapeHTML(priceStr)})\n\n` +
           `⚡️ <b>Invoice Actions:</b>\n` +
           `➕ <a href="https://dashboard.stripe.com/invoices/create">1. Create Stripe Invoice</a>\n\n` +
           `⚡️ <b>Client Notification:</b>\n` +
