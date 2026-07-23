@@ -3549,6 +3549,365 @@ html {
 }
 
 /* ========================================================================
+   SERVICES HUB PAGE
+   ======================================================================== */
+
+/* --- Hero --- */
+.svc-hub-hero {
+    position: relative;
+    background: var(--sea-navy);
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 100px 5% 80px;
+}
+
+.svc-hub-hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(196,162,101,0.08) 0%, transparent 60%),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            rgba(196,162,101,0.04) 40px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 39px,
+            rgba(196,162,101,0.04) 40px
+        );
+    pointer-events: none;
+}
+
+.svc-hub-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 760px;
+}
+
+.svc-hub-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--champagne-bronze);
+    margin-bottom: 18px;
+}
+
+.svc-hub-hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    color: var(--yacht-cream);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+
+.svc-hub-hero-content p {
+    font-size: 1.05rem;
+    color: rgba(240,235,227,0.7);
+    line-height: 1.75;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+/* --- Section header label --- */
+.svc-hub-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--champagne-bronze);
+    margin-bottom: 14px;
+}
+
+/* --- Core Services Section --- */
+.svc-hub-section {
+    padding: 90px 5%;
+    background: var(--riviera-white);
+}
+
+.svc-hub-section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.svc-hub-section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+    color: var(--sea-navy);
+    line-height: 1.2;
+}
+
+.svc-hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- Core Service Card --- */
+.svc-hub-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(15,29,50,0.07);
+    border: 1px solid rgba(196,162,101,0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.165,0.84,0.44,1), box-shadow 0.4s ease;
+}
+
+.svc-hub-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(15,29,50,0.12);
+}
+
+.svc-hub-card-img-wrap {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.svc-hub-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+.svc-hub-card:hover .svc-hub-card-img {
+    transform: scale(1.05);
+}
+
+.svc-hub-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(15,29,50,0.1) 0%, rgba(15,29,50,0.55) 100%);
+}
+
+.svc-hub-card-tag {
+    position: absolute;
+    bottom: 14px;
+    left: 16px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--champagne-bronze);
+    background: rgba(15,29,50,0.7);
+    border: 1px solid rgba(196,162,101,0.35);
+    border-radius: 20px;
+    padding: 4px 12px;
+    backdrop-filter: blur(4px);
+}
+
+.svc-hub-card-body {
+    padding: 28px 28px 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.svc-hub-card-body h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sea-navy);
+    margin-bottom: 12px;
+}
+
+.svc-hub-card-body p {
+    font-size: 0.92rem;
+    color: #666;
+    line-height: 1.65;
+    margin-bottom: 18px;
+}
+
+.svc-hub-features {
+    list-style: none;
+    margin: 0 0 24px 0;
+    padding: 0;
+}
+
+.svc-hub-features li {
+    font-size: 0.85rem;
+    color: var(--sea-navy);
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 7px;
+    line-height: 1.5;
+}
+
+.svc-hub-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--champagne-bronze);
+    font-weight: bold;
+}
+
+.svc-hub-card-body .banner-btn {
+    margin-top: auto;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    font-size: 10px;
+    padding: 12px 20px;
+}
+
+/* --- Why V-Transfer Section --- */
+.svc-why-section {
+    padding: 90px 5%;
+    background: var(--sea-navy);
+}
+
+.svc-why-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.svc-why-header .svc-hub-label {
+    color: var(--champagne-bronze);
+}
+
+.svc-why-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+    color: var(--yacht-cream);
+    line-height: 1.2;
+}
+
+.svc-why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.svc-why-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(196,162,101,0.18);
+    border-radius: 10px;
+    padding: 36px 30px;
+    text-align: center;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.4s ease;
+}
+
+.svc-why-card:hover {
+    background: rgba(196,162,101,0.06);
+    border-color: rgba(196,162,101,0.35);
+    transform: translateY(-4px);
+}
+
+.svc-why-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(196,162,101,0.12);
+    border: 1px solid rgba(196,162,101,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 22px;
+    color: var(--champagne-bronze);
+    transition: background 0.3s ease;
+}
+
+.svc-why-card:hover .svc-why-icon {
+    background: rgba(196,162,101,0.2);
+}
+
+.svc-why-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--yacht-cream);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+.svc-why-card p {
+    font-size: 0.9rem;
+    color: rgba(240,235,227,0.6);
+    line-height: 1.7;
+}
+
+/* --- Custom Quote CTA Banner --- */
+.svc-cta-section {
+    padding: 90px 5%;
+    background: var(--riviera-white);
+}
+
+.svc-cta-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.svc-cta-inner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    color: var(--sea-navy);
+    margin-bottom: 18px;
+}
+
+.svc-cta-inner p {
+    font-size: 1rem;
+    color: var(--soft-gray);
+    line-height: 1.75;
+    margin-bottom: 36px;
+}
+
+.svc-cta-inner .btn-request {
+    background: var(--sea-navy);
+    color: var(--yacht-cream);
+    padding: 16px 48px;
+    font-size: 11px;
+}
+
+.svc-cta-inner .btn-request:hover {
+    background: var(--bronze-gradient);
+    color: #fff;
+}
+
+/* --- Services Hub Responsive --- */
+@media (max-width: 900px) {
+    .svc-hub-grid,
+    .svc-why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .svc-hub-hero {
+        padding: 80px 5% 60px;
+        min-height: 320px;
+    }
+}
+
+@media (max-width: 600px) {
+    .svc-hub-section,
+    .svc-why-section,
+    .svc-cta-section {
+        padding: 70px 4%;
+    }
+
+    .svc-hub-card-img-wrap {
+        height: 180px;
+    }
+}
+
+/* ========================================================================
    FEATURED TOURS SECTION
    ======================================================================== */
 

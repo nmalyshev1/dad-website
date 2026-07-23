@@ -53,13 +53,24 @@ var translations = {
         'services': {
             'title': 'Chauffeur Services',
             'subtitle': 'Cannes • Monaco • Nice • St Tropez',
+            'hero_desc': 'Everything from a seamless airport pickup to a curated two-day wine tour — crafted around your schedule, delivered in uncompromising luxury.',
+            'core_label': 'Core Services',
+            'core_title': 'How We Can Drive You',
             'airport_desc': 'Swift, punctual transfers to and from NICE Airport. Your driver will meet you at arrivals with a personalized sign, handling your luggage for a seamless transition.',
             'intercity_desc': 'Premium one-way travel between major Riviera hubs. Whether moving from Monaco to Cannes or Marseille to St Tropez, enjoy the landscape in total comfort.',
             'private_desc': 'Hourly bookings for sightseeing, shopping trips, or business meetings. Minimum 4 hours, tailored entirely to your itinerary.',
             'learn_more': 'Learn More',
             'bespoke_pricing': 'Custom Pricing',
             'bespoke_desc': 'Every journey is unique. Rather than fixed rates, we provide customized quotes tailored precisely to your itinerary, vehicle preference, and schedule.',
-            'request_custom': 'Request Custom Booking'
+            'request_custom': 'Request a Custom Quote',
+            'why_label': 'Why Choose Us',
+            'why_title': 'The V-Transfer Difference',
+            'why1_title': 'Fixed Prices, Zero Surprises',
+            'why1_desc': 'Every journey is agreed in advance. No meters, no surge pricing, no hidden fees — the price you receive is exactly what you pay.',
+            'why2_title': 'Premium Fleet & Discretion',
+            'why2_desc': 'Immaculate late-model Mercedes vehicles with tinted windows, climate control, and on-board WiFi. Quiet, private, and utterly comfortable.',
+            'why3_title': 'Multilingual Chauffeurs',
+            'why3_desc': 'Our team speaks English, French, and Russian — ensuring every detail is communicated clearly, no matter where you are from.'
         },
         'airport': {
             'title': 'Airport Transfers',
@@ -332,13 +343,24 @@ var translations = {
         'services': {
             'title': 'Услуги шофера',
             'subtitle': 'Канны • Монако • Ницца • Сен-Тропе',
+            'hero_desc': 'От трансфера из аэропорта до двухдневного винного тура — каждый маршрут создан под ваш график и доставлен в безупречной роскоши.',
+            'core_label': 'Основные услуги',
+            'core_title': 'Как мы можем вас отвезти',
             'airport_desc': 'Быстрые и пунктуальные трансферы в аэропорт Ниццы и обратно. Водитель встретит вас с табличкой и поможет с багажом.',
             'intercity_desc': 'Премиальные поездки между городами Ривьеры. Из Монако в Канны или из Марселя в Сен-Тропе — наслаждайтесь видами в полном комфорте.',
             'private_desc': 'Почасовая аренда для экскурсий, шопинга или деловых встреч. Минимум 4 часа, полностью по вашему маршруту.',
             'learn_more': 'Подробнее',
             'bespoke_pricing': 'Индивидуальный расчет',
             'bespoke_desc': 'Каждая поездка уникальна. Вместо фиксированных тарифов мы предлагаем расчет стоимости, основанный на вашем маршруте и предпочтениях.',
-            'request_custom': 'Заказать индивидуальную поездку'
+            'request_custom': 'Запросить индивидуальное предложение',
+            'why_label': 'Почему мы',
+            'why_title': 'Преимущества V-Transfer',
+            'why1_title': 'Фиксированные цены — никаких сюрпризов',
+            'why1_desc': 'Каждая поездка согласовывается заранее. Никаких счётчиков, никаких скрытых платежей — цена, которую вы получаете, это именно то, что вы платите.',
+            'why2_title': 'Премиальный автопарк и дискретность',
+            'why2_desc': 'Безупречные автомобили Mercedes последних моделей с тонированными стёклами, климат-контролем и WiFi на борту. Тихо, приватно и невероятно комфортно.',
+            'why3_title': 'Многоязычные шоферы',
+            'why3_desc': 'Наша команда говорит по-английски, по-французски и по-русски — каждая деталь будет понята и выполнена безупречно.'
         },
         'airport': {
             'title': 'Трансфер в аэропорт',
@@ -611,13 +633,24 @@ var translations = {
         'services': {
             'title': 'Services de Chauffeur',
             'subtitle': 'Cannes • Monaco • Nice • St Tropez',
+            'hero_desc': "Du transfert aéroport à un tour viticole de deux jours — chaque trajet est conçu selon votre agenda et exécuté dans un luxe absolu.",
+            'core_label': 'Services principaux',
+            'core_title': 'Comment nous pouvons vous conduire',
             'airport_desc': "Transferts rapides et ponctuels vers et depuis l'aéroport de NICE. Votre chauffeur vous accueillera avec un panneau personnalisé et s'occupera de vos bagages.",
             'intercity_desc': 'Voyages premium entre les grands centres de la Riviera. De Monaco à Cannes ou de Marseille à St Tropez, profitez du paysage en tout confort.',
             'private_desc': 'Réservations à l\'heure pour visites, shopping ou réunions d\'affaires. Minimum 4 heures, entièrement adapté à votre itinéraire.',
             'learn_more': 'En savoir plus',
             'bespoke_pricing': 'Tarification sur mesure',
             'bespoke_desc': "Chaque voyage est unique. Plutôt que des tarifs fixes, nous fournissons des devis personnalisés adaptés précisément à votre itinéraire et vos préférences.",
-            'request_custom': 'Réserver un trajet personnalisé'
+            'request_custom': 'Demander un devis personnalisé',
+            'why_label': 'Pourquoi nous choisir',
+            'why_title': 'La Différence V-Transfer',
+            'why1_title': 'Prix fixes, zéro surprise',
+            'why1_desc': 'Chaque trajet est convenu à l\'avance. Pas de compteur, pas de majoration, pas de frais cachés — le prix que vous recevez est exactement ce que vous payez.',
+            'why2_title': 'Flotte premium & discrétion',
+            'why2_desc': 'Véhicules Mercedes impeccables avec vitres teintées, climatisation et WiFi à bord. Silencieux, privé et d\'un confort absolu.',
+            'why3_title': 'Chauffeurs multilingues',
+            'why3_desc': 'Notre équipe parle anglais, français et russe — chaque détail est communiqué clairement, quelle que soit votre origine.'
         },
         'airport': {
             'title': 'Transferts Aéroport',

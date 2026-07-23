@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360">
+  <defs>
+    <style>
+      .logo-text {
+        font-family: 'Outfit', 'Arial Black', Arial, sans-serif;
+        font-size: 88px;
+        font-weight: 800;
+        letter-spacing: 28px;
+        fill: #0F1D32;
+        text-transform: uppercase;
+      }
+    </style>
+    <linearGradient id="bronzeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C4A265;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8E6D3B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- White background -->
+  <rect width="900" height="360" fill="#FFFFFF" rx="18"/>
+
+  <!-- Subtle gold border -->
+  <rect width="900" height="360" fill="none" stroke="#C4A265" stroke-width="1.5" stroke-opacity="0.4" rx="18"/>
+
+  <!-- V-Transfer Icon -->
+  <g transform="translate(100, 75) scale(6.25)">
+    <path d="M2 4 L12 21 L22 4" fill="none" stroke="url(#bronzeGrad2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M7 4 L12 12.5 L17 4" fill="none" stroke="url(#bronzeGrad2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- TRANSFER text -->
+  <text x="335" y="220" class="logo-text" fill="#0F1D32">TRANSFER</text>
+</svg>

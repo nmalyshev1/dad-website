@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Services | V-TRANSFER VIP</title>
+  <title>Our Services | V-TRANSFER – Private Chauffeur French Riviera</title>
+  <meta name="description" content="Discover V-Transfer's full range of premium chauffeur services on the French Riviera: airport transfers, intercity rides, private excursions, and curated full-day tours.">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -12,165 +13,357 @@
 <header class="mainHeader">
   <a href="index.html" class="logo-link">
     <div class="logo">
-            <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
-                <path d="M2 4 L12 21 L22 4"></path>
-                <path d="M7 4 L12 12.5 L17 4"></path>
-            </svg>
-            TRANSFER
-        </div>
+      <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+        <path d="M2 4 L12 21 L22 4"></path>
+        <path d="M7 4 L12 12.5 L17 4"></path>
+      </svg>
+      TRANSFER
+    </div>
   </a>
   <nav class="navBar">
-        <ul>
-            <li><a href="index.html#home" data-i18n="nav.home">Home</a></li>
-            <li><a href="index.html#fleet" data-i18n="nav.fleet">Fleet</a></li>
-            <li><a href="index.html#routes">Routes</a></li>
-            <li><a href="index.html#services" data-i18n="nav.services">Services</a></li>
-            <li><a href="index.html#faq">FAQ</a></li>
-            <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
-        </ul>
-    </nav>
+    <ul>
+      <li><a href="index.html#home" data-i18n="nav.home">Home</a></li>
+      <li><a href="index.html#fleet" data-i18n="nav.fleet">Fleet</a></li>
+      <li><a href="index.html#routes">Routes</a></li>
+      <li><a href="services.html" data-i18n="nav.services">Services</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+  </nav>
   <div class="requestButton">
     <div class="lang-picker">
-        <div class="current-lang">
-            <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" id="current-flag" alt="Flag">
-            <span class="current-lang-text">EN</span>
-        </div>
-        <div class="lang-dropdown">
-            <a href="#" class="lang-option" data-lang="en">
-                <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="English"> English
-            </a>
-            <a href="#" class="lang-option" data-lang="fr">
-                <img src="https://flagcdn.com/w40/fr.png" class="flag-icon" alt="Français"> Français
-            </a>
-            <a href="#" class="lang-option" data-lang="ru">
-                <img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="Русский"> Русский
-            </a>
-        </div>
+      <div class="current-lang">
+        <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" id="current-flag" alt="Flag">
+        <span class="current-lang-text">EN</span>
+      </div>
+      <div class="lang-dropdown">
+        <a href="#" class="lang-option" data-lang="en">
+          <img src="https://flagcdn.com/w40/gb.png" class="flag-icon" alt="English"> English
+        </a>
+        <a href="#" class="lang-option" data-lang="fr">
+          <img src="https://flagcdn.com/w40/fr.png" class="flag-icon" alt="Français"> Français
+        </a>
+        <a href="#" class="lang-option" data-lang="ru">
+          <img src="https://flagcdn.com/w40/ru.png" class="flag-icon" alt="Русский"> Русский
+        </a>
+      </div>
     </div>
-    <a href="request.html" class="btn-request"><span data-i18n="nav.request_quote">Request Car</span></a>
+    <a href="request.html" class="btn-request" data-i18n="nav.request_quote">Request Car</a>
   </div>
-
-    <!-- Hamburger Button -->
-    <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
+  <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+
 <!-- Mobile Navigation Overlay -->
 <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
 
 <!-- Mobile Menu Panel -->
 <div class="mobile-menu" id="mobile-menu">
-    <ul>
-        <li><a href="index.html#home" class="mobile-menu-close-on-click" data-i18n="nav.home">Home</a></li>
-        <li><a href="index.html#fleet" class="mobile-menu-close-on-click" data-i18n="nav.fleet">Fleet</a></li>
-        <li><a href="index.html#routes" class="mobile-menu-close-on-click">Routes</a></li>
-        <li><a href="index.html#services" class="mobile-menu-close-on-click" data-i18n="nav.services">Services</a></li>
-        <li><a href="index.html#faq" class="mobile-menu-close-on-click">FAQ</a></li>
-        <li><a href="index.html#contact" class="mobile-menu-close-on-click" data-i18n="nav.contact">Contact</a></li>
-    </ul>
-    <div class="mobile-menu-footer">
-        <a href="request.html" class="btn-request mobile-menu-close-on-click"><span data-i18n="nav.request_quote">Request Car</span></a>
-        <div class="mobile-lang-switcher">
-            <a href="#" class="mobile-lang-btn" data-lang="en">
-                <img src="https://flagcdn.com/w40/gb.png" alt="EN"> EN
-            </a>
-            <a href="#" class="mobile-lang-btn" data-lang="fr">
-                <img src="https://flagcdn.com/w40/fr.png" alt="FR"> FR
-            </a>
-            <a href="#" class="mobile-lang-btn" data-lang="ru">
-                <img src="https://flagcdn.com/w40/ru.png" alt="RU"> RU
-            </a>
-        </div>
+  <ul>
+    <li><a href="index.html#home" class="mobile-menu-close-on-click" data-i18n="nav.home">Home</a></li>
+    <li><a href="index.html#fleet" class="mobile-menu-close-on-click" data-i18n="nav.fleet">Fleet</a></li>
+    <li><a href="index.html#routes" class="mobile-menu-close-on-click">Routes</a></li>
+    <li><a href="services.html" class="mobile-menu-close-on-click" data-i18n="nav.services">Services</a></li>
+    <li><a href="index.html#faq" class="mobile-menu-close-on-click">FAQ</a></li>
+    <li><a href="index.html#contact" class="mobile-menu-close-on-click" data-i18n="nav.contact">Contact</a></li>
+  </ul>
+  <div class="mobile-menu-footer">
+    <a href="request.html" class="btn-request mobile-menu-close-on-click"><span data-i18n="nav.request_quote">Request Car</span></a>
+    <div class="mobile-lang-switcher">
+      <a href="#" class="mobile-lang-btn" data-lang="en"><img src="https://flagcdn.com/w40/gb.png" alt="EN"> EN</a>
+      <a href="#" class="mobile-lang-btn" data-lang="fr"><img src="https://flagcdn.com/w40/fr.png" alt="FR"> FR</a>
+      <a href="#" class="mobile-lang-btn" data-lang="ru"><img src="https://flagcdn.com/w40/ru.png" alt="RU"> RU</a>
     </div>
+  </div>
 </div>
 
-
 <main>
-  <section class="services-hero">
-    <h1 data-i18n="services.title">Chauffeur Services</h1>
-    <p class="service-subtitle" data-i18n="services.subtitle">Cannes • Monaco • Nice • St Tropez</p>
-  </section>
 
-  <section class="services-grid stagger-parent">
-    <div class="service-type-card reveal">
-      <img src="images/airport_transfer.png" alt="Airport Transfers" class="fleet-image" style="border-radius: 6px; margin-bottom: 20px;">
-      <h3 data-i18n="footer.airport_transfers">Airport Transfers</h3>
-      <p data-i18n="services.airport_desc">Swift, punctual transfers to and from NICE Airport. Your driver will meet you at arrivals with a personalized sign, handling your luggage for a seamless transition.</p>
-      <a href="airport-transfers.html" class="banner-btn" data-i18n="services.learn_more">Learn More</a>
-    </div>
-    <div class="service-type-card reveal">
-      <img src="images/intercity_transfer.png" alt="Inter-City Transfers" class="fleet-image" style="border-radius: 6px; margin-bottom: 20px;">
-      <h3 data-i18n="footer.intercity_transfers">Inter-City Transfers</h3>
-      <p data-i18n="services.intercity_desc">Premium one-way travel between major Riviera hubs. Whether moving from Monaco to Cannes or Marseille to St Tropez, enjoy the landscape in total comfort.</p>
-      <a href="intercity-transfers.html" class="banner-btn" data-i18n="services.learn_more">Learn More</a>
-    </div>
-    <div class="service-type-card reveal">
-      <img src="images/private_excursion.png" alt="Private Excursions" class="fleet-image" style="border-radius: 6px; margin-bottom: 20px;">
-      <h3 data-i18n="footer.private_excursions">Private Excursions</h3>
-      <p data-i18n="services.private_desc">Hourly bookings for sightseeing, shopping trips, or business meetings. Minimum 4 hours, tailored entirely to your itinerary.</p>
-      <a href="private-excursions.html" class="banner-btn" data-i18n="services.learn_more">Learn More</a>
+  <!-- ===== HERO ===== -->
+  <section class="svc-hub-hero">
+    <div class="svc-hub-hero-bg"></div>
+    <div class="svc-hub-hero-content">
+      <span class="svc-hub-eyebrow" data-i18n="services.subtitle">Cannes • Monaco • Nice • St Tropez</span>
+      <h1 data-i18n="services.title">Chauffeur Services</h1>
+      <p data-i18n="services.hero_desc">Everything from a seamless airport pickup to a curated two-day wine tour — crafted around your schedule, delivered in uncompromising luxury.</p>
     </div>
   </section>
 
-  <section class="pricing-section cta-banner" style="text-align: center; padding: 60px 20px; background: transparent;">
-      <h2 style="color: var(--sea-navy); margin-bottom: 15px;" data-i18n="services.bespoke_pricing">Custom Pricing</h2>
-      <p style="margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; color: #555;" data-i18n="services.bespoke_desc">Every journey is unique. Rather than fixed rates, we provide customized quotes tailored precisely to your itinerary, vehicle preference, and schedule.</p>
-      <a href="request.html" class="banner-btn" style="color: var(--sea-navy); border-color: var(--sea-navy);" data-i18n="services.request_custom">Request a Custom Quote</a>
+  <!-- ===== CORE SERVICES ===== -->
+  <section class="svc-hub-section">
+    <div class="svc-hub-section-header reveal">
+      <span class="svc-hub-label" data-i18n="services.core_label">Core Services</span>
+      <h2 data-i18n="services.core_title">How We Can Drive You</h2>
+    </div>
+
+    <div class="svc-hub-grid">
+
+      <div class="svc-hub-card reveal">
+        <div class="svc-hub-card-img-wrap">
+          <img src="images/airport_transfer.png" alt="Airport Transfer" class="svc-hub-card-img">
+          <div class="svc-hub-card-overlay"></div>
+          <span class="svc-hub-card-tag" data-i18n="footer.airport_transfers">Airport Transfers</span>
+        </div>
+        <div class="svc-hub-card-body">
+          <h3 data-i18n="footer.airport_transfers">Airport Transfers</h3>
+          <p data-i18n="services.airport_desc">Swift, punctual transfers to and from Nice Airport. Your driver meets you at arrivals with a name board, handling every bag for a seamless transition.</p>
+          <ul class="svc-hub-features">
+            <li data-i18n="airport.f1">Real-time flight tracking</li>
+            <li data-i18n="airport.f2">Complimentary wait time</li>
+            <li data-i18n="airport.f3">VIP Meet &amp; Greet at arrivals</li>
+          </ul>
+          <a href="airport-transfers.html" class="banner-btn" data-i18n="services.learn_more">Learn More</a>
+        </div>
+      </div>
+
+      <div class="svc-hub-card reveal">
+        <div class="svc-hub-card-img-wrap">
+          <img src="images/intercity_transfer.png" alt="Intercity Transfer" class="svc-hub-card-img">
+          <div class="svc-hub-card-overlay"></div>
+          <span class="svc-hub-card-tag" data-i18n="footer.intercity_transfers">Intercity Transfers</span>
+        </div>
+        <div class="svc-hub-card-body">
+          <h3 data-i18n="footer.intercity_transfers">Intercity Transfers</h3>
+          <p data-i18n="services.intercity_desc">Premium one-way travel between major Riviera hubs. Monaco to Cannes, Marseille to St Tropez — enjoy the landscape in total comfort.</p>
+          <ul class="svc-hub-features">
+            <li data-i18n="intercity.f1">Door-to-door executive travel</li>
+            <li data-i18n="intercity.f2">Absolute privacy, tinted windows</li>
+            <li data-i18n="intercity.f3">Spacious seating &amp; on-board WiFi</li>
+          </ul>
+          <a href="intercity-transfers.html" class="banner-btn" data-i18n="services.learn_more">Learn More</a>
+        </div>
+      </div>
+
+      <div class="svc-hub-card reveal">
+        <div class="svc-hub-card-img-wrap">
+          <img src="images/private_excursion.png" alt="Private Excursion" class="svc-hub-card-img">
+          <div class="svc-hub-card-overlay"></div>
+          <span class="svc-hub-card-tag" data-i18n="footer.private_excursions">Private Excursions</span>
+        </div>
+        <div class="svc-hub-card-body">
+          <h3 data-i18n="footer.private_excursions">Private Excursions</h3>
+          <p data-i18n="services.private_desc">Hourly bookings for sightseeing, shopping or business. Minimum 4 hours, tailored entirely to your itinerary — your driver, your agenda.</p>
+          <ul class="svc-hub-features">
+            <li data-i18n="excursions.f1">Hourly and daily hire available</li>
+            <li data-i18n="excursions.f2">Customizable, flexible itineraries</li>
+            <li data-i18n="excursions.f3">Chauffeurs with deep local knowledge</li>
+          </ul>
+          <a href="private-excursions.html" class="banner-btn" data-i18n="services.learn_more">Learn More</a>
+        </div>
+      </div>
+
+    </div>
   </section>
+
+  <!-- ===== FEATURED TOURS ===== -->
+  <section class="tours-section" style="background: #f7f5f2;">
+    <div class="tours-section-header reveal">
+      <span class="section-eyebrow" data-i18n="tours.section_eyebrow">Curated Day Experiences</span>
+      <h2 data-i18n="tours.section_title">Featured Tours</h2>
+      <p data-i18n="tours.section_desc">Handcrafted full-day and multi-day journeys along the French Riviera — private transfers, exclusive wine tastings, and iconic destinations, all arranged for you.</p>
+    </div>
+
+    <div class="tours-grid">
+
+      <!-- Tour 1: Saint-Tropez & Château d'Esclans (1 Day) -->
+      <div class="tour-card reveal">
+        <div class="tour-card-header">
+          <div class="tour-badge" data-i18n="tours.tour1_badge">1 Day · Saint-Tropez</div>
+          <h3 data-i18n="tours.tour1_title">Saint-Tropez &amp; Château d'Esclans</h3>
+          <p class="tour-tagline" data-i18n="tours.tour1_tagline">Exclusive day on the Riviera: legendary Provençal wine, beach relaxation, panoramic aperitif, and an evening in the heart of Saint-Tropez.</p>
+        </div>
+        <div class="tour-card-body">
+          <ul class="tour-itinerary">
+            <li><span class="tour-time" data-i18n="tours.tour1_t1">09:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour1_s1">Departure from Nice</strong><span data-i18n="tours.tour1_d1">Comfortable premium vehicle pickup from Nice.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour1_t2">11:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour1_s2">Château d'Esclans</strong><span data-i18n="tours.tour1_d2">Private tour with tasting of 5 premium Côtes de Provence wines.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour1_t3">13:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour1_s3">Lunch</strong><span data-i18n="tours.tour1_d3">Local cuisine at an iconic restaurant on the waterfront.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour1_t4">16:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour1_s4">Apéro at Lily of the Valley</strong><span data-i18n="tours.tour1_d4">Aperitif on the panoramic terrace of a Forbes Top-10 hotel.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour1_t5">18:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour1_s5">Saint-Tropez Old Town</strong><span data-i18n="tours.tour1_d5">Leisurely stroll through the charming historic streets.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour1_t6">19:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour1_s6">Dinner at Café de Paris</strong><span data-i18n="tours.tour1_d6">Atmospheric evening at the famous Café de Paris in the port.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour1_t7">21:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour1_s7">Return Transfer to Nice</strong><span data-i18n="tours.tour1_d7">Comfortable return journey in your private vehicle.</span></div></li>
+          </ul>
+          <p class="tour-includes-title" data-i18n="tours.includes_title">What's Included</p>
+          <ul class="tour-includes">
+            <li data-i18n="tours.tour1_i1">Private premium chauffeur transfer for the full day</li>
+            <li data-i18n="tours.tour1_i2">Private tour &amp; tasting at Château d'Esclans</li>
+            <li data-i18n="tours.tour1_i3">Reservation of the best tables along the route</li>
+          </ul>
+          <div class="tour-cta"><a href="request.html" class="btn-request" data-i18n="tours.book_tour">Enquire About This Tour</a></div>
+        </div>
+      </div>
+
+      <!-- Tour 2: French Riviera Signature Day (1 Day) -->
+      <div class="tour-card reveal">
+        <div class="tour-card-header">
+          <div class="tour-badge" data-i18n="tours.tour2_badge">1 Day · Riviera Highlights</div>
+          <h3 data-i18n="tours.tour2_title">The French Riviera Signature Day</h3>
+          <p class="tour-tagline" data-i18n="tours.tour2_tagline">The greatest jewels of the coast in one day: Cap Ferrat, Villa Rothschild, medieval Èze, and the charm of Old Nice.</p>
+        </div>
+        <div class="tour-card-body">
+          <ul class="tour-itinerary">
+            <li><span class="tour-time" data-i18n="tours.tour2_t1">10:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour2_s1">Saint-Jean-Cap-Ferrat</strong><span data-i18n="tours.tour2_d1">Walk along the most picturesque coastal promenade in the region.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour2_t2">11:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour2_s2">Villa Ephrussi de Rothschild</strong><span data-i18n="tours.tour2_d2">Tour of the famous palace and its 9 themed gardens.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour2_t3">12:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour2_s3">Lunch at Restaurant Béatrice</strong><span data-i18n="tours.tour2_d3">Gastronomic lunch at the exquisite Béatrice restaurant.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour2_t4">15:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour2_s4">Èze Village</strong><span data-i18n="tours.tour2_d4">Wander the narrow lanes of this dramatic medieval clifftop village.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour2_t5">16:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour2_s5">Panoramic Aperitif</strong><span data-i18n="tours.tour2_d5">Cocktail on the terrace with the finest view of the entire coast.</span></div></li>
+            <li><span class="tour-time" data-i18n="tours.tour2_t6">18:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour2_s6">Guided Walk in Old Nice</strong><span data-i18n="tours.tour2_d6">Immersive guided tour through the colourful streets of Vieux Nice.</span></div></li>
+          </ul>
+          <p class="tour-includes-title" data-i18n="tours.includes_title">What's Included</p>
+          <ul class="tour-includes">
+            <li data-i18n="tours.tour2_i1">Private premium chauffeur transfer throughout</li>
+            <li data-i18n="tours.tour2_i2">Visit to Villa Ephrussi de Rothschild &amp; Èze</li>
+            <li data-i18n="tours.tour2_i3">Guided tour of Nice's Old Town</li>
+            <li data-i18n="tours.tour2_i4">Restaurant reservations along the route</li>
+          </ul>
+          <div class="tour-cta"><a href="request.html" class="btn-request" data-i18n="tours.book_tour">Enquire About This Tour</a></div>
+        </div>
+      </div>
+
+      <!-- Tour 3: 2-Day Saint-Tropez & Var -->
+      <div class="tour-card tour-card--wide reveal">
+        <div class="tour-card-header">
+          <div class="tour-badge" data-i18n="tours.tour3_badge">2 Days · Saint-Tropez &amp; Var</div>
+          <h3 data-i18n="tours.tour3_title">Saint-Tropez &amp; the Gems of the Var</h3>
+          <p class="tour-tagline" data-i18n="tours.tour3_tagline">An immersion into French Art de Vivre: exclusive grand-château tastings, the finest beach restaurants, Provençal Venice, and the glamour of Saint-Tropez.</p>
+        </div>
+        <div class="tour-card-body">
+          <div class="tour-wide-inner">
+            <div class="tour-day-column">
+              <div class="tour-day-label">
+                <span class="tour-day-label-text" data-i18n="tours.day1_label">Day 1</span>
+                <span class="tour-day-label-title" data-i18n="tours.tour3_day1_title">Saint-Tropez Highlights</span>
+              </div>
+              <ul class="tour-itinerary">
+                <li><span class="tour-time" data-i18n="tours.tour3_d1_t1">09:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d1_s1">Departure from Nice</strong><span data-i18n="tours.tour3_d1_d1">Premium vehicle departure from Nice.</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d1_t2">11:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d1_s2">Château d'Esclans</strong><span data-i18n="tours.tour3_d1_d2">Private estate tour with tasting of 5 premium wines.</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d1_t3">13:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d1_s3">Lunch</strong><span data-i18n="tours.tour3_d1_d3">Gastronomic pause at an iconic coastal restaurant.</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d1_t4">16:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d1_s4">Apéro at Lily of the Valley</strong><span data-i18n="tours.tour3_d1_d4">Panoramic aperitif at a Forbes Top-10 hotel.</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d1_t5">18:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d1_s5">Saint-Tropez Old Town</strong><span data-i18n="tours.tour3_d1_d5">Stroll through the colourful historic streets.</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d1_t6">19:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d1_s6">Dinner at Café de Paris</strong><span data-i18n="tours.tour3_d1_d6">Atmospheric evening in the famous port-side Café de Paris.</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d1_t7">21:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d1_s7">Transfer to hotel</strong><span data-i18n="tours.tour3_d1_d7">Evening transfer to your hotel to rest.</span></div></li>
+              </ul>
+            </div>
+            <div class="tour-day-column">
+              <div class="tour-day-label">
+                <span class="tour-day-label-text" data-i18n="tours.day2_label">Day 2</span>
+                <span class="tour-day-label-title" data-i18n="tours.tour3_day2_title">Provençal Estates &amp; Port Grimaud</span>
+              </div>
+              <ul class="tour-itinerary">
+                <li><span class="tour-time" data-i18n="tours.tour3_d2_t1">09:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d2_s1">Breakfast at hotel</strong><span data-i18n="tours.tour3_d2_d1">Leisurely start with hotel breakfast.</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d2_t2">11:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d2_s2">Premium Winery Visit</strong><span data-i18n="tours.tour3_d2_d2">Private tasting at Château Minuty, Domaine de la Madrague, or Domaine du Bourrian.</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d2_t3">13:00</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d2_s3">Lunch at Plage de Gigaro</strong><span data-i18n="tours.tour3_d2_d3">Lunch on the scenic Gigaro beach.</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d2_t4">15:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d2_s4">Port Grimaud</strong><span data-i18n="tours.tour3_d2_d4">Stroll through the 'French Venice' — canals and bridges.</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d2_t5">17:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d2_s5">Château Saint-Maur</strong><span data-i18n="tours.tour3_d2_d5">Final Grand Cru tasting (or alternative of your choosing).</span></div></li>
+                <li><span class="tour-time" data-i18n="tours.tour3_d2_t6">18:30</span><span class="tour-dot"></span><div class="tour-stop"><strong data-i18n="tours.tour3_d2_s6">Return to Nice</strong><span data-i18n="tours.tour3_d2_d6">Comfortable return transfer to Nice.</span></div></li>
+              </ul>
+            </div>
+          </div>
+          <p class="tour-includes-title" data-i18n="tours.includes_title">What's Included</p>
+          <ul class="tour-includes">
+            <li data-i18n="tours.tour3_i1">Private premium chauffeur transfer for 2 full days</li>
+            <li data-i18n="tours.tour3_i2">Private excursions &amp; tastings at grand estates</li>
+            <li data-i18n="tours.tour3_i3">Personal assistance &amp; best table reservations throughout</li>
+          </ul>
+          <div class="tour-cta"><a href="request.html" class="btn-request" data-i18n="tours.book_tour">Enquire About This Tour</a></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== WHY V-TRANSFER ===== -->
+  <section class="svc-why-section">
+    <div class="svc-why-header reveal">
+      <span class="svc-hub-label" data-i18n="services.why_label">Why Choose Us</span>
+      <h2 data-i18n="services.why_title">The V-Transfer Difference</h2>
+    </div>
+    <div class="svc-why-grid">
+      <div class="svc-why-card reveal">
+        <div class="svc-why-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3 data-i18n="services.why1_title">Fixed Prices, Zero Surprises</h3>
+        <p data-i18n="services.why1_desc">Every journey is agreed in advance. No meters, no surge pricing, no hidden fees — the price you receive is exactly what you pay.</p>
+      </div>
+      <div class="svc-why-card reveal">
+        <div class="svc-why-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3 data-i18n="services.why2_title">Premium Fleet &amp; Discretion</h3>
+        <p data-i18n="services.why2_desc">Immaculate late-model Mercedes vehicles with tinted windows, climate control, and on-board WiFi. Quiet, private, and utterly comfortable.</p>
+      </div>
+      <div class="svc-why-card reveal">
+        <div class="svc-why-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3 data-i18n="services.why3_title">Multilingual Chauffeurs</h3>
+        <p data-i18n="services.why3_desc">Our team speaks English, French, and Russian — ensuring every detail is communicated clearly, no matter where you are from.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CUSTOM QUOTE CTA ===== -->
+  <section class="svc-cta-section">
+    <div class="svc-cta-inner reveal">
+      <h2 data-i18n="services.bespoke_pricing">Custom Pricing</h2>
+      <p data-i18n="services.bespoke_desc">Every journey is unique. Rather than fixed rates, we provide customized quotes tailored precisely to your itinerary, vehicle preference, and schedule.</p>
+      <a href="request.html" class="btn-request" data-i18n="services.request_custom">Request a Custom Quote</a>
+    </div>
+  </section>
+
 </main>
 
 <footer class="global-footer">
-    <div class="footer-container">
-        <div class="footer-brand">
-            <div class="logo">
-            <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
-                <path d="M2 4 L12 21 L22 4"></path>
-                <path d="M7 4 L12 12.5 L17 4"></path>
-            </svg>
-            TRANSFER
-        </div>
-            <p data-i18n="footer.brand_desc">Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
-        </div>
-
-        <div class="footer-links">
-            <h4 class="footer-heading" data-i18n="footer.services">Services</h4>
-            <ul>
-                <li><a href="airport-transfers.html" data-i18n="footer.airport_transfers">Airport Transfers</a></li>
-                <li><a href="intercity-transfers.html" data-i18n="footer.intercity_transfers">Intercity Transfers</a></li>
-                <li><a href="private-excursions.html" data-i18n="footer.private_excursions">Private Excursions</a></li>
-                <li><a href="services.html" data-i18n="footer.all_services">All Services</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-links">
-            <h4 class="footer-heading" data-i18n="footer.company">Company</h4>
-            <ul>
-                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
-                <li><a href="index.html#fleet" data-i18n="footer.the_fleet">The Fleet</a></li>
-                <li><a href="contact.html" data-i18n="footer.contact_us">Contact Us</a></li>
-                <li><a href="request.html" data-i18n="footer.book_now">Book Now</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-contact-info">
-            <h4 class="footer-heading" data-i18n="footer.inquiries">Inquiries</h4>
-            <p>06400 Cannes, France</p>
-            <p><a href="tel:+33686269909">+33 6 86 26 99 09</a></p>
-            <p><a href="mailto:info@vtransfer.fr">info@vtransfer.fr</a></p>
-        </div>
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="logo">
+        <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+          <path d="M2 4 L12 21 L22 4"></path>
+          <path d="M7 4 L12 12.5 L17 4"></path>
+        </svg>
+        TRANSFER
+      </div>
+      <p data-i18n="footer.brand_desc">Premium chauffeur services on the French Riviera. Elevating your travel experience with discretion, luxury, and unmatched professionalism.</p>
     </div>
-
-    <div class="footer-bottom">
-        <div class="copyright">
-            &copy; 2026 V-TRANSFER. <span data-i18n="footer.rights">All rights reserved.</span>
-        </div>
-        <div class="legal-links">
-            <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
-            <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
-        </div>
+    <div class="footer-links">
+      <h4 class="footer-heading" data-i18n="footer.services">Services</h4>
+      <ul>
+        <li><a href="airport-transfers.html" data-i18n="footer.airport_transfers">Airport Transfers</a></li>
+        <li><a href="intercity-transfers.html" data-i18n="footer.intercity_transfers">Intercity Transfers</a></li>
+        <li><a href="private-excursions.html" data-i18n="footer.private_excursions">Private Excursions</a></li>
+        <li><a href="services.html" data-i18n="footer.all_services">All Services</a></li>
+      </ul>
     </div>
+    <div class="footer-links">
+      <h4 class="footer-heading" data-i18n="footer.company">Company</h4>
+      <ul>
+        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="index.html#fleet" data-i18n="footer.the_fleet">The Fleet</a></li>
+        <li><a href="contact.html" data-i18n="footer.contact_us">Contact Us</a></li>
+        <li><a href="request.html" data-i18n="footer.book_now">Book Now</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact-info">
+      <h4 class="footer-heading" data-i18n="footer.inquiries">Inquiries</h4>
+      <p>06400 Cannes, France</p>
+      <p><a href="tel:+33686269909">+33 6 86 26 99 09</a></p>
+      <p><a href="mailto:info@vtransfer.fr">info@vtransfer.fr</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copyright">&copy; 2026 V-TRANSFER. <span data-i18n="footer.rights">All rights reserved.</span></div>
+    <div class="legal-links">
+      <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+      <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
+    </div>
+  </div>
 </footer>
 
 <script src="translations.js"></script>
@@ -178,32 +371,29 @@
 
 <!-- Floating buttons group -->
 <div class="float-btn-group">
-    <a href="tel:+33686269909" class="call-float float-btn" aria-label="Call Now">
-        <span class="float-btn-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="26" height="26" fill="white"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58z"/></svg>
-        </span>
-        <span class="float-btn-label" data-i18n="nav.call_now">Call Now</span>
-    </a>
-    <a href="https://wa.me/33686269909?text=Hello,%20I'm%20interested%20in%20a%20transfer." class="whatsapp-float float-btn" target="_blank" rel="noopener noreferrer">
-        <span class="float-btn-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="whatsapp-icon" style="fill: #ffffff; stroke: none !important; border: none !important;">
-                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
-            </svg>
-        </span>
-        <span class="float-btn-label">WhatsApp</span>
-    </a>
+  <a href="tel:+33686269909" class="call-float float-btn" aria-label="Call Now">
+    <span class="float-btn-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="26" height="26" fill="white"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58z"/></svg>
+    </span>
+    <span class="float-btn-label" data-i18n="nav.call_now">Call Now</span>
+  </a>
+  <a href="https://wa.me/33686269909?text=Hello,%20I'm%20interested%20in%20a%20transfer." class="whatsapp-float float-btn" target="_blank" rel="noopener noreferrer">
+    <span class="float-btn-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="whatsapp-icon" style="fill: #ffffff; stroke: none !important;">
+        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+      </svg>
+    </span>
+    <span class="float-btn-label">WhatsApp</span>
+  </a>
 </div>
 
 <script src="burger.js"></script>
 <script>
-// Scroll Reveal Logic
 document.addEventListener('DOMContentLoaded', () => {
     const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+            if (entry.isIntersecting) entry.target.classList.add('visible');
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     reveals.forEach(el => revealObserver.observe(el));
